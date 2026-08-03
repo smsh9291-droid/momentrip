@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Momentrip Wireframe - Home</title>
+<link rel="stylesheet" href="css/wireframe.css">
+</head>
+<body>
+
+<!-- ==========================================================================
+     HEADER
+     ========================================================================== -->
+<header class="site-header">
+  <!-- Mobile(~767px): 햄버거 / 로고 / 검색 아이콘만 노출.
+       지역 선택 · 마이페이지는 햄버거 메뉴 내부로 이동(별도 드로어는 IA 단계라 생략). -->
+  <div class="container header-inner">
+    <button type="button" class="gnb-toggle" aria-label="메뉴 열기">MENU</button>
+
+    <div class="logo-area">
+      <a href="index.html" class="logo-box">LOGO</a>
+    </div>
+
+    <nav class="gnb">
+      <a href="index.html" class="is-active">둘러보기</a>
+      <a href="#">클래스·체험</a>
+      <a href="#">지역행사</a>
+      <a href="board-list.html">커뮤니티</a>
+    </nav>
+
+    <div class="header-utils">
+      <button type="button" class="region-select">
+        <span class="icon-circle sm"></span>
+        <span class="util-label">지역 선택</span>
+      </button>
+      <button type="button" class="util-btn util-search">
+        <span class="icon-circle sm"></span>
+        <span class="util-label">검색</span>
+      </button>
+      <button type="button" class="util-btn util-mypage">
+        <span class="icon-circle sm"></span>
+        <span class="util-label">마이페이지</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ==========================================================================
+       HERO
+       "오늘 무엇을 할까?"를 바로 검색/탐색으로 연결하는 진입 영역
+       ========================================================================== -->
+  <section class="page-section hero-section">
+    <div class="container">
+      <span class="section-label">SECTION: HERO</span>
+
+      <div class="hero">
+        <div class="hero-top">
+          <div class="hero-content">
+            <div class="current-region">
+              <span class="icon-circle sm"></span>
+              현재 지역 : 서울 성동구
+            </div>
+
+            <h1>오늘은 어떤 하루를<br>보내고 싶나요?</h1>
+            <p class="hero-desc">지금 이 순간, 가까운 곳에서 즐길 수 있는 장소와 경험을 찾아보세요.</p>
+          </div>
+
+          <div class="hero-visual">
+            <div class="hero-map-card">
+              <div class="ph-box hero-map"></div>
+
+              <div class="hero-map-spots">
+                <p class="panel-title">오늘 인기 Spot</p>
+                <ul class="hero-spot-list">
+                  <li class="hero-spot-item">
+                    <span class="spot-rank">1</span>
+                    <span class="icon-box"></span>
+                    <span class="spot-text">
+                      <span class="spot-name">소소한 카페</span>
+                      <span class="spot-meta">성수동 · 도보 5분</span>
+                    </span>
+                  </li>
+                  <li class="hero-spot-item">
+                    <span class="spot-rank">2</span>
+                    <span class="icon-box"></span>
+                    <span class="spot-text">
+                      <span class="spot-name">한강 피크닉 존</span>
+                      <span class="spot-meta">성수동 · 도보 12분</span>
+                    </span>
+                  </li>
+                  <li class="hero-spot-item">
+                    <span class="spot-rank">3</span>
+                    <span class="icon-box"></span>
+                    <span class="spot-text">
+                      <span class="spot-name">전시 갤러리 무드</span>
+                      <span class="spot-meta">성수동 · 도보 8분</span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-bottom">
+          <form class="search-box" role="search">
+            <input type="text" class="input-text" placeholder="오늘 하고 싶은 것을 검색해보세요">
+            <button type="submit" class="btn">검색</button>
+          </form>
+
+          <div class="hero-quick-category">
+            <p class="quick-category-label">Quick Category</p>
+            <div class="chip-list">
+              <button type="button" class="chip">
+                <span class="icon-circle sm"></span>
+                카페
+              </button>
+              <button type="button" class="chip">
+                <span class="icon-circle sm"></span>
+                산책
+              </button>
+              <button type="button" class="chip">
+                <span class="icon-circle sm"></span>
+                데이트
+              </button>
+              <button type="button" class="chip">
+                <span class="icon-circle sm"></span>
+                아이와 함께
+              </button>
+              <button type="button" class="chip">
+                <span class="icon-circle sm"></span>
+                친구와
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MOMENTRIP PICK
+       Momentrip만의 핵심 섹션 - 장소 -> 식사 -> 체험으로 이어지는 코스형 추천
+       ========================================================================== -->
+  <section class="page-section moment-pick-section">
+    <div class="container">
+      <span class="section-label">SECTION: MOMENTRIP PICK</span>
+
+      <div class="section-heading">
+        <div>
+          <h2 class="title">MOMENTRIP PICK</h2>
+          <p class="desc">오늘의 추천 코스 - 장소부터 식사, 체험까지 하나의 흐름으로 이어드려요</p>
+        </div>
+        <a href="#" class="link-more">전체보기</a>
+      </div>
+
+      <div class="course-grid">
+        <article class="course-card">
+          <div class="course-card-head">
+            <span class="badge">오늘의 추천 코스</span>
+            <h3 class="course-title">성수동 감성 하루 코스</h3>
+            <p class="course-meta">서울 성동구 · 총 3곳 · 예상 3시간</p>
+          </div>
+          <div class="course-steps">
+            <div class="course-step">
+              <div class="ph-box ratio-1-1"></div>
+              <span class="step-label">STEP 1 · 장소</span>
+              <span class="step-name">소소한 카페</span>
+            </div>
+            <span class="course-arrow">&rarr;</span>
+            <div class="course-step">
+              <div class="ph-box ratio-1-1"></div>
+              <span class="step-label">STEP 2 · 식사</span>
+              <span class="step-name">성수 로컬 브런치</span>
+            </div>
+            <span class="course-arrow">&rarr;</span>
+            <div class="course-step">
+              <div class="ph-box ratio-1-1"></div>
+              <span class="step-label">STEP 3 · 체험</span>
+              <span class="step-name">도자기 원데이 클래스</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-card-head">
+            <span class="badge">비 오는 날 추천 코스</span>
+            <h3 class="course-title">실내에서 즐기는 힐링 코스</h3>
+            <p class="course-meta">서울 마포구 · 총 3곳 · 예상 2시간 30분</p>
+          </div>
+          <div class="course-steps">
+            <div class="course-step">
+              <div class="ph-box ratio-1-1"></div>
+              <span class="step-label">STEP 1 · 장소</span>
+              <span class="step-name">전시 갤러리 무드</span>
+            </div>
+            <span class="course-arrow">&rarr;</span>
+            <div class="course-step">
+              <div class="ph-box ratio-1-1"></div>
+              <span class="step-label">STEP 2 · 식사</span>
+              <span class="step-name">비건 파스타 하우스</span>
+            </div>
+            <span class="course-arrow">&rarr;</span>
+            <div class="course-step">
+              <div class="ph-box ratio-1-1"></div>
+              <span class="step-label">STEP 3 · 체험</span>
+              <span class="step-name">향수 만들기 클래스</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       HOT
+       클래스/행사/체험을 구분하지 않고 인기 콘텐츠로 통합 노출
+       ========================================================================== -->
+  <section class="page-section hot-section">
+    <div class="container">
+      <span class="section-label">SECTION: HOT</span>
+
+      <div class="section-heading">
+        <div>
+          <h2 class="title">이번 주 HOT</h2>
+          <p class="desc">지금 가장 많이 찾는 콘텐츠예요</p>
+        </div>
+        <a href="#" class="link-more">전체보기</a>
+      </div>
+
+      <div class="card-grid">
+        <article class="card overlay-card">
+          <div class="card-image-wrap">
+            <div class="ph-box ratio-4-3"></div>
+            <div class="card-image-overlay">
+              <span class="badge">클래스</span>
+              <span class="icon-box sm"></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">도자기 원데이 클래스</h3>
+            <div class="card-meta">
+              <span>서울 성동구 · 08.02(토)</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card overlay-card">
+          <div class="card-image-wrap">
+            <div class="ph-box ratio-4-3"></div>
+            <div class="card-image-overlay">
+              <span class="badge">행사</span>
+              <span class="icon-box sm"></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">성수 리버사이드 마켓</h3>
+            <div class="card-meta">
+              <span>서울 성동구 · 08.09(토)~08.10(일)</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card overlay-card">
+          <div class="card-image-wrap">
+            <div class="ph-box ratio-4-3"></div>
+            <div class="card-image-overlay">
+              <span class="badge">체험</span>
+              <span class="icon-box sm"></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">한강 카약 체험</h3>
+            <div class="card-meta">
+              <span>서울 광진구 · 08.03(일)</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card overlay-card">
+          <div class="card-image-wrap">
+            <div class="ph-box ratio-4-3"></div>
+            <div class="card-image-overlay">
+              <span class="badge">장소</span>
+              <span class="icon-box sm"></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">루프탑 브런치 카페</h3>
+            <div class="card-meta">
+              <span>서울 용산구 · 상시 운영</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       POPULAR PLACE
+       ========================================================================== -->
+  <section class="page-section popular-section">
+    <div class="container">
+      <span class="section-label">SECTION: POPULAR PLACE</span>
+
+      <div class="section-heading">
+        <div>
+          <h2 class="title">주변 인기 장소</h2>
+          <p class="desc">지금 내 주변에서 가장 많이 찜한 장소예요</p>
+        </div>
+        <a href="#" class="link-more">전체보기</a>
+      </div>
+
+      <div class="card-grid">
+        <article class="card overlay-card">
+          <div class="card-image-wrap">
+            <div class="ph-box ratio-4-3"></div>
+            <div class="card-image-overlay">
+              <span class="badge">맛집·카페</span>
+              <span class="icon-box sm"></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">플레이스 이름 001</h3>
+            <div class="card-meta">
+              <span>서울 성동구</span>
+            </div>
+            <div class="card-rating">
+              <span class="icon-box"></span>
+              4.8 (128)
+            </div>
+          </div>
+        </article>
+
+        <article class="card overlay-card">
+          <div class="card-image-wrap">
+            <div class="ph-box ratio-4-3"></div>
+            <div class="card-image-overlay">
+              <span class="badge">문화·전시</span>
+              <span class="icon-box sm"></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">플레이스 이름 002</h3>
+            <div class="card-meta">
+              <span>서울 마포구</span>
+            </div>
+            <div class="card-rating">
+              <span class="icon-box"></span>
+              4.6 (94)
+            </div>
+          </div>
+        </article>
+
+        <article class="card overlay-card">
+          <div class="card-image-wrap">
+            <div class="ph-box ratio-4-3"></div>
+            <div class="card-image-overlay">
+              <span class="badge">자연·산책</span>
+              <span class="icon-box sm"></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">플레이스 이름 003</h3>
+            <div class="card-meta">
+              <span>서울 용산구</span>
+            </div>
+            <div class="card-rating">
+              <span class="icon-box"></span>
+              4.9 (201)
+            </div>
+          </div>
+        </article>
+
+        <article class="card overlay-card">
+          <div class="card-image-wrap">
+            <div class="ph-box ratio-4-3"></div>
+            <div class="card-image-overlay">
+              <span class="badge">야외 활동</span>
+              <span class="icon-box sm"></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">플레이스 이름 004</h3>
+            <div class="card-meta">
+              <span>서울 성동구</span>
+            </div>
+            <div class="card-rating">
+              <span class="icon-box"></span>
+              4.7 (156)
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       CATEGORY
+       ========================================================================== -->
+  <section class="page-section category-section">
+    <div class="container">
+      <span class="section-label">SECTION: CATEGORY</span>
+
+      <div class="section-heading">
+        <div>
+          <h2 class="title">카테고리 탐색</h2>
+          <p class="desc">관심있는 카테고리를 선택해보세요</p>
+        </div>
+      </div>
+
+      <div class="category-grid">
+        <article class="category-item">
+          <span class="icon-circle lg"></span>
+          <span class="category-name">맛집</span>
+          <span class="category-sub">242곳</span>
+        </article>
+        <article class="category-item">
+          <span class="icon-circle lg"></span>
+          <span class="category-name">산책</span>
+          <span class="category-sub">118곳</span>
+        </article>
+        <article class="category-item">
+          <span class="icon-circle lg"></span>
+          <span class="category-name">문화</span>
+          <span class="category-sub">96곳</span>
+        </article>
+        <article class="category-item">
+          <span class="icon-circle lg"></span>
+          <span class="category-name">체험</span>
+          <span class="category-sub">73개</span>
+        </article>
+        <article class="category-item">
+          <span class="icon-circle lg"></span>
+          <span class="category-name">플리마켓</span>
+          <span class="category-sub">이번 달 5건</span>
+        </article>
+        <article class="category-item">
+          <span class="icon-circle lg"></span>
+          <span class="category-name">축제</span>
+          <span class="category-sub">이번 달 8건</span>
+        </article>
+        <article class="category-item">
+          <span class="icon-circle lg"></span>
+          <span class="category-name">키즈</span>
+          <span class="category-sub">54개</span>
+        </article>
+        <article class="category-item">
+          <span class="icon-circle lg"></span>
+          <span class="category-name">실내</span>
+          <span class="category-sub">89곳</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       LOCAL EVENT
+       ========================================================================== -->
+  <section class="page-section event-section">
+    <div class="container">
+      <span class="section-label">SECTION: LOCAL EVENT</span>
+
+      <div class="section-heading">
+        <div>
+          <h2 class="title">지역 행사</h2>
+          <p class="desc">우리 동네에서 열리는 행사 소식</p>
+        </div>
+        <a href="#" class="link-more">전체보기</a>
+      </div>
+
+      <div class="event-timeline">
+        <article class="event-timeline-item">
+          <div class="event-timeline-marker">
+            <span class="date-day">09</span>
+            <span class="date-month">AUG</span>
+            <span class="marker-dot"></span>
+            <span class="marker-line"></span>
+          </div>
+          <div class="event-timeline-card">
+            <div class="ph-box"></div>
+            <div class="card-body">
+              <span class="badge">축제·행사</span>
+              <h3 class="card-title">성수 리버사이드 마켓</h3>
+              <div class="card-meta">
+                <span>서울 성동구</span>
+                <span class="divider"></span>
+                <span>08.09(토) ~ 08.10(일)</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="event-timeline-item">
+          <div class="event-timeline-marker">
+            <span class="date-day">12</span>
+            <span class="date-month">AUG</span>
+            <span class="marker-dot"></span>
+            <span class="marker-line"></span>
+          </div>
+          <div class="event-timeline-card">
+            <div class="ph-box"></div>
+            <div class="card-body">
+              <span class="badge">플리마켓</span>
+              <h3 class="card-title">서브 행사 타이틀 001</h3>
+              <div class="card-meta">
+                <span>서울 마포구</span>
+                <span class="divider"></span>
+                <span>08.12(화)</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="event-timeline-item">
+          <div class="event-timeline-marker">
+            <span class="date-day">15</span>
+            <span class="date-month">AUG</span>
+            <span class="marker-dot"></span>
+            <span class="marker-line"></span>
+          </div>
+          <div class="event-timeline-card">
+            <div class="ph-box"></div>
+            <div class="card-body">
+              <span class="badge">문화·전시</span>
+              <h3 class="card-title">서브 행사 타이틀 002</h3>
+              <div class="card-meta">
+                <span>서울 용산구</span>
+                <span class="divider"></span>
+                <span>08.15(금)</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       COMMUNITY
+       ========================================================================== -->
+  <section class="page-section community-section">
+    <div class="container">
+      <span class="section-label">SECTION: COMMUNITY</span>
+
+      <div class="section-heading">
+        <div>
+          <h2 class="title">커뮤니티</h2>
+          <p class="desc">모먼트립 이용자들의 생생한 이야기</p>
+        </div>
+        <a href="board-list.html" class="link-more">전체보기</a>
+      </div>
+
+      <div class="board-preview-table">
+        <div class="board-row head">
+          <span class="col-category">카테고리</span>
+          <span class="col-title">제목</span>
+          <span class="col-author">작성자</span>
+          <span class="col-date">작성일</span>
+        </div>
+        <div class="board-row">
+          <span class="col-category">자유게시판</span>
+          <span class="col-title">게시글 제목이 들어가는 영역입니다 001</span>
+          <span class="col-author">작성자01</span>
+          <span class="col-date">2026.07.28</span>
+        </div>
+        <div class="board-row">
+          <span class="col-category">후기</span>
+          <span class="col-title">게시글 제목이 들어가는 영역입니다 002</span>
+          <span class="col-author">작성자02</span>
+          <span class="col-date">2026.07.27</span>
+        </div>
+        <div class="board-row">
+          <span class="col-category">질문</span>
+          <span class="col-title">게시글 제목이 들어가는 영역입니다 003</span>
+          <span class="col-author">작성자03</span>
+          <span class="col-date">2026.07.26</span>
+        </div>
+        <div class="board-row">
+          <span class="col-category">동행 모집</span>
+          <span class="col-title">게시글 제목이 들어가는 영역입니다 004</span>
+          <span class="col-author">작성자04</span>
+          <span class="col-date">2026.07.25</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     FOOTER
+     ========================================================================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="logo-box">LOGO</div>
+      <nav class="footer-links">
+        <a href="#">서비스 소개</a>
+        <a href="#">이용약관</a>
+        <a href="#">개인정보처리방침</a>
+        <a href="#">문의하기</a>
+      </nav>
+    </div>
+    <p class="footer-copy">Copyright &copy; Momentrip. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

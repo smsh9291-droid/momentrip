@@ -1,0 +1,1490 @@
+/* ==========================================================================
+   Momentrip Wireframe Stylesheet
+   Low-Fidelity Wireframe / Grayscale / No brand color, no shadow, no gradient
+   Desktop base: 1920px viewport / 1440px content width
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  --color-bg: #F7F7F7;
+  --color-card: #FFFFFF;
+  --color-placeholder: #D9D9D9;
+  --color-placeholder-sub: #E9E9E9;
+  --color-border: #B8B8B8;
+  --color-text: #333333;
+  --color-subtext: #777777;
+
+  --content-width: 1440px;
+
+  --gap-xs: 8px;
+  --gap-sm: 12px;
+  --gap-md: 20px;
+  --gap-lg: 32px;
+  --gap-xl: 48px;
+}
+
+/* --------------------------------------------------------------------------
+   1. Reset & Base
+   -------------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   2. Layout Containers
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.page-section {
+  position: relative;
+  padding: var(--gap-xl) 0;
+  border-top: 1px dashed var(--color-border);
+}
+
+.page-section:first-of-type {
+  border-top: none;
+}
+
+/* small wireframe annotation tag shown at the top-left of every section
+   e.g. [ SECTION: HERO ] -- NOT part of the final design */
+.section-label {
+  display: inline-block;
+  margin-bottom: var(--gap-md);
+  padding: 3px 10px;
+  border: 1px dashed var(--color-border);
+  background-color: var(--color-placeholder-sub);
+  color: var(--color-subtext);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--gap-md);
+}
+
+.section-heading .title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.section-heading .desc {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--color-subtext);
+  font-weight: 400;
+}
+
+.link-more {
+  font-size: 13px;
+  color: var(--color-subtext);
+  border: 1px solid var(--color-border);
+  padding: 6px 14px;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   3. Placeholder primitives
+   -------------------------------------------------------------------------- */
+.ph-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-placeholder);
+  border: 1px solid var(--color-border);
+  color: var(--color-subtext);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.ph-box::before {
+  content: "IMAGE";
+}
+
+.ph-box.ratio-16-9 { aspect-ratio: 16 / 9; }
+.ph-box.ratio-4-3  { aspect-ratio: 4 / 3; }
+.ph-box.ratio-1-1  { aspect-ratio: 1 / 1; }
+.ph-box.ratio-3-2  { aspect-ratio: 3 / 2; }
+
+.icon-circle,
+.icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-placeholder-sub);
+  border: 1px solid var(--color-border);
+  color: var(--color-subtext);
+  flex-shrink: 0;
+}
+
+.icon-circle {
+  border-radius: 50%;
+}
+
+.icon-circle.sm, .icon-box.sm { width: 20px; height: 20px; }
+.icon-circle.md, .icon-box.md { width: 32px; height: 32px; }
+.icon-circle.lg, .icon-box.lg { width: 48px; height: 48px; }
+
+/* --------------------------------------------------------------------------
+   4. Buttons / Form controls (structure only, no real styling)
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-card);
+  color: var(--color-text);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn.btn-fill {
+  background-color: var(--color-placeholder);
+}
+
+.btn.btn-block {
+  width: 100%;
+}
+
+.btn.btn-lg {
+  padding: 14px 24px;
+  font-size: 15px;
+}
+
+.field {
+  margin-bottom: var(--gap-md);
+}
+
+.field .field-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.field .field-hint {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--color-subtext);
+}
+
+.input-text,
+.input-select,
+.input-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-card);
+  color: var(--color-text);
+  font-size: 14px;
+}
+
+.input-textarea {
+  resize: vertical;
+  min-height: 220px;
+}
+
+.search-box {
+  display: flex;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-card);
+}
+
+.search-box .input-text {
+  border: none;
+  flex: 1;
+}
+
+.search-box .btn {
+  border: none;
+  border-left: 1px solid var(--color-border);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+}
+
+.tag {
+  padding: 5px 12px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-placeholder-sub);
+  color: var(--color-subtext);
+  font-size: 12px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-placeholder-sub);
+  color: var(--color-text);
+  font-size: 11px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Header
+   -------------------------------------------------------------------------- */
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-card);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 112px;
+}
+
+.logo-box {
+  width: 140px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-placeholder-sub);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+
+.gnb {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-lg);
+}
+
+.gnb a {
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px 0;
+}
+
+.gnb a.is-active {
+  border-bottom: 2px solid var(--color-text);
+  font-weight: 700;
+}
+
+.header-utils {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-lg);
+}
+
+.header-utils .region-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  font-size: 13px;
+}
+
+.header-utils .util-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.gnb-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-placeholder-sub);
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   6. Breadcrumb
+   -------------------------------------------------------------------------- */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--gap-md) 0;
+  font-size: 12px;
+  color: var(--color-subtext);
+}
+
+.breadcrumb .current {
+  color: var(--color-text);
+}
+
+/* --------------------------------------------------------------------------
+   7. Hero (index) - Discovery search + quick category + map/spot
+   -------------------------------------------------------------------------- */
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+}
+
+/* Hero top: left copy block and right MAP card share the same row height,
+   so the two sides read as one component instead of two mismatched blocks. */
+.hero-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-xl);
+  align-items: stretch;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.hero-content .current-region {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  margin-bottom: var(--gap-sm);
+  padding: 4px 10px;
+  border: 1px solid var(--color-border);
+  font-size: 12px;
+  color: var(--color-subtext);
+}
+
+.hero-content h1 {
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: var(--gap-sm);
+  line-height: 1.35;
+}
+
+.hero-content .hero-desc {
+  font-size: 15px;
+  color: var(--color-subtext);
+}
+
+.hero-visual {
+  display: flex;
+  height: 100%;
+}
+
+.hero-visual .hero-map-card {
+  width: 100%;
+}
+
+/* Hero bottom: search + quick category merged into a single bar
+   that spans the full Hero width, directly under the top row. */
+.hero-bottom {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-lg);
+  padding: var(--gap-md) var(--gap-lg);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-card);
+}
+
+.hero-bottom .search-box {
+  flex: 0 0 420px;
+  height: 56px;
+}
+
+.hero-quick-category {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-quick-category .quick-category-label {
+  font-size: 12px;
+  color: var(--color-subtext);
+  margin-bottom: var(--gap-xs);
+  text-align: right;
+}
+
+.hero-quick-category .chip-list {
+  justify-content: flex-end;
+}
+
+/* Generic chip component: reused for Hero quick category and future filters */
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-card);
+  color: var(--color-subtext);
+  font-size: 13px;
+}
+
+.chip .icon-circle {
+  width: 22px;
+  height: 22px;
+}
+
+.chip.is-active {
+  background-color: var(--color-placeholder);
+  border-color: var(--color-text);
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+/* Hero right side: MAP and "today's popular spot" merged into one card component,
+   no big hero image and no separate floating panel. */
+.hero-map-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+}
+
+.hero-map-card .hero-map.ph-box {
+  aspect-ratio: 16 / 9;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero-map::before {
+  content: "MAP";
+}
+
+.hero-map-spots {
+  padding: var(--gap-md);
+}
+
+.hero-map-spots .panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: var(--gap-sm);
+}
+
+.hero-spot-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.hero-spot-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-spot-item .spot-rank {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-placeholder-sub);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.hero-spot-item .icon-box {
+  width: 44px;
+  height: 44px;
+}
+
+.hero-spot-item .spot-text {
+  flex: 1;
+}
+
+.hero-spot-item .spot-name {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.hero-spot-item .spot-meta {
+  display: block;
+  font-size: 11px;
+  color: var(--color-subtext);
+}
+
+/* --------------------------------------------------------------------------
+   7-1. MOMENTRIP PICK - Momentrip's signature course cards
+   place -> meal -> activity, connected as a single flow
+   -------------------------------------------------------------------------- */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap-md);
+}
+
+.course-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  padding: var(--gap-md);
+}
+
+.course-card-head {
+  margin-bottom: var(--gap-md);
+}
+
+.course-card-head .badge {
+  margin-bottom: 8px;
+}
+
+.course-card-head .course-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.course-card-head .course-meta {
+  font-size: 12px;
+  color: var(--color-subtext);
+}
+
+.course-steps {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+.course-step {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.course-step .ph-box {
+  aspect-ratio: 1 / 1;
+  margin-bottom: 8px;
+}
+
+.course-step .step-label {
+  display: block;
+  font-size: 10px;
+  color: var(--color-subtext);
+  margin-bottom: 6px;
+}
+
+.course-step .step-name {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.course-arrow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  font-size: 16px;
+  color: var(--color-subtext);
+}
+
+/* --------------------------------------------------------------------------
+   8. Grids: Category / Cards
+   -------------------------------------------------------------------------- */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: var(--gap-md);
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--gap-md) var(--gap-xs);
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.category-item .icon-circle {
+  width: 56px;
+  height: 56px;
+}
+
+.category-item .category-name {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.category-item .category-sub {
+  font-size: 11px;
+  color: var(--color-subtext);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-md);
+}
+
+.card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.card-body {
+  padding: var(--gap-sm) var(--gap-sm) var(--gap-md);
+}
+
+.card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.card .badge {
+  font-size: 11px;
+}
+
+.card .card-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.card .card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--color-subtext);
+}
+
+.card .card-meta .divider {
+  width: 1px;
+  height: 10px;
+  background-color: var(--color-border);
+}
+
+.card .card-favorite {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Overlay card: image with overlay badge/favorite.
+   Shared by "이번 주 HOT" (mixed content types) and "주변 인기 장소" (place-only). */
+.overlay-card .card-image-wrap {
+  position: relative;
+}
+
+.overlay-card .card-image-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.overlay-card .card-image-overlay .badge,
+.overlay-card .card-image-overlay .icon-box {
+  background-color: var(--color-card);
+}
+
+.overlay-card .card-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.overlay-card .card-rating .icon-box {
+  width: 14px;
+  height: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Local Event Section - date timeline + horizontal event card
+   (intentionally different from the "1 large + 2 small" catalog layout)
+   -------------------------------------------------------------------------- */
+.event-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-timeline-item {
+  display: flex;
+  gap: var(--gap-md);
+  padding-bottom: var(--gap-lg);
+}
+
+.event-timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.event-timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 64px;
+  flex-shrink: 0;
+}
+
+.event-timeline-marker .date-day {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.event-timeline-marker .date-month {
+  font-size: 11px;
+  color: var(--color-subtext);
+}
+
+.event-timeline-marker .marker-dot {
+  width: 10px;
+  height: 10px;
+  margin-top: 8px;
+  border-radius: 50%;
+  background-color: var(--color-placeholder-sub);
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.event-timeline-marker .marker-line {
+  width: 1px;
+  flex: 1;
+  margin-top: 8px;
+  background-color: var(--color-border);
+}
+
+.event-timeline-item:last-child .marker-line {
+  background-color: transparent;
+}
+
+.event-timeline-card {
+  flex: 1;
+  display: flex;
+  gap: var(--gap-sm);
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  padding: var(--gap-sm);
+}
+
+.event-timeline-card .ph-box {
+  width: 180px;
+  min-width: 180px;
+  height: 120px;
+}
+
+.event-timeline-card .card-body {
+  flex: 1;
+}
+
+/* --------------------------------------------------------------------------
+   10. Tabs (board category, etc.)
+   -------------------------------------------------------------------------- */
+.tab-list {
+  display: flex;
+  gap: var(--gap-xs);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--gap-lg);
+}
+
+.tab-item {
+  padding: 12px 22px;
+  font-size: 14px;
+  color: var(--color-subtext);
+  border: 1px solid var(--color-border);
+  border-bottom: none;
+  background-color: var(--color-placeholder-sub);
+  margin-bottom: -1px;
+}
+
+.tab-item.is-active {
+  background-color: var(--color-card);
+  color: var(--color-text);
+  font-weight: 700;
+  border-bottom: 1px solid var(--color-card);
+}
+
+.card-grid.card-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* --------------------------------------------------------------------------
+   11. Community / Board list
+   -------------------------------------------------------------------------- */
+.board-preview-table {
+  width: 100%;
+  border-top: 1px solid var(--color-text);
+}
+
+.board-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 140px 110px;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: 16px 8px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 14px;
+}
+
+.board-row.head {
+  background-color: var(--color-placeholder-sub);
+  font-size: 12px;
+  color: var(--color-subtext);
+  font-weight: 700;
+  padding: 12px 8px;
+}
+
+.board-row .col-category {
+  color: var(--color-subtext);
+  font-size: 12px;
+}
+
+.board-row .col-title {
+  font-weight: 500;
+}
+
+.board-row .col-author,
+.board-row .col-date {
+  color: var(--color-subtext);
+  font-size: 13px;
+}
+
+.board-list-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--gap-md);
+}
+
+.board-list-toolbar .toolbar-right {
+  display: flex;
+  gap: var(--gap-sm);
+}
+
+.board-list-toolbar .input-select {
+  width: 140px;
+}
+
+.board-list-toolbar .search-box {
+  width: 280px;
+}
+
+.board-write-cta {
+  display: flex;
+  justify-content: flex-end;
+  margin: var(--gap-lg) 0;
+}
+
+/* --------------------------------------------------------------------------
+   12. Pagination
+   -------------------------------------------------------------------------- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: var(--gap-xl);
+}
+
+.pagination .page-num,
+.pagination .page-arrow {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  font-size: 13px;
+  color: var(--color-subtext);
+}
+
+.pagination .page-num.is-active {
+  background-color: var(--color-placeholder);
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   13. Board View (detail)
+   -------------------------------------------------------------------------- */
+.post-header {
+  padding-bottom: var(--gap-md);
+  border-bottom: 1px solid var(--color-text);
+  margin-bottom: var(--gap-lg);
+}
+
+.post-header .badge {
+  margin-bottom: var(--gap-sm);
+}
+
+.post-header .post-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: var(--gap-sm);
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  font-size: 13px;
+  color: var(--color-subtext);
+}
+
+.post-meta .divider {
+  width: 1px;
+  height: 10px;
+  background-color: var(--color-border);
+}
+
+.post-body {
+  padding: var(--gap-md) 0 var(--gap-xl);
+  font-size: 15px;
+  line-height: 1.8;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.post-body p {
+  margin-bottom: var(--gap-md);
+  color: var(--color-text);
+}
+
+.post-body .ph-box {
+  margin: var(--gap-md) 0;
+  aspect-ratio: 16 / 9;
+  max-width: 600px;
+}
+
+.post-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-md);
+  padding: var(--gap-lg) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.post-actions .action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-subtext);
+}
+
+.comment-section {
+  padding: var(--gap-lg) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.comment-form {
+  display: flex;
+  gap: var(--gap-sm);
+  margin-bottom: var(--gap-lg);
+}
+
+.comment-form .input-textarea {
+  min-height: 80px;
+}
+
+.comment-item {
+  display: flex;
+  gap: var(--gap-sm);
+  padding: var(--gap-md) 0;
+  border-top: 1px dashed var(--color-border);
+}
+
+.comment-item:first-child {
+  border-top: none;
+}
+
+.comment-item .comment-body {
+  flex: 1;
+}
+
+.comment-item .comment-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--color-subtext);
+  margin-bottom: 4px;
+}
+
+.comment-item .comment-text {
+  font-size: 14px;
+}
+
+.post-nav {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.post-nav .post-nav-row {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: 14px 0;
+  font-size: 14px;
+}
+
+.post-nav .post-nav-row .nav-label {
+  width: 60px;
+  color: var(--color-subtext);
+  font-size: 13px;
+}
+
+.post-nav .post-nav-row + .post-nav-row {
+  border-top: 1px dashed var(--color-border);
+}
+
+.post-footer-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--gap-lg);
+}
+
+.post-footer-actions .actions-right {
+  display: flex;
+  gap: var(--gap-sm);
+}
+
+/* --------------------------------------------------------------------------
+   14. Board Write (form)
+   -------------------------------------------------------------------------- */
+.write-form {
+  max-width: 900px;
+}
+
+.category-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+}
+
+.category-radio-group .radio-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid var(--color-border);
+  font-size: 13px;
+}
+
+.image-attach-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+}
+
+.image-attach-box .ph-box {
+  width: 160px;
+  height: 120px;
+}
+
+.image-attach-box .ph-box.upload-trigger::before {
+  content: "+ 이미지 추가";
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--gap-sm);
+  margin-top: var(--gap-xl);
+}
+
+.form-actions .btn {
+  min-width: 160px;
+}
+
+/* --------------------------------------------------------------------------
+   15. Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-card);
+  padding: 64px 0 var(--gap-xl);
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--gap-xl);
+}
+
+.footer-links {
+  display: flex;
+  gap: var(--gap-lg);
+  font-size: 13px;
+  color: var(--color-subtext);
+}
+
+.footer-copy {
+  padding-top: var(--gap-lg);
+  border-top: 1px solid var(--color-border);
+  font-size: 12px;
+  color: var(--color-subtext);
+}
+
+/* --------------------------------------------------------------------------
+   16. Responsive
+   -------------------------------------------------------------------------- */
+
+/* Tablet: 768px ~ 1199px */
+@media (max-width: 1199px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .gnb {
+    gap: var(--gap-md);
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card-grid.card-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero-top {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .hero-content {
+    height: auto;
+  }
+
+  .hero-visual {
+    order: -1;
+    height: auto;
+  }
+
+  .hero-spot-list {
+    flex-direction: row;
+  }
+
+  .hero-spot-item {
+    flex: 1;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .course-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .event-timeline-card .ph-box {
+    width: 140px;
+    min-width: 140px;
+  }
+
+  .board-row {
+    grid-template-columns: 90px 1fr 100px;
+  }
+
+  .board-row .col-date {
+    display: none;
+  }
+}
+
+/* Mobile: 767px and below */
+@media (max-width: 767px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .header-inner {
+    height: 64px;
+  }
+
+  .gnb {
+    display: none;
+  }
+
+  .header-utils .util-label {
+    display: none;
+  }
+
+  /* Mobile header shows only: hamburger / logo / search icon.
+     Region select and mypage move inside the hamburger menu. */
+  .region-select,
+  .util-mypage {
+    display: none;
+  }
+
+  .gnb-toggle {
+    display: flex;
+  }
+
+  .page-section {
+    padding: var(--gap-lg) 0;
+  }
+
+  .section-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-xs);
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gap-lg) var(--gap-md);
+  }
+
+  .category-item {
+    padding: var(--gap-lg) var(--gap-sm);
+  }
+
+  /* Card Carousel: HOT / MOMENTRIP PICK / Popular Place / Local Event
+     switch from a long vertical list to a horizontal scroll on mobile. */
+  .card-grid,
+  .card-grid.card-grid-3,
+  .course-grid,
+  .event-timeline {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: var(--gap-md);
+    padding-bottom: var(--gap-sm);
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .card-grid > *,
+  .card-grid.card-grid-3 > *,
+  .course-grid > *,
+  .event-timeline > * {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+
+  .course-grid > .course-card {
+    flex-basis: 90%;
+  }
+
+  /* Keep the STEP1 -> STEP2 -> STEP3 flow on a single row so the arrow
+     always stays centered between steps instead of dropping to its own line. */
+  .course-steps {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+  }
+
+  /* Pin the arrow to the image's vertical center specifically, not the
+     whole step block, so a 2-line STEP3 title can never push it down.
+     ph-box is 1:1, so image height == step column width. The 3 equal
+     columns + 2 arrows(20px) + 4 gaps(var(--gap-xs)=8px) share .course-steps'
+     width, so image height = (100% - 72px) / 3. Arrow (24px line box) is
+     nudged down by half that, minus half its own height. */
+  .course-arrow {
+    align-self: flex-start;
+    margin-top: calc(100% / 6 - 24px);
+  }
+
+  .course-step {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .course-step .step-label {
+    line-height: 1.4;
+  }
+
+  .course-step .step-name {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    min-height: 2.8em;
+    line-height: 1.4;
+  }
+
+  .hero-content h1 {
+    font-size: 24px;
+  }
+
+  .hero-bottom {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--gap-md);
+    padding: var(--gap-md);
+  }
+
+  .hero-bottom .search-box {
+    flex: 0 0 auto;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .hero-bottom .search-box .input-text {
+    border-bottom: 1px solid var(--color-border);
+    padding: 14px;
+  }
+
+  .hero-bottom .search-box .btn {
+    border-left: none;
+  }
+
+  .chip-list {
+    flex-direction: column;
+  }
+
+  .hero-quick-category .quick-category-label {
+    text-align: left;
+    margin-bottom: 16px;
+  }
+
+  .hero-quick-category .chip-list {
+    justify-content: flex-start;
+  }
+
+  .chip {
+    justify-content: center;
+  }
+
+  .hero-spot-list {
+    flex-direction: column;
+  }
+
+  .hero-spot-item {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .event-timeline-item {
+    padding-bottom: 0;
+  }
+
+  .event-timeline-marker {
+    display: none;
+  }
+
+  .event-timeline-card {
+    flex-direction: column;
+  }
+
+  .event-timeline-card .ph-box {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .tab-list {
+    flex-wrap: wrap;
+  }
+
+  .board-list-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--gap-sm);
+  }
+
+  .board-list-toolbar .toolbar-right {
+    flex-direction: column;
+  }
+
+  .board-list-toolbar .search-box,
+  .board-list-toolbar .input-select {
+    width: 100%;
+  }
+
+  .board-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    text-align: left;
+  }
+
+  .board-row.head {
+    display: none;
+  }
+
+  .board-row .col-category {
+    order: -1;
+  }
+
+  .post-header .post-title {
+    font-size: 20px;
+  }
+
+  .post-nav .post-nav-row .nav-label {
+    width: 44px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-md);
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+  }
+}
