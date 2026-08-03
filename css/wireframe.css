@@ -907,12 +907,14 @@ button, input, textarea, select {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--gap-md);
   margin-bottom: var(--gap-md);
 }
 
 .board-list-toolbar .toolbar-right {
   display: flex;
   gap: var(--gap-sm);
+  flex-shrink: 0;
 }
 
 .board-list-toolbar .input-select {
@@ -920,13 +922,160 @@ button, input, textarea, select {
 }
 
 .board-list-toolbar .search-box {
-  width: 280px;
+  flex: 1;
+  min-width: 420px;
 }
 
 .board-write-cta {
   display: flex;
   justify-content: flex-end;
   margin: var(--gap-lg) 0;
+}
+
+/* Result count + sort (최신순 / 인기순 / 조회순) */
+.board-result-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--gap-md);
+  font-size: 13px;
+  color: var(--color-subtext);
+}
+
+.sort-list {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-list button {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--color-subtext);
+  cursor: pointer;
+}
+
+.sort-list button.is-active {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.sort-list .sort-divider {
+  width: 1px;
+  height: 10px;
+  background-color: var(--color-border);
+}
+
+/* Post feed: 지역 경험 공유 카드 리스트 (썸네일 + 본문). 일반 게시판 표(board-preview-table)와
+   달리 지역/작성자/반응 정보를 카드형으로 노출해 "경험을 확인한다"는 느낌을 준다. */
+.post-feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
+.post-card {
+  display: flex;
+  gap: var(--gap-md);
+  padding: var(--gap-md);
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+}
+
+.post-card-thumb {
+  width: 200px;
+  min-width: 200px;
+}
+
+.post-card-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-card-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+}
+
+/* 지역명 강조: 테두리 배지인 카테고리와 달리 굵은 텍스트로 대비를 줘 자연스럽게 눈에 띄게 함 */
+.region-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.region-tag .icon-circle {
+  width: 16px;
+  height: 16px;
+}
+
+.post-card-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 8px 0 4px;
+}
+
+.post-card-excerpt {
+  font-size: 13px;
+  color: var(--color-subtext);
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.post-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: var(--gap-sm);
+  border-top: 1px dashed var(--color-border);
+  font-size: 12px;
+  color: var(--color-subtext);
+}
+
+.post-card-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.post-card-author .icon-circle {
+  width: 22px;
+  height: 22px;
+}
+
+.post-card-author .divider {
+  width: 1px;
+  height: 10px;
+  background-color: var(--color-border);
+}
+
+.post-card-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.post-card-stats .stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.post-card-stats .icon-box {
+  width: 14px;
+  height: 14px;
 }
 
 /* --------------------------------------------------------------------------
@@ -1247,6 +1396,11 @@ button, input, textarea, select {
   .board-row .col-date {
     display: none;
   }
+
+  .post-card-thumb {
+    width: 140px;
+    min-width: 140px;
+  }
 }
 
 /* Mobile: 767px and below */
@@ -1433,7 +1587,20 @@ button, input, textarea, select {
   }
 
   .tab-list {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .tab-item {
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--color-border);
+    text-align: center;
+    justify-content: center;
+  }
+
+  .tab-item.is-active {
+    border-bottom: 1px solid var(--color-border);
   }
 
   .board-list-toolbar {
@@ -1449,6 +1616,38 @@ button, input, textarea, select {
   .board-list-toolbar .search-box,
   .board-list-toolbar .input-select {
     width: 100%;
+  }
+
+  .board-list-toolbar .search-box {
+    flex: none;
+    min-width: 0;
+  }
+
+  .board-write-btn {
+    width: 100%;
+    margin-top: var(--gap-sm);
+  }
+
+  .board-result-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .post-card {
+    flex-direction: column;
+  }
+
+  .post-card-thumb {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .post-card-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-top: var(--gap-sm);
   }
 
   .board-row {
@@ -1486,5 +1685,312 @@ button, input, textarea, select {
   .footer-links {
     flex-wrap: wrap;
     gap: var(--gap-sm);
+  }
+}
+
+/* ==========================================================================
+   17. Board View (Post Detail) - board-view.html 전용 신규 컴포넌트
+   기존 13번(post-header / post-body / post-actions / comment-section /
+   post-nav)은 그대로 재사용하고, 여기서는 2단 레이아웃과 장소 정보 박스 등
+   이번 페이지에서 새로 필요한 것만 추가한다. index.html / board-list.html이
+   사용하는 위쪽 섹션들은 수정하지 않는다.
+   ========================================================================== */
+
+/* 게시글 헤더/본문 + 장소 정보 패널 shell.
+   .post-view-shell은 .container를 그대로 물려받으므로 breadcrumb, 본문(및 아래
+   post-view-grid 안의 모든 항목)이 항상 같은 왼쪽 시작선(container의 padding 안쪽
+   끝)에서 출발한다 -- 이게 요청하신 "왼쪽 시작선 정렬"의 핵심이다.
+
+   post-view-grid는 기본값(1450px 이하: 태블릿/일반 데스크톱/모바일)에서는 그냥
+   위→아래로 쌓이는 세로 블록이고, 1451px 이상(아래 미디어쿼리)에서만
+   [본문 960px] + [간격 40px] + [PLACE INFO 320px] 2열 grid로 전환된다. */
+
+/* 본문 읽기 폭 기준선. header/body/owner-actions/PLACE INFO 컬럼 모두 이 폭을
+   넘지 않도록 고정해서, 2열 grid가 꺼진 상태(1450px 이하)에서도 폭이
+   화면 크기에 따라 들쭉날쭉해지지 않고 항상 900~960px 안에서 유지된다. */
+.post-header,
+.post-body,
+.post-owner-actions,
+.place-info-column {
+  max-width: 960px;
+}
+
+.place-info-column {
+  margin-top: var(--gap-lg);
+}
+
+/* shell 바깥의 반응/댓글/이전글·다음글/하단버튼: 화면 폭과 상관없이 항상
+   본문과 같은 960px 폭으로 중앙 정렬한다 (본문이 960px보다 좁아지는
+   태블릿/모바일에서는 이 규칙이 아무 영향을 주지 않는다). */
+.post-view-below > * {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 카테고리 배지 + 지역 강조를 한 줄로 (board-list의 region-tag 재사용) */
+.post-header-top {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  margin-bottom: var(--gap-sm);
+}
+
+.post-header-top .badge {
+  margin-bottom: 0;
+}
+
+/* 모바일 전용 뒤로가기 버튼 - Desktop/Tablet에서는 노출하지 않는다 */
+.post-back-btn {
+  display: none;
+}
+
+/* 본문 이미지 + 캡션 */
+.post-body figure {
+  margin: var(--gap-md) 0;
+}
+
+.post-body figure .ph-box {
+  margin: 0 0 8px;
+}
+
+.image-caption {
+  font-size: 12px;
+  color: var(--color-subtext);
+  text-align: center;
+}
+
+/* 장소 정보 카드 (보조 영역).
+   기본값은 폭 100%(부모 .place-info-column을 그대로 채움)의 static 박스이며,
+   sticky/고정폭은 아래 min-width:1451px 미디어쿼리에서만 적용된다. */
+.place-info-card {
+  padding: var(--gap-md);
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+}
+
+.place-info-label {
+  font-size: 11px;
+  color: var(--color-subtext);
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.place-info-name {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: var(--gap-sm);
+}
+
+.place-info-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.place-info-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--color-border);
+  font-size: 13px;
+}
+
+.place-info-list li:last-child {
+  border-bottom: none;
+}
+
+.place-info-list .label {
+  color: var(--color-subtext);
+}
+
+.place-info-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: var(--gap-md);
+}
+
+.place-info-hint {
+  margin-top: var(--gap-sm);
+  font-size: 11px;
+  color: var(--color-subtext);
+  line-height: 1.5;
+}
+
+/* 작성자 전용 관리 버튼 (수정/삭제) - 반응 영역과 분리, 본문 하단 우측에 작게 배치 */
+.post-owner-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gap-sm);
+  margin: var(--gap-lg) 0;
+}
+
+/* 반응 영역: 좋아요/저장/공유를 하나의 그룹으로 묶어 모바일에서만 버튼형으로 전환 */
+.reaction-group {
+  display: contents;
+}
+
+/* 댓글 영역 보강 */
+.comment-heading {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: var(--gap-md);
+}
+
+.comment-form .input-textarea {
+  flex: 1;
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--color-subtext);
+}
+
+.comment-actions button {
+  background: none;
+  border: none;
+  color: var(--color-subtext);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.comment-replies {
+  margin-left: 44px;
+  margin-top: var(--gap-sm);
+}
+
+/* Board View Responsive - Large Desktop (1451px 이상) 전용 2열 grid.
+   그 이하(태블릿/일반 데스크톱/모바일)에서는 post-view-grid가 그냥 세로 블록이라
+   header -> body -> PLACE INFO -> 수정/삭제 순서로 1열로 쌓인다 (모바일과 동일한 순서).
+   이 미디어쿼리 안에서만 grid-template-areas로 PLACE INFO를 본문 오른쪽으로,
+   수정/삭제 버튼을 본문 컬럼 하단으로 재배치한다 (DOM 순서는 그대로 유지되고
+   시각적 위치만 grid-area로 바뀐다).
+
+   breakpoint 계산: 본문 960px + 간격 40px + PLACE INFO 320px = 1320px.
+   여기에 .container의 좌우 패딩(24px * 2 = 48px)을 더하면 필요한 뷰포트 = 1368px.
+   실기기 오차/스크롤바 폭을 감안해 1450px을 기준선으로 잡는다
+   (1400~1500px 권장 범위 안, 최소 필요치보다 82px 여유). */
+@media (min-width: 1451px) {
+  /* align-items를 지정하지 않는다(기본값 stretch 유지) -- aside 셀이
+     header+body 두 행 높이만큼 그대로 늘어나 있어야 place-info-card가
+     그 안에서 sticky로 이동할 공간이 생긴다. */
+  .post-view-grid {
+    display: grid;
+    grid-template-columns: 960px 320px;
+    column-gap: 40px;
+    grid-template-areas:
+      "header  aside"
+      "body    aside"
+      "owner   .";
+  }
+
+  .post-header { grid-area: header; }
+  .post-body   { grid-area: body; }
+
+  /* 수정/삭제 버튼: PLACE INFO 기준이 아니라 본문 컬럼(header/body와 같은 열)에만
+     배치된다. 오른쪽의 "." 칸은 비워두므로 PLACE INFO 폭까지 넓어지지 않는다. */
+  .post-owner-actions {
+    grid-area: owner;
+    margin: var(--gap-md) 0 0;
+  }
+
+  /* PLACE INFO는 header+body 두 행(aside 영역)에 걸쳐 있는 자기 grid 셀 "안"에서만
+     움직인다. 기본 align-items: stretch 덕분에 이 셀 자체가 header+body를 합친
+     높이만큼 세로로 늘어나 있고(= sticky가 이동할 수 있는 실질적인 공간),
+     그 셀 안에서 place-info-card가 sticky로 위아래를 오간다.
+     -> align-self: start를 여기 주면 셀이 카드 높이만큼만 줄어들어 sticky가
+        움직일 공간이 사라지므로(과거 버그 원인) 절대 주지 않는다. */
+  .place-info-column {
+    grid-area: aside;
+    margin-top: 0;
+  }
+
+  .place-info-card {
+    position: sticky;
+    top: 132px;
+  }
+}
+
+/* Board View Responsive - Mobile (767px 이하) */
+@media (max-width: 767px) {
+  .post-header-top {
+    flex-wrap: wrap;
+  }
+
+  /* 카테고리/지역 행의 오른쪽 끝에 배치되는 보조 버튼.
+     제목보다 시각적 우선순위가 낮도록 옅은 회색 텍스트 + 얇은 테두리만 사용. */
+  .post-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    padding: 8px 12px;
+    min-height: 36px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-card);
+    color: var(--color-subtext);
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .post-body figure .ph-box {
+    max-width: 100%;
+  }
+
+  .post-owner-actions .btn {
+    flex: 1;
+    padding: 14px 20px;
+  }
+
+  .post-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--gap-sm);
+  }
+
+  .reaction-group {
+    display: flex;
+    gap: var(--gap-sm);
+  }
+
+  .reaction-group .action-btn {
+    flex: 1;
+    flex-direction: row;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid var(--color-border);
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .post-actions .action-report {
+    align-self: center;
+  }
+
+  .comment-form {
+    flex-direction: column;
+  }
+
+  .post-nav-row {
+    border: 1px solid var(--color-border);
+    padding: var(--gap-sm) var(--gap-md);
+    margin-bottom: var(--gap-sm);
+  }
+
+  .post-nav-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .post-nav {
+    border-bottom: none;
+  }
+
+  .post-nav .post-nav-row + .post-nav-row {
+    border-top: 1px solid var(--color-border);
   }
 }

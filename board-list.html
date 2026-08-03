@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Momentrip Wireframe - Board List</title>
+<link rel="stylesheet" href="css/wireframe.css">1
+</head>
+<body>
+
+<!-- ==========================================================================
+     HEADER (index.html과 동일)
+     ========================================================================== -->
+<header class="site-header">
+  <div class="container header-inner">
+    <button type="button" class="gnb-toggle" aria-label="메뉴 열기">MENU</button>
+
+    <div class="logo-area">
+      <a href="index.html" class="logo-box">LOGO</a>
+    </div>
+
+    <nav class="gnb">
+      <a href="index.html">둘러보기</a>
+      <a href="#">클래스·체험</a>
+      <a href="#">지역행사</a>
+      <a href="board-list.html" class="is-active">커뮤니티</a>
+    </nav>
+
+    <div class="header-utils">
+      <button type="button" class="region-select">
+        <span class="icon-circle sm"></span>
+        <span class="util-label">지역 선택</span>
+      </button>
+      <button type="button" class="util-btn util-search">
+        <span class="icon-circle sm"></span>
+        <span class="util-label">검색</span>
+      </button>
+      <button type="button" class="util-btn util-mypage">
+        <span class="icon-circle sm"></span>
+        <span class="util-label">마이페이지</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ==========================================================================
+       BOARD LIST
+       지역 정보/경험을 나누는 커뮤니티 피드. 단순 게시판 표가 아니라
+       썸네일 + 요약 + 지역강조 + 반응(조회/댓글/좋아요)이 담긴 카드 리스트로 구성.
+       ========================================================================== -->
+  <section class="page-section board-list-section">
+    <div class="container">
+      <span class="section-label">SECTION: BOARD LIST</span>
+
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href="index.html">홈</a>
+        <span>/</span>
+        <span class="current">커뮤니티</span>
+      </nav>
+
+      <div class="section-heading">
+        <div>
+          <h1 class="title">커뮤니티</h1>
+          <p class="desc">가까운 동네 사람들이 남긴 생생한 경험과 이야기를 확인해보세요</p>
+        </div>
+        <a href="board-write.html" class="btn btn-fill board-write-btn">글쓰기</a>
+      </div>
+
+      <div class="tab-list" role="tablist">
+        <button type="button" class="tab-item is-active" role="tab">전체</button>
+        <button type="button" class="tab-item" role="tab">후기</button>
+        <button type="button" class="tab-item" role="tab">질문</button>
+        <button type="button" class="tab-item" role="tab">정보공유</button>
+        <button type="button" class="tab-item" role="tab">동행모집</button>
+        <button type="button" class="tab-item" role="tab">행사후기</button>
+      </div>
+
+      <div class="board-list-toolbar">
+        <form class="search-box" role="search">
+          <input type="text" class="input-text" placeholder="궁금한 지역, 키워드로 검색해보세요">
+          <button type="submit" class="btn">검색</button>
+        </form>
+
+        <div class="toolbar-right">
+          <select class="input-select" aria-label="카테고리 선택">
+            <option>카테고리 전체</option>
+            <option>후기</option>
+            <option>질문</option>
+            <option>정보공유</option>
+            <option>동행모집</option>
+            <option>행사후기</option>
+          </select>
+          <select class="input-select" aria-label="지역 선택">
+            <option>지역 전체</option>
+            <option>서울 성동구</option>
+            <option>서울 마포구</option>
+            <option>서울 용산구</option>
+            <option>서울 광진구</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="board-result-bar">
+        <span>전체 128개의 이야기가 있어요</span>
+        <div class="sort-list">
+          <button type="button" class="is-active">최신순</button>
+          <span class="sort-divider"></span>
+          <button type="button">인기순</button>
+          <span class="sort-divider"></span>
+          <button type="button">조회순</button>
+        </div>
+      </div>
+
+      <ul class="post-feed">
+        <li>
+          <article class="post-card">
+            <div class="ph-box ratio-4-3 post-card-thumb"></div>
+            <div class="post-card-body">
+              <div class="post-card-top">
+                <span class="badge">후기</span>
+                <span class="region-tag"><span class="icon-circle"></span>서울 성동구</span>
+              </div>
+              <h3 class="post-card-title"><a href="board-view.html">성수동 소소한 카페, 대기 없이 다녀왔어요</a></h3>
+              <p class="post-card-excerpt">평일 오전에 방문했더니 여유롭게 자리를 잡을 수 있었어요. 원두도 좋고 분위기도 조용해서 작업하기 좋았습니다.</p>
+              <div class="post-card-bottom">
+                <div class="post-card-author">
+                  <span class="icon-circle"></span>
+                  <span>작성자01</span>
+                  <span class="divider"></span>
+                  <span>2026.07.28</span>
+                </div>
+                <div class="post-card-stats">
+                  <span class="stat"><span class="icon-box"></span>조회 186</span>
+                  <span class="stat"><span class="icon-box"></span>댓글 12</span>
+                  <span class="stat"><span class="icon-box"></span>좋아요 34</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+
+        <li>
+          <article class="post-card">
+            <div class="post-card-body">
+              <div class="post-card-top">
+                <span class="badge">질문</span>
+                <span class="region-tag"><span class="icon-circle"></span>서울 마포구</span>
+              </div>
+              <h3 class="post-card-title"><a href="board-view.html">마포구에서 아이랑 갈만한 실내 데이트 코스 있을까요?</a></h3>
+              <p class="post-card-excerpt">이번 주말에 아이와 함께 갈만한 실내 위주 코스 찾고 있어요. 추천 부탁드립니다!</p>
+              <div class="post-card-bottom">
+                <div class="post-card-author">
+                  <span class="icon-circle"></span>
+                  <span>작성자02</span>
+                  <span class="divider"></span>
+                  <span>2026.07.27</span>
+                </div>
+                <div class="post-card-stats">
+                  <span class="stat"><span class="icon-box"></span>조회 97</span>
+                  <span class="stat"><span class="icon-box"></span>댓글 8</span>
+                  <span class="stat"><span class="icon-box"></span>좋아요 5</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+
+        <li>
+          <article class="post-card">
+            <div class="post-card-body">
+              <div class="post-card-top">
+                <span class="badge">정보공유</span>
+                <span class="region-tag"><span class="icon-circle"></span>서울 용산구</span>
+              </div>
+              <h3 class="post-card-title"><a href="board-view.html">용산구 무료 공영주차장 정리해봤어요</a></h3>
+              <p class="post-card-excerpt">자주 이용하는 무료 주차장 위치 몇 곳 공유합니다. 주말엔 자리 경쟁이 있으니 참고하세요.</p>
+              <div class="post-card-bottom">
+                <div class="post-card-author">
+                  <span class="icon-circle"></span>
+                  <span>작성자03</span>
+                  <span class="divider"></span>
+                  <span>2026.07.27</span>
+                </div>
+                <div class="post-card-stats">
+                  <span class="stat"><span class="icon-box"></span>조회 212</span>
+                  <span class="stat"><span class="icon-box"></span>댓글 15</span>
+                  <span class="stat"><span class="icon-box"></span>좋아요 41</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+
+        <li>
+          <article class="post-card">
+            <div class="ph-box ratio-4-3 post-card-thumb"></div>
+            <div class="post-card-body">
+              <div class="post-card-top">
+                <span class="badge">동행모집</span>
+                <span class="region-tag"><span class="icon-circle"></span>서울 광진구</span>
+              </div>
+              <h3 class="post-card-title"><a href="board-view.html">이번 주말 한강 카약 같이 타실 분 구해요</a></h3>
+              <p class="post-card-excerpt">토요일 오후에 카약 체험 예약했는데 인원이 부족해서 같이 하실 분 찾습니다.</p>
+              <div class="post-card-bottom">
+                <div class="post-card-author">
+                  <span class="icon-circle"></span>
+                  <span>작성자04</span>
+                  <span class="divider"></span>
+                  <span>2026.07.26</span>
+                </div>
+                <div class="post-card-stats">
+                  <span class="stat"><span class="icon-box"></span>조회 154</span>
+                  <span class="stat"><span class="icon-box"></span>댓글 22</span>
+                  <span class="stat"><span class="icon-box"></span>좋아요 18</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+
+        <li>
+          <article class="post-card">
+            <div class="ph-box ratio-4-3 post-card-thumb"></div>
+            <div class="post-card-body">
+              <div class="post-card-top">
+                <span class="badge">행사후기</span>
+                <span class="region-tag"><span class="icon-circle"></span>서울 성동구</span>
+              </div>
+              <h3 class="post-card-title"><a href="board-view.html">성수 리버사이드 마켓 다녀온 후기, 사진 많아요</a></h3>
+              <p class="post-card-excerpt">생각보다 볼거리도 많고 먹거리도 다양해서 하루 종일 있었어요. 다음에 또 열리면 꼭 가려구요.</p>
+              <div class="post-card-bottom">
+                <div class="post-card-author">
+                  <span class="icon-circle"></span>
+                  <span>작성자05</span>
+                  <span class="divider"></span>
+                  <span>2026.07.25</span>
+                </div>
+                <div class="post-card-stats">
+                  <span class="stat"><span class="icon-box"></span>조회 320</span>
+                  <span class="stat"><span class="icon-box"></span>댓글 27</span>
+                  <span class="stat"><span class="icon-box"></span>좋아요 56</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+
+        <li>
+          <article class="post-card">
+            <div class="ph-box ratio-4-3 post-card-thumb"></div>
+            <div class="post-card-body">
+              <div class="post-card-top">
+                <span class="badge">후기</span>
+                <span class="region-tag"><span class="icon-circle"></span>서울 용산구</span>
+              </div>
+              <h3 class="post-card-title"><a href="board-view.html">루프탑 브런치 카페, 뷰 진짜 좋아요</a></h3>
+              <p class="post-card-excerpt">노을 질 때 방문했는데 뷰가 정말 예뻤어요. 웨이팅은 조금 있는 편입니다.</p>
+              <div class="post-card-bottom">
+                <div class="post-card-author">
+                  <span class="icon-circle"></span>
+                  <span>작성자06</span>
+                  <span class="divider"></span>
+                  <span>2026.07.24</span>
+                </div>
+                <div class="post-card-stats">
+                  <span class="stat"><span class="icon-box"></span>조회 178</span>
+                  <span class="stat"><span class="icon-box"></span>댓글 9</span>
+                  <span class="stat"><span class="icon-box"></span>좋아요 29</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+
+        <li>
+          <article class="post-card">
+            <div class="post-card-body">
+              <div class="post-card-top">
+                <span class="badge">질문</span>
+                <span class="region-tag"><span class="icon-circle"></span>서울 성동구</span>
+              </div>
+              <h3 class="post-card-title"><a href="board-view.html">성동구 평일 저녁에 걷기 좋은 산책 코스 있을까요?</a></h3>
+              <p class="post-card-excerpt">퇴근 후에 가볍게 걸을 만한 코스를 찾고 있어요. 조용한 곳이면 더 좋을 것 같아요.</p>
+              <div class="post-card-bottom">
+                <div class="post-card-author">
+                  <span class="icon-circle"></span>
+                  <span>작성자07</span>
+                  <span class="divider"></span>
+                  <span>2026.07.23</span>
+                </div>
+                <div class="post-card-stats">
+                  <span class="stat"><span class="icon-box"></span>조회 88</span>
+                  <span class="stat"><span class="icon-box"></span>댓글 6</span>
+                  <span class="stat"><span class="icon-box"></span>좋아요 4</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+
+        <li>
+          <article class="post-card">
+            <div class="post-card-body">
+              <div class="post-card-top">
+                <span class="badge">동행모집</span>
+                <span class="region-tag"><span class="icon-circle"></span>서울 마포구</span>
+              </div>
+              <h3 class="post-card-title"><a href="board-view.html">전시 같이 보러 가실 분 구해요</a></h3>
+              <p class="post-card-excerpt">이번 주 금요일 저녁에 전시 보러 갈 예정인데 같이 가실 분 있으면 편하게 말씀해주세요.</p>
+              <div class="post-card-bottom">
+                <div class="post-card-author">
+                  <span class="icon-circle"></span>
+                  <span>작성자08</span>
+                  <span class="divider"></span>
+                  <span>2026.07.22</span>
+                </div>
+                <div class="post-card-stats">
+                  <span class="stat"><span class="icon-box"></span>조회 63</span>
+                  <span class="stat"><span class="icon-box"></span>댓글 4</span>
+                  <span class="stat"><span class="icon-box"></span>좋아요 3</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+      </ul>
+
+      <nav class="pagination" aria-label="페이지네이션">
+        <a href="#" class="page-arrow">&laquo;</a>
+        <a href="#" class="page-num is-active">1</a>
+        <a href="#" class="page-num">2</a>
+        <a href="#" class="page-num">3</a>
+        <a href="#" class="page-num">4</a>
+        <a href="#" class="page-num">5</a>
+        <a href="#" class="page-arrow">&raquo;</a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     FOOTER (index.html과 동일)
+     ========================================================================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="logo-box">LOGO</div>
+      <nav class="footer-links">
+        <a href="#">서비스 소개</a>
+        <a href="#">이용약관</a>
+        <a href="#">개인정보처리방침</a>
+        <a href="#">문의하기</a>
+      </nav>
+    </div>
+    <p class="footer-copy">Copyright &copy; Momentrip. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
