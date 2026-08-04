@@ -230,7 +230,7 @@ button, input, textarea, select {
 }
 
 .btn:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-interactive-strong);
   outline-offset: 2px;
 }
 
@@ -244,7 +244,7 @@ button, input, textarea, select {
 .btn.btn-fill {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
-  color: var(--color-surface);
+  color: var(--color-text);
   box-shadow: var(--shadow-sm);
 }
 
@@ -252,7 +252,7 @@ button, input, textarea, select {
 .btn.btn-fill:active {
   background-color: color-mix(in srgb, var(--color-primary) 85%, var(--color-secondary) 15%);
   border-color: color-mix(in srgb, var(--color-primary) 85%, var(--color-secondary) 15%);
-  color: var(--color-surface);
+  color: var(--color-text);
 }
 
 .btn.btn-fill:active {
@@ -288,7 +288,7 @@ button, input, textarea, select {
 }
 
 .btn.btn-outline:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-interactive-strong);
   outline-offset: 2px;
 }
 
@@ -441,12 +441,12 @@ button, input, textarea, select {
 }
 
 .gnb a:hover {
-  color: var(--color-primary);
+  color: var(--color-interactive-strong);
 }
 
 .gnb a.is-active {
   border-bottom: 2px solid var(--color-primary);
-  color: var(--color-primary);
+  color: var(--color-interactive-strong);
   font-weight: 600;
 }
 
@@ -483,7 +483,7 @@ button, input, textarea, select {
 
 .header-utils .region-select:focus-visible,
 .header-utils .util-btn:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-interactive-strong);
   outline-offset: 2px;
 }
 
@@ -2492,7 +2492,7 @@ button, input, textarea, select {
 .hero-spot-list .hero-spot-item:first-child .spot-rank {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
-  color: var(--color-surface);
+  color: var(--color-interactive-strong);
 }
 
 .hero-spot-item .spot-name {
@@ -2508,7 +2508,7 @@ button, input, textarea, select {
 }
 
 .course-step .step-label {
-  color: var(--color-primary);
+  color: var(--color-interactive-strong);
   font-weight: 700;
   letter-spacing: 0.02em;
 }
@@ -2556,7 +2556,7 @@ button, input, textarea, select {
 }
 
 .community-section .board-row:not(.head):hover .col-title {
-  color: var(--color-primary);
+  color: var(--color-interactive-strong);
 }
 
 .community-section .board-row .col-category {
