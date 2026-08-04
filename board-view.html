@@ -35,10 +35,10 @@
         <span class="icon-circle sm"></span>
         <span class="util-label">검색</span>
       </button>
-      <button type="button" class="util-btn util-mypage">
+      <a href="board-login.html" class="util-btn util-login">
         <span class="icon-circle sm"></span>
-        <span class="util-label">마이페이지</span>
-      </button>
+        <span class="util-label">로그인</span>
+      </a>
     </div>
   </div>
 </header>
@@ -51,26 +51,26 @@
        장소 정보는 본문 흐름을 방해하지 않는 우측 보조 카드로 분리했다.
        ========================================================================== -->
   <section class="page-section board-view-section">
-    <div class="container">
-      <span class="section-label">SECTION: BOARD VIEW</span>
-    </div>
 
-    <!-- 게시글 헤더/본문 + 장소 정보 패널 shell.
-         .container 클래스를 그대로 물려받아 breadcrumb와 본문의 왼쪽 시작선이
-         항상 같은 지점에서 출발한다 (css 17번 참고).
-         내부 .post-view-grid는 기본적으로 세로 1열 블록이며,
-         충분히 넓은 화면(아래 미디어쿼리)에서만 2열 grid로 전환된다. -->
-    <div class="container post-view-shell">
+    <!-- 게시글 본문 + 장소 정보 stage.
+         .post-view-stage는 [여백][본문 960px][PLACE INFO] 구조의 grid로,
+         "본문+PLACE INFO 묶음 전체"가 아니라 .post-article(본문) 자체가
+         PLACE INFO 유무와 무관하게 항상 화면 정중앙에 오도록 한다 (css 17번 참고).
+         .post-article 안에는 SECTION 라벨부터 수정/삭제 버튼까지 모두 담겨
+         동일한 960px 기준선을 공유한다. -->
+    <div class="container post-view-stage">
 
-      <nav class="breadcrumb" aria-label="breadcrumb">
-        <a href="index.html">홈</a>
-        <span>/</span>
-        <a href="board-list.html">커뮤니티</a>
-        <span>/</span>
-        <span class="current">게시글 상세</span>
-      </nav>
+      <article class="post-article">
 
-      <div class="post-view-grid">
+        <span class="section-label">SECTION: BOARD VIEW</span>
+
+        <nav class="breadcrumb" aria-label="breadcrumb">
+          <a href="index.html">홈</a>
+          <span>/</span>
+          <a href="board-list.html">커뮤니티</a>
+          <span>/</span>
+          <span class="current">게시글 상세</span>
+        </nav>
 
         <!-- 게시글 헤더 -->
         <header class="post-header">
@@ -95,7 +95,7 @@
           </div>
         </header>
 
-        <!-- 게시글 본문 -->
+        <!-- 게시글 본문 (하단 구분선은 css .post-body border-bottom) -->
         <div class="post-body">
           <p>평일 오전에 방문했더니 대기 없이 바로 자리를 잡을 수 있었어요. 성수동 골목 안쪽에 있는 카페인데, 생각보다 한적한 분위기라 편하게 머물다 왔습니다.</p>
 
@@ -119,36 +119,40 @@
           </figure>
         </div>
 
-        <!-- 장소 정보 박스: 넓은 데스크톱에서는 이 컬럼 안에서만 sticky로 움직인다.
-             DOM 순서는 모바일 1열 스택 순서(본문 -> PLACE INFO -> 수정/삭제)를 위한 것이고,
-             데스크톱 2열 모드에서는 grid-area로 위치를 재배치한다. -->
-        <div class="place-info-column">
-          <aside class="place-info-card">
-            <p class="place-info-label">PLACE INFO</p>
-            <h2 class="place-info-name">소소한 카페</h2>
-            <ul class="place-info-list">
-              <li><span class="label">지역</span><span class="value">서울 성동구</span></li>
-              <li><span class="label">운영시간</span><span class="value">매일 09:00 - 21:00</span></li>
-              <li><span class="label">주차</span><span class="value">가능 (건물 내 2대)</span></li>
-            </ul>
-            <div class="place-info-actions">
-              <button type="button" class="btn btn-block">길찾기</button>
-              <button type="button" class="btn btn-block">저장</button>
-            </div>
-            <p class="place-info-hint">* 길찾기 버튼은 추후 네이버지도 · 카카오맵 · T맵 연동이 들어갈 위치입니다 (와이어프레임 단계)</p>
-          </aside>
-        </div>
-
-        <!-- 작성자 전용 관리 버튼: 데스크톱 2열 모드에서는 본문 컬럼 하단, 오른쪽 정렬로 재배치 -->
+        <!-- 작성자 전용 관리 버튼: 본문 하단 구분선 바로 아래, .post-article의
+             960px 폭 기준으로 오른쪽 정렬 (PLACE INFO나 바깥 container 폭 기준 아님) -->
         <div class="post-owner-actions">
           <a href="board-write.html" class="btn">수정</a>
           <button type="button" class="btn">삭제</button>
         </div>
 
+      </article>
+
+      <!-- 장소 정보 박스: 오른쪽 전용 열. 1680px 이상에서만 이 열 안에서
+           sticky로 움직이고, 그 이하에서는 본문 아래 1열로 전환된다.
+           DOM 순서는 데스크톱 배치(본문 컬럼/PLACE INFO 컬럼 분리)를 위한 것이고,
+           1679px 이하의 시각적 스택 순서(본문 -> PLACE INFO -> 수정/삭제)는
+           css order 값이 재현한다 (css 17번 참고). -->
+      <div class="place-info-column">
+        <aside class="place-info-card">
+          <p class="place-info-label">PLACE INFO</p>
+          <h2 class="place-info-name">소소한 카페</h2>
+          <ul class="place-info-list">
+            <li><span class="label">지역</span><span class="value">서울 성동구</span></li>
+            <li><span class="label">운영시간</span><span class="value">매일 09:00 - 21:00</span></li>
+            <li><span class="label">주차</span><span class="value">가능 (건물 내 2대)</span></li>
+          </ul>
+          <div class="place-info-actions">
+            <button type="button" class="btn btn-block">길찾기</button>
+            <button type="button" class="btn btn-block">저장</button>
+          </div>
+          <p class="place-info-hint">* 길찾기 버튼은 추후 네이버지도 · 카카오맵 · T맵 연동이 들어갈 위치입니다 (와이어프레임 단계)</p>
+        </aside>
       </div>
+
     </div>
 
-    <!-- shell 바깥: 반응/댓글/이전글·다음글/하단버튼은 본문과 동일한 900~960px 폭으로 별도 정렬 (css 17번) -->
+    <!-- stage 바깥: 반응/댓글/이전글·다음글/하단버튼은 본문과 동일한 960px 폭으로 별도 정렬 (css 17번) -->
     <div class="container post-view-below">
 
       <!-- 게시글 반응 영역 -->

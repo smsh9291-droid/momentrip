@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Momentrip Wireframe - Board Login</title>
+<link rel="stylesheet" href="css/wireframe.css">
+</head>
+<body>
+
+<!-- ==========================================================================
+     HEADER (index.html / board-list.html / board-view.html / board-write.html과 동일)
+     ========================================================================== -->
+<header class="site-header">
+  <div class="container header-inner">
+    <button type="button" class="gnb-toggle" aria-label="메뉴 열기">MENU</button>
+
+    <div class="logo-area">
+      <a href="index.html" class="logo-box">LOGO</a>
+    </div>
+
+    <nav class="gnb">
+      <a href="index.html">둘러보기</a>
+      <a href="#">클래스·체험</a>
+      <a href="#">지역행사</a>
+      <a href="board-list.html">커뮤니티</a>
+    </nav>
+
+    <div class="header-utils">
+      <button type="button" class="region-select">
+        <span class="icon-circle sm"></span>
+        <span class="util-label">지역 선택</span>
+      </button>
+      <button type="button" class="util-btn util-search">
+        <span class="icon-circle sm"></span>
+        <span class="util-label">검색</span>
+      </button>
+      <a href="board-login.html" class="util-btn util-login">
+        <span class="icon-circle sm"></span>
+        <span class="util-label">로그인</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ==========================================================================
+       BOARD LOGIN
+       board-view/board-write와 동일한 960px 기준선(.login-stage)을 재사용하고,
+       실제 로그인 폼(.login-box)만 480px로 다시 좁혀 중앙 정렬한다.
+       ========================================================================== -->
+  <section class="page-section board-login-section">
+    <div class="container">
+     <div class="login-stage">
+
+      <span class="section-label">SECTION: BOARD LOGIN</span>
+
+      <nav class="breadcrumb" aria-label="breadcrumb">
+        <a href="index.html">홈</a>
+        <span>/</span>
+        <span class="current">로그인</span>
+      </nav>
+
+      <div class="login-box">
+
+        <header class="login-header">
+          <h1 class="login-title">로그인</h1>
+          <p class="login-desc">모먼트립에서 다양한 지역 이야기를 만나보세요.</p>
+        </header>
+
+        <form class="login-form">
+          <div class="field">
+            <label class="field-label">아이디</label>
+            <input type="text" class="input-text" placeholder="아이디를 입력해주세요">
+          </div>
+
+          <div class="field">
+            <label class="field-label">비밀번호</label>
+            <input type="password" class="input-text" placeholder="비밀번호를 입력해주세요">
+          </div>
+
+          <label class="login-remember">
+            <input type="checkbox">
+            로그인 상태 유지
+          </label>
+
+          <button type="submit" class="btn btn-fill btn-block btn-lg">로그인</button>
+        </form>
+
+        <p class="login-divider">또는</p>
+
+        <div class="social-login">
+          <button type="button" class="btn btn-block btn-lg">카카오 로그인</button>
+          <button type="button" class="btn btn-block btn-lg">네이버 로그인</button>
+          <button type="button" class="btn btn-block btn-lg">Google 로그인</button>
+        </div>
+
+        <nav class="login-links" aria-label="계정 찾기">
+          <a href="#">아이디 찾기</a>
+          <span class="divider"></span>
+          <a href="#">비밀번호 찾기</a>
+          <span class="divider"></span>
+          <a href="#">회원가입</a>
+        </nav>
+
+      </div>
+
+     </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     FOOTER (index.html / board-list.html / board-view.html / board-write.html과 동일)
+     ========================================================================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="logo-box">LOGO</div>
+      <nav class="footer-links">
+        <a href="#">서비스 소개</a>
+        <a href="#">이용약관</a>
+        <a href="#">개인정보처리방침</a>
+        <a href="#">문의하기</a>
+      </nav>
+    </div>
+    <p class="footer-copy">Copyright &copy; Momentrip. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
