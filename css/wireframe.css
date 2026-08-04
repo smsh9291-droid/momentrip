@@ -8,7 +8,14 @@
    0. Tokens
    -------------------------------------------------------------------------- */
 :root {
-  --color-bg: #F7F7F7;
+  /* Brand Palette (Figma 확정 컬러) - selector에서 직접 참조하지 않고
+     아래 Semantic UI Token을 통해서만 사용한다 */
+  --color-brand-primary: #8FCFC3;
+  --color-brand-secondary: #FFF4DF;
+  --color-brand-background: #FFFCF6;
+  --color-brand-neutral: #EADCC8;
+
+  --color-bg: var(--color-brand-background);
   --color-card: #FFFFFF;
   --color-placeholder: #D9D9D9;
   --color-placeholder-sub: #E9E9E9;
@@ -24,10 +31,14 @@
   --gap-lg: 32px;
   --gap-xl: 48px;
 
-  /* Design tokens (STEP 1) - 실제 적용은 다음 단계(Button/Input/Card/Header...)에서 진행 */
-  --color-primary: #67B8A7;
+  /* Semantic UI Tokens (STEP 1) - 실제 selector 적용은 다음 단계
+     (Button/Input/Card/Header...)에서 진행 */
+  --color-primary: var(--color-brand-primary);
   --color-primary-light: #EAF7F4;
-  --color-secondary: #4E6F69;
+  --color-interactive-strong: #4E6F69;
+  --color-secondary: var(--color-interactive-strong); /* 하위 호환 별칭 - 삭제/직접 값 변경 금지 */
+  --color-accent-soft: var(--color-brand-secondary);
+  --color-neutral: var(--color-brand-neutral);
   --color-surface: #FFFFFF;
 
   --color-success: #66B67A;
@@ -2432,4 +2443,122 @@ button, input, textarea, select {
   width: 1px;
   height: 10px;
   background-color: var(--color-border);
+}
+
+/* ==========================================================================
+   19. STEP 6 - Home UI Design (index.html 전용)
+   기존 Grid/Flex/width/height/gap/margin/padding/display/position은 건드리지
+   않고, STEP1 Design Token만 사용해 Typography/Color/Shadow만 보강한다.
+   여기 selector는 전부 index.html에만 존재하는 클래스(또는 그 하위)이므로
+   board-list/board-view/board-write/board-login, Header, Footer에는
+   영향을 주지 않는다. Card Hover 원칙(Shadow만 변경)은 기존 규칙(4번,
+   line 883)을 그대로 유지하고 여기서 다시 건드리지 않는다.
+   ========================================================================== */
+
+/* --- Hero: Search(STEP3 Button 재사용) / Quick Category(STEP3 재사용) / MAP --- */
+.hero-bottom .search-box {
+  box-shadow: var(--shadow-sm);
+}
+
+.hero-bottom .search-box .btn {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-surface);
+  font-weight: 600;
+}
+
+.hero-bottom .search-box .btn:hover,
+.hero-bottom .search-box .btn:active {
+  background-color: color-mix(in srgb, var(--color-primary) 85%, var(--color-secondary) 15%);
+  border-color: color-mix(in srgb, var(--color-primary) 85%, var(--color-secondary) 15%);
+  color: var(--color-surface);
+}
+
+.hero-bottom .search-box .btn:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+.hero-content h1 {
+  letter-spacing: -0.01em;
+}
+
+.hero-quick-category .chip:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-secondary);
+}
+
+.hero-spot-list .hero-spot-item:first-child .spot-rank {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-surface);
+}
+
+.hero-spot-item .spot-name {
+  font-weight: 700;
+}
+
+/* --- MOMENTRIP PICK: Badge / STEP / Title / Meta --- */
+.course-card-head .badge {
+  background-color: var(--color-primary-light);
+  border-color: transparent;
+  color: var(--color-secondary);
+  font-weight: 700;
+}
+
+.course-step .step-label {
+  color: var(--color-primary);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.course-step .step-name {
+  font-weight: 700;
+}
+
+/* course-arrow: 요구사항상 "Arrow는 그대로 유지"이므로 별도 스타일 없음 */
+
+/* --- HOT / Popular Spot: 동일한 Card(overlay-card) 시스템 공유 컴포넌트 --- */
+.overlay-card .card-image-overlay .badge {
+  box-shadow: var(--shadow-sm);
+  font-weight: 700;
+}
+
+.overlay-card .card-image-overlay .icon-box {
+  box-shadow: var(--shadow-sm);
+}
+
+.card .card-title {
+  letter-spacing: -0.01em;
+}
+
+.overlay-card .card-rating {
+  color: var(--color-secondary);
+}
+
+/* --- Category: Card 시스템 그대로, Hover는 기존 4번 규칙(Shadow만)만 사용 --- */
+.category-item .category-name {
+  font-weight: 700;
+}
+
+/* --- Local Event: 이번 STEP에서 변경 없음 (Badge-Title spacing, Timeline 그대로 유지) --- */
+
+/* --- Community Preview: Title / Meta, 기존 board-row 구조 그대로 --- */
+.community-section .board-row.head {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.community-section .board-row:not(.head):hover {
+  background-color: var(--color-primary-light);
+  cursor: pointer;
+}
+
+.community-section .board-row:not(.head):hover .col-title {
+  color: var(--color-primary);
+}
+
+.community-section .board-row .col-category {
+  font-weight: 600;
 }
