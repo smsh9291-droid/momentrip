@@ -160,6 +160,18 @@ button, input, textarea, select {
   border: 1px solid var(--color-border);
   padding: 6px 14px;
   white-space: nowrap;
+  transition: var(--transition);
+}
+
+.link-more:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-interactive-strong);
+}
+
+.link-more:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
 }
 
 /* --------------------------------------------------------------------------
@@ -427,6 +439,17 @@ button, input, textarea, select {
   transition: var(--transition);
 }
 
+a.logo-box:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-interactive-strong);
+}
+
+a.logo-box:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
+}
+
 .gnb {
   display: flex;
   align-items: center;
@@ -442,6 +465,11 @@ button, input, textarea, select {
 
 .gnb a:hover {
   color: var(--color-interactive-strong);
+}
+
+.gnb a:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
 }
 
 .gnb a.is-active {
@@ -502,6 +530,18 @@ button, input, textarea, select {
   align-items: center;
   justify-content: center;
   font-size: var(--font-size-caption);
+  transition: var(--transition);
+}
+
+.gnb-toggle:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-interactive-strong);
+}
+
+.gnb-toggle:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
 }
 
 /* --------------------------------------------------------------------------
@@ -518,6 +558,19 @@ button, input, textarea, select {
 
 .breadcrumb .current {
   color: var(--color-text);
+}
+
+.breadcrumb a {
+  transition: var(--transition);
+}
+
+.breadcrumb a:hover {
+  color: var(--color-interactive-strong);
+}
+
+.breadcrumb a:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
 }
 
 /* --------------------------------------------------------------------------
@@ -626,6 +679,12 @@ button, input, textarea, select {
   background-color: var(--color-card);
   color: var(--color-subtext);
   font-size: var(--font-size-caption);
+  transition: var(--transition);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
 }
 
 .chip .icon-circle {
@@ -1708,6 +1767,19 @@ button, input, textarea, select {
   color: var(--color-subtext);
 }
 
+.footer-links a {
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--color-interactive-strong);
+}
+
+.footer-links a:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
+}
+
 .footer-copy {
   padding-top: var(--gap-lg);
   border-top: 1px solid var(--color-border);
@@ -2383,6 +2455,18 @@ button, input, textarea, select {
     color: var(--color-subtext);
     font-size: var(--font-size-caption);
     cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .post-back-btn:hover {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
+    color: var(--color-interactive-strong);
+  }
+
+  .post-back-btn:focus-visible {
+    outline: 2px solid var(--color-interactive-strong);
+    outline-offset: 2px;
   }
 
   .post-body figure .ph-box {
