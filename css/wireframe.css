@@ -254,16 +254,17 @@ button, input, textarea, select {
 }
 
 .btn.btn-fill {
-  background-color: color-mix(in srgb, var(--color-primary) 15%, var(--color-interactive-strong) 85%);
-  border-color: color-mix(in srgb, var(--color-primary) 15%, var(--color-interactive-strong) 85%);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
   color: var(--color-surface);
+  font-weight: 600;
   box-shadow: var(--shadow-sm);
 }
 
 .btn.btn-fill:hover,
 .btn.btn-fill:active {
-  background-color: var(--color-interactive-strong);
-  border-color: var(--color-interactive-strong);
+  background-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
+  border-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
   color: var(--color-surface);
 }
 
@@ -385,6 +386,11 @@ button, input, textarea, select {
   border-left: 1px solid var(--color-border);
 }
 
+.hero-bottom .search-box .input-text::placeholder,
+.board-list-toolbar .search-box .input-text::placeholder {
+  color: var(--color-placeholder);
+}
+
 .tag-list {
   display: flex;
   flex-wrap: wrap;
@@ -402,10 +408,11 @@ button, input, textarea, select {
 .badge {
   display: inline-block;
   padding: 3px 8px;
-  border: 1px solid var(--color-border);
-  background-color: var(--color-placeholder-sub);
-  color: var(--color-text);
+  border: none;
+  background-color: var(--color-primary-light);
+  color: var(--color-interactive-strong);
   font-size: var(--font-size-caption);
+  font-weight: 700;
 }
 
 /* --------------------------------------------------------------------------
@@ -639,12 +646,12 @@ a.logo-box:focus-visible {
   align-items: center;
   gap: var(--gap-lg);
   padding: var(--gap-md) var(--gap-lg);
-  border: 1px solid var(--color-border);
+  border: none;
   background-color: var(--color-card);
 }
 
 .hero-bottom .search-box {
-  flex: 0 0 420px;
+  flex: 0 0 520px;
   height: 56px;
 }
 
@@ -704,7 +711,7 @@ a.logo-box:focus-visible {
    no big hero image and no separate floating panel. */
 .hero-map-card {
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: none;
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
@@ -789,7 +796,7 @@ a.logo-box:focus-visible {
 
 .course-card {
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: none;
   padding: var(--gap-md);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
@@ -871,7 +878,7 @@ a.logo-box:focus-visible {
   gap: var(--gap-sm);
   padding: var(--gap-md) var(--gap-xs);
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: none;
   text-align: center;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
@@ -901,7 +908,7 @@ a.logo-box:focus-visible {
 
 .card {
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: none;
   overflow: hidden;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
@@ -1064,7 +1071,7 @@ a.logo-box:focus-visible {
   display: flex;
   gap: var(--gap-sm);
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: none;
   padding: var(--gap-sm);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
@@ -1137,6 +1144,7 @@ a.logo-box:focus-visible {
   padding: 16px 8px;
   border-bottom: 1px solid var(--color-border);
   font-size: var(--font-size-body);
+  transition: var(--transition);
 }
 
 .board-row.head {
@@ -1188,16 +1196,16 @@ a.logo-box:focus-visible {
 }
 
 .board-list-toolbar .search-box .btn {
-  background-color: color-mix(in srgb, var(--color-primary) 15%, var(--color-interactive-strong) 85%);
-  border-color: transparent;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
   color: var(--color-surface);
   font-weight: 600;
 }
 
 .board-list-toolbar .search-box .btn:hover,
 .board-list-toolbar .search-box .btn:active {
-  background-color: var(--color-interactive-strong);
-  border-color: transparent;
+  background-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
+  border-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
   color: var(--color-surface);
 }
 
@@ -1265,7 +1273,7 @@ a.logo-box:focus-visible {
   gap: var(--gap-md);
   padding: var(--gap-md);
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: none;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
@@ -1410,7 +1418,7 @@ a.logo-box:focus-visible {
 
 .pagination .page-num.is-active {
   background-color: var(--color-primary);
-  color: var(--color-text);
+  color: var(--color-surface);
   border-color: var(--color-primary);
   font-weight: 700;
 }
@@ -2276,7 +2284,7 @@ a.logo-box:focus-visible {
 .place-info-card {
   padding: var(--gap-md);
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: none;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
@@ -2679,8 +2687,8 @@ a.logo-box:focus-visible {
 }
 
 .hero-bottom .search-box .btn {
-  background-color: color-mix(in srgb, var(--color-primary) 15%, var(--color-interactive-strong) 85%);
-  border-color: transparent;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
   box-shadow: none;
   color: var(--color-surface);
   font-weight: 600;
@@ -2688,8 +2696,8 @@ a.logo-box:focus-visible {
 
 .hero-bottom .search-box .btn:hover,
 .hero-bottom .search-box .btn:active {
-  background-color: var(--color-interactive-strong);
-  border-color: transparent;
+  background-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
+  border-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
   color: var(--color-surface);
 }
 
@@ -2711,7 +2719,7 @@ a.logo-box:focus-visible {
 .hero-spot-list .hero-spot-item:first-child .spot-rank {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
-  color: var(--color-interactive-strong);
+  color: var(--color-surface);
 }
 
 .hero-spot-item .spot-name {
