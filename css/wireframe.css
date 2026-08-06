@@ -156,17 +156,20 @@ button, input, textarea, select {
 
 .link-more {
   font-size: var(--font-size-caption);
-  color: var(--color-subtext);
-  border: 1px solid var(--color-border);
+  color: var(--color-surface);
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
   padding: 6px 14px;
   white-space: nowrap;
+  font-weight: 600;
   transition: var(--transition);
 }
 
-.link-more:hover {
-  background-color: var(--color-primary-light);
-  border-color: var(--color-primary);
-  color: var(--color-interactive-strong);
+.link-more:hover,
+.link-more:active {
+  background-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
+  border-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
+  color: var(--color-surface);
 }
 
 .link-more:focus-visible {
@@ -429,7 +432,7 @@ button, input, textarea, select {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 112px;
+  height: 98px;
 }
 
 .logo-box {
@@ -489,15 +492,22 @@ a.logo-box:focus-visible {
 .header-utils {
   display: flex;
   align-items: center;
-  gap: var(--gap-lg);
+  gap: var(--gap-md);
+}
+
+.header-utils .region-select,
+.header-utils .util-btn {
+  background: none;
+  border: 1px solid transparent;
+  appearance: none;
+  cursor: pointer;
 }
 
 .header-utils .region-select {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   padding: 8px 12px;
-  border: 1px solid var(--color-border);
   font-size: var(--font-size-caption);
   transition: var(--transition);
 }
@@ -505,7 +515,7 @@ a.logo-box:focus-visible {
 .header-utils .util-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-size: var(--font-size-caption);
   transition: var(--transition);
 }
@@ -529,22 +539,37 @@ a.logo-box:focus-visible {
   cursor: not-allowed;
 }
 
+.header-utils .region-select i,
+.header-utils .util-btn i {
+  color: var(--color-primary);
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.header-utils .region-select:hover i,
+.header-utils .util-btn:hover i {
+  color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
+}
+
 .gnb-toggle {
   display: none;
   width: 40px;
   height: 40px;
-  border: 1px solid var(--color-border);
-  background-color: var(--color-placeholder-sub);
+  border: none;
+  background-color: transparent;
   align-items: center;
   justify-content: center;
   font-size: var(--font-size-caption);
   transition: var(--transition);
 }
 
-.gnb-toggle:hover {
-  background-color: var(--color-primary-light);
-  border-color: var(--color-primary);
-  color: var(--color-interactive-strong);
+.gnb-toggle i {
+  color: var(--color-primary);
+  font-size: 18px;
+}
+
+.gnb-toggle:hover i {
+  color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
 }
 
 .gnb-toggle:focus-visible {
@@ -618,6 +643,11 @@ a.logo-box:focus-visible {
   color: var(--color-subtext);
 }
 
+.hero-content .current-region i {
+  color: var(--color-primary);
+  font-size: 13px;
+}
+
 .hero-content h1 {
   font-size: var(--font-size-display);
   font-weight: 800;
@@ -681,12 +711,12 @@ a.logo-box:focus-visible {
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
   padding: 10px 18px;
-  border: 1px solid var(--color-border);
-  background-color: var(--color-card);
-  color: var(--color-subtext);
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-primary);
+  color: var(--color-surface);
   font-size: var(--font-size-caption);
+  font-weight: 600;
   transition: var(--transition);
 }
 
@@ -888,6 +918,16 @@ a.logo-box:focus-visible {
 .category-item .icon-circle {
   width: 56px;
   height: 56px;
+}
+
+.category-item > i {
+  color: var(--color-primary);
+  font-size: var(--font-size-display);
+  transition: var(--transition);
+}
+
+.category-item:hover > i {
+  color: var(--color-interactive-strong);
 }
 
 .category-item .category-name {
@@ -1313,6 +1353,11 @@ a.logo-box:focus-visible {
   height: 16px;
 }
 
+.region-tag i {
+  color: var(--color-primary);
+  font-size: 13px;
+}
+
 .post-card-title {
   font-size: var(--font-size-subtitle);
   font-weight: 700;
@@ -1348,12 +1393,17 @@ a.logo-box:focus-visible {
 .post-card-author {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .post-card-author .icon-circle {
   width: 22px;
   height: 22px;
+}
+
+.post-card-author i {
+  color: var(--color-primary);
+  font-size: 13px;
 }
 
 .post-card-author .divider {
@@ -1377,6 +1427,11 @@ a.logo-box:focus-visible {
 .post-card-stats .icon-box {
   width: 14px;
   height: 14px;
+}
+
+.post-card-stats i {
+  color: var(--color-primary);
+  font-size: 12px;
 }
 
 /* --------------------------------------------------------------------------
@@ -1489,12 +1544,24 @@ a.logo-box:focus-visible {
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
   font-size: var(--font-size-caption);
   color: var(--color-subtext);
   transition: var(--transition);
 }
 
+.post-actions .action-btn i {
+  color: var(--color-primary);
+  font-size: 16px;
+}
+
 .post-actions .action-btn:hover {
+  color: var(--color-interactive-strong);
+}
+
+.post-actions .action-btn:hover i {
   color: var(--color-interactive-strong);
 }
 
@@ -1688,13 +1755,14 @@ a.logo-box:focus-visible {
 }
 
 /* 이미지/동영상 첨부: textarea와 동일하게 필드 폭(100%)을 그대로 채우는
-   큰 업로드 영역. 텍스트만 표시하고 아이콘/이모지는 사용하지 않는다. */
+   큰 업로드 영역. Font Awesome 아이콘 + 텍스트로 구성한다 (STEP11). */
 .upload-box {
   width: 100%;
   min-height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: var(--gap-xs);
   padding: 0 8px;
   border: 1px solid var(--color-border);
   background-color: var(--color-placeholder-sub);
@@ -1709,6 +1777,10 @@ a.logo-box:focus-visible {
   background-color: var(--color-primary-light);
   border-color: var(--color-primary);
   color: var(--color-interactive-strong);
+}
+
+.upload-box i {
+  color: var(--color-primary);
 }
 
 /* 지역/위치 전용 wrapper. 1199px 이하(태블릿/모바일)에서는 세로 1열,
@@ -1776,7 +1848,7 @@ a.logo-box:focus-visible {
 .site-footer {
   border-top: 1px solid var(--color-border);
   background-color: var(--color-card);
-  padding: 64px 0 var(--gap-xl);
+  padding: 42px 0 var(--gap-xl);
 }
 
 .footer-top {
@@ -1900,15 +1972,20 @@ a.logo-box:focus-visible {
     display: none;
   }
 
+  .logo-area {
+    display: none;
+  }
+
   .header-utils .util-label {
     display: none;
   }
 
-  /* Mobile header shows: hamburger / logo / search icon / login icon.
-     Region select만 햄버거 메뉴 내부로 이동(로그인은 진입점 유지를 위해
-     계속 노출). .util-label은 위 규칙으로 이미 숨겨져 아이콘만 보인다. */
-  .region-select {
-    display: none;
+  /* Mobile header (STEP11-3): 왼쪽 햄버거 아이콘 / 오른쪽 지역·검색·로그인
+     아이콘만 노출한다. 로고는 숨기고, .util-label은 위 규칙으로 이미 숨겨져
+     세 버튼 모두 아이콘만 보인다. 아이콘 3개가 한 그룹으로 붙어 보이도록
+     gap을 데스크톱보다 더 좁힌다. */
+  .header-utils {
+    gap: var(--gap-sm);
   }
 
   .gnb-toggle {
@@ -2157,6 +2234,10 @@ a.logo-box:focus-visible {
 
   .form-actions {
     flex-direction: column-reverse;
+  }
+
+  .site-footer {
+    padding: 36px 0 var(--gap-lg);
   }
 
   .footer-top {
@@ -2710,10 +2791,11 @@ a.logo-box:focus-visible {
   letter-spacing: -0.01em;
 }
 
-.hero-quick-category .chip:hover {
-  background-color: var(--color-primary-light);
-  border-color: var(--color-primary);
-  color: var(--color-secondary);
+.hero-quick-category .chip:hover,
+.hero-quick-category .chip:active {
+  background-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
+  border-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
+  color: var(--color-surface);
 }
 
 .hero-spot-list .hero-spot-item:first-child .spot-rank {

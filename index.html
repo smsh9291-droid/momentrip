@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Momentrip Wireframe - Home</title>
 <link rel="stylesheet" href="css/wireframe.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
 
@@ -15,7 +16,7 @@
   <!-- Mobile(~767px): 햄버거 / 로고 / 검색 아이콘 / 로그인 아이콘만 노출.
        지역 선택만 햄버거 메뉴 내부로 이동(별도 드로어는 IA 단계라 생략). -->
   <div class="container header-inner">
-    <button type="button" class="gnb-toggle" aria-label="메뉴 열기">MENU</button>
+    <button type="button" class="gnb-toggle" aria-label="메뉴 열기"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
 
     <div class="logo-area">
       <a href="index.html" class="logo-box"><img src="assets/momentrip-logo-primary.svg" alt="MOMENTRIP" class="site-logo"></a>
@@ -30,15 +31,15 @@
 
     <div class="header-utils">
       <button type="button" class="region-select">
-        <span class="icon-circle sm"></span>
+        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
         <span class="util-label">지역 선택</span>
       </button>
       <button type="button" class="util-btn util-search">
-        <span class="icon-circle sm"></span>
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         <span class="util-label">검색</span>
       </button>
       <a href="board-login.html" class="util-btn util-login">
-        <span class="icon-circle sm"></span>
+        <i class="fa-solid fa-user" aria-hidden="true"></i>
         <span class="util-label">로그인</span>
       </a>
     </div>
@@ -53,13 +54,11 @@
        ========================================================================== -->
   <section class="page-section hero-section">
     <div class="container">
-      <span class="section-label">SECTION: HERO</span>
-
       <div class="hero">
         <div class="hero-top">
           <div class="hero-content">
             <div class="current-region">
-              <span class="icon-circle sm"></span>
+              <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
               현재 지역 : 서울 성동구
             </div>
 
@@ -111,28 +110,12 @@
           </form>
 
           <div class="hero-quick-category">
-            <p class="quick-category-label">Quick Category</p>
             <div class="chip-list">
-              <button type="button" class="chip">
-                <span class="icon-circle sm"></span>
-                카페
-              </button>
-              <button type="button" class="chip">
-                <span class="icon-circle sm"></span>
-                산책
-              </button>
-              <button type="button" class="chip">
-                <span class="icon-circle sm"></span>
-                데이트
-              </button>
-              <button type="button" class="chip">
-                <span class="icon-circle sm"></span>
-                아이와 함께
-              </button>
-              <button type="button" class="chip">
-                <span class="icon-circle sm"></span>
-                친구와
-              </button>
+              <button type="button" class="chip">카페</button>
+              <button type="button" class="chip">산책</button>
+              <button type="button" class="chip">데이트</button>
+              <button type="button" class="chip">아이와 함께</button>
+              <button type="button" class="chip">친구와</button>
             </div>
           </div>
         </div>
@@ -146,8 +129,6 @@
        ========================================================================== -->
   <section class="page-section moment-pick-section">
     <div class="container">
-      <span class="section-label">SECTION: MOMENTRIP PICK</span>
-
       <div class="section-heading">
         <div>
           <h2 class="title">MOMENTRIP PICK</h2>
@@ -220,8 +201,6 @@
        ========================================================================== -->
   <section class="page-section hot-section">
     <div class="container">
-      <span class="section-label">SECTION: HOT</span>
-
       <div class="section-heading">
         <div>
           <h2 class="title">이번 주 HOT</h2>
@@ -303,8 +282,6 @@
        ========================================================================== -->
   <section class="page-section popular-section">
     <div class="container">
-      <span class="section-label">SECTION: POPULAR PLACE</span>
-
       <div class="section-heading">
         <div>
           <h2 class="title">주변 인기 장소</h2>
@@ -402,8 +379,6 @@
        ========================================================================== -->
   <section class="page-section category-section">
     <div class="container">
-      <span class="section-label">SECTION: CATEGORY</span>
-
       <div class="section-heading">
         <div>
           <h2 class="title">카테고리 탐색</h2>
@@ -413,42 +388,42 @@
 
       <div class="category-grid">
         <article class="category-item">
-          <span class="icon-circle lg"></span>
+          <i class="fa-solid fa-utensils" aria-hidden="true"></i>
           <span class="category-name">맛집</span>
           <span class="category-sub">242곳</span>
         </article>
         <article class="category-item">
-          <span class="icon-circle lg"></span>
+          <i class="fa-solid fa-person-walking" aria-hidden="true"></i>
           <span class="category-name">산책</span>
           <span class="category-sub">118곳</span>
         </article>
         <article class="category-item">
-          <span class="icon-circle lg"></span>
+          <i class="fa-solid fa-masks-theater" aria-hidden="true"></i>
           <span class="category-name">문화</span>
           <span class="category-sub">96곳</span>
         </article>
         <article class="category-item">
-          <span class="icon-circle lg"></span>
+          <i class="fa-solid fa-star" aria-hidden="true"></i>
           <span class="category-name">체험</span>
           <span class="category-sub">73개</span>
         </article>
         <article class="category-item">
-          <span class="icon-circle lg"></span>
+          <i class="fa-solid fa-store" aria-hidden="true"></i>
           <span class="category-name">플리마켓</span>
           <span class="category-sub">이번 달 5건</span>
         </article>
         <article class="category-item">
-          <span class="icon-circle lg"></span>
+          <i class="fa-solid fa-champagne-glasses" aria-hidden="true"></i>
           <span class="category-name">축제</span>
           <span class="category-sub">이번 달 8건</span>
         </article>
         <article class="category-item">
-          <span class="icon-circle lg"></span>
+          <i class="fa-solid fa-child-reaching" aria-hidden="true"></i>
           <span class="category-name">키즈</span>
           <span class="category-sub">54개</span>
         </article>
         <article class="category-item">
-          <span class="icon-circle lg"></span>
+          <i class="fa-solid fa-house" aria-hidden="true"></i>
           <span class="category-name">실내</span>
           <span class="category-sub">89곳</span>
         </article>
@@ -461,8 +436,6 @@
        ========================================================================== -->
   <section class="page-section event-section">
     <div class="container">
-      <span class="section-label">SECTION: LOCAL EVENT</span>
-
       <div class="section-heading">
         <div>
           <h2 class="title">지역 행사</h2>
@@ -543,8 +516,6 @@
        ========================================================================== -->
   <section class="page-section community-section">
     <div class="container">
-      <span class="section-label">SECTION: COMMUNITY</span>
-
       <div class="section-heading">
         <div>
           <h2 class="title">커뮤니티</h2>
