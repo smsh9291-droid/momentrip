@@ -114,7 +114,7 @@ button, input, textarea, select {
 .page-section {
   position: relative;
   padding: var(--gap-xl) 0;
-  border-top: 1px dashed var(--color-border);
+  border-top: none;
 }
 
 .page-section:first-of-type {
@@ -159,6 +159,7 @@ button, input, textarea, select {
   color: var(--color-surface);
   background-color: var(--color-primary);
   border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
   padding: 6px 14px;
   white-space: nowrap;
   font-weight: 600;
@@ -330,7 +331,7 @@ button, input, textarea, select {
 
 .field .field-label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: var(--gap-xs);
   font-size: var(--font-size-caption);
   font-weight: 700;
 }
@@ -422,9 +423,9 @@ button, input, textarea, select {
    5. Header
    -------------------------------------------------------------------------- */
 .site-header {
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: none;
   background-color: var(--color-surface);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transition: var(--transition);
 }
 
@@ -432,7 +433,7 @@ button, input, textarea, select {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 98px;
+  height: 80px;
 }
 
 .logo-box {
@@ -498,7 +499,7 @@ a.logo-box:focus-visible {
 .header-utils .region-select,
 .header-utils .util-btn {
   background: none;
-  border: 1px solid transparent;
+  border: none;
   appearance: none;
   cursor: pointer;
 }
@@ -507,7 +508,7 @@ a.logo-box:focus-visible {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 8px 12px;
+  padding: 0;
   font-size: var(--font-size-caption);
   transition: var(--transition);
 }
@@ -518,13 +519,6 @@ a.logo-box:focus-visible {
   gap: 4px;
   font-size: var(--font-size-caption);
   transition: var(--transition);
-}
-
-.header-utils .region-select:hover,
-.header-utils .util-btn:hover {
-  background-color: var(--color-primary-light);
-  border-color: var(--color-primary);
-  color: var(--color-secondary);
 }
 
 .header-utils .region-select:focus-visible,
@@ -544,11 +538,6 @@ a.logo-box:focus-visible {
   color: var(--color-primary);
   font-size: 14px;
   transition: var(--transition);
-}
-
-.header-utils .region-select:hover i,
-.header-utils .util-btn:hover i {
-  color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
 }
 
 .gnb-toggle {
@@ -612,14 +601,14 @@ a.logo-box:focus-visible {
 .hero {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-lg);
+  gap: var(--gap-md);
 }
 
 /* Hero top: left copy block and right MAP card share the same row height,
    so the two sides read as one component instead of two mismatched blocks. */
 .hero-top {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.95fr 1.05fr;
   gap: var(--gap-xl);
   align-items: stretch;
 }
@@ -637,8 +626,9 @@ a.logo-box:focus-visible {
   gap: 6px;
   align-self: flex-start;
   margin-bottom: var(--gap-sm);
-  padding: 4px 10px;
-  border: 1px solid var(--color-border);
+  padding: 0;
+  border: none;
+  background: transparent;
   font-size: var(--font-size-caption);
   color: var(--color-subtext);
 }
@@ -669,50 +659,52 @@ a.logo-box:focus-visible {
   width: 100%;
 }
 
-/* Hero bottom: search + quick category merged into a single bar
-   that spans the full Hero width, directly under the top row. */
+/* Hero bottom: reuses hero-top's own grid columns/gap so the search box
+   and Quick Category align to the same left/right axis as Hero Copy/MAP. */
 .hero-bottom {
-  display: flex;
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: var(--gap-xl);
   align-items: center;
-  gap: var(--gap-lg);
-  padding: var(--gap-md) var(--gap-lg);
+  padding: var(--gap-sm) 0;
   border: none;
-  background-color: var(--color-card);
+  background-color: transparent;
 }
 
 .hero-bottom .search-box {
-  flex: 0 0 520px;
+  width: 100%;
   height: 56px;
+  align-items: stretch;
 }
 
-.hero-quick-category {
-  flex: 1;
-  min-width: 0;
+.hero-bottom .search-box .btn {
+  height: 100%;
 }
 
 .hero-quick-category .quick-category-label {
   font-size: var(--font-size-caption);
   color: var(--color-subtext);
   margin-bottom: var(--gap-xs);
-  text-align: right;
+  text-align: left;
 }
 
 .hero-quick-category .chip-list {
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 /* Generic chip component: reused for Hero quick category and future filters */
 .chip-list {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--gap-sm);
+  gap: 8px;
 }
 
 .chip {
   display: inline-flex;
   align-items: center;
-  padding: 10px 18px;
+  padding: 10px 24px;
   border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
   background-color: var(--color-primary);
   color: var(--color-surface);
   font-size: var(--font-size-caption);
@@ -744,7 +736,7 @@ a.logo-box:focus-visible {
   border: none;
   border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transition: var(--transition);
 }
 
@@ -759,19 +751,19 @@ a.logo-box:focus-visible {
 }
 
 .hero-map-spots {
-  padding: var(--gap-md);
+  padding: var(--gap-sm) var(--gap-md);
 }
 
 .hero-map-spots .panel-title {
   font-size: var(--font-size-caption);
   font-weight: 700;
-  margin-bottom: var(--gap-sm);
+  margin-bottom: var(--gap-xs);
 }
 
 .hero-spot-list {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-sm);
+  gap: var(--gap-xs);
 }
 
 .hero-spot-item {
@@ -787,8 +779,8 @@ a.logo-box:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--color-border);
-  background-color: var(--color-placeholder-sub);
+  border: 1px solid var(--color-placeholder-sub);
+  background-color: var(--color-surface);
   font-size: var(--font-size-caption);
   font-weight: 700;
 }
@@ -818,6 +810,10 @@ a.logo-box:focus-visible {
    7-1. MOMENTRIP PICK - Momentrip's signature course cards
    place -> meal -> activity, connected as a single flow
    -------------------------------------------------------------------------- */
+.moment-pick-section {
+  border-top: 1px solid var(--color-placeholder-sub);
+}
+
 .course-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -829,12 +825,12 @@ a.logo-box:focus-visible {
   border: none;
   padding: var(--gap-md);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transition: var(--transition);
 }
 
 .course-card-head {
-  margin-bottom: var(--gap-md);
+  margin-bottom: var(--gap-sm);
 }
 
 .course-card-head .badge {
@@ -866,14 +862,15 @@ a.logo-box:focus-visible {
 
 .course-step .ph-box {
   aspect-ratio: 1 / 1;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .course-step .step-label {
   display: block;
   font-size: var(--font-size-caption);
-  color: var(--color-subtext);
-  margin-bottom: 6px;
+  font-weight: 700;
+  color: var(--color-interactive-strong);
+  margin-bottom: 4px;
 }
 
 .course-step .step-name {
@@ -905,8 +902,8 @@ a.logo-box:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--gap-sm);
-  padding: var(--gap-md) var(--gap-xs);
+  gap: 6px;
+  padding: var(--gap-sm) var(--gap-xs);
   background-color: var(--color-surface);
   border: none;
   text-align: center;
@@ -922,7 +919,7 @@ a.logo-box:focus-visible {
 
 .category-item > i {
   color: var(--color-primary);
-  font-size: var(--font-size-display);
+  font-size: var(--font-size-heading);
   transition: var(--transition);
 }
 
@@ -943,7 +940,7 @@ a.logo-box:focus-visible {
 .card-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--gap-md);
+  gap: var(--gap-sm);
 }
 
 .card {
@@ -951,12 +948,12 @@ a.logo-box:focus-visible {
   border: none;
   overflow: hidden;
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transition: var(--transition);
 }
 
 .card-body {
-  padding: var(--gap-sm) var(--gap-sm) var(--gap-md);
+  padding: var(--gap-sm) var(--gap-sm) var(--gap-sm);
 }
 
 .card-top-row {
@@ -973,7 +970,7 @@ a.logo-box:focus-visible {
 .card .card-title {
   font-size: var(--font-size-body);
   font-weight: 700;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .card .card-meta {
@@ -1059,7 +1056,7 @@ a.logo-box:focus-visible {
 
 .event-timeline-item {
   display: flex;
-  gap: var(--gap-md);
+  gap: var(--gap-sm);
   padding-bottom: var(--gap-lg);
 }
 
@@ -1109,19 +1106,19 @@ a.logo-box:focus-visible {
 .event-timeline-card {
   flex: 1;
   display: flex;
-  gap: var(--gap-sm);
+  gap: var(--gap-xs);
   background-color: var(--color-surface);
   border: none;
   padding: var(--gap-sm);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transition: var(--transition);
 }
 
 .event-timeline-card .ph-box {
   width: 180px;
   min-width: 180px;
-  height: 120px;
+  height: 100px;
 }
 
 .event-timeline-card .card-body {
@@ -1143,11 +1140,12 @@ a.logo-box:focus-visible {
 }
 
 .tab-item {
-  padding: 12px 22px;
+  padding: 12px 20px;
   font-size: var(--font-size-body);
   color: var(--color-subtext);
   border: 1px solid var(--color-border);
   border-bottom: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   background-color: transparent;
   margin-bottom: -1px;
   transition: var(--transition);
@@ -1173,7 +1171,7 @@ a.logo-box:focus-visible {
    -------------------------------------------------------------------------- */
 .board-preview-table {
   width: 100%;
-  border-top: 1px solid var(--color-text);
+  border-top: none;
 }
 
 .board-row {
@@ -1181,18 +1179,23 @@ a.logo-box:focus-visible {
   grid-template-columns: 110px 1fr 140px 110px;
   align-items: center;
   gap: var(--gap-sm);
-  padding: 16px 8px;
-  border-bottom: 1px solid var(--color-border);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-placeholder-sub);
   font-size: var(--font-size-body);
   transition: var(--transition);
 }
 
+.board-row:last-child {
+  border-bottom: none;
+}
+
 .board-row.head {
-  background-color: var(--color-placeholder-sub);
+  background-color: var(--color-primary-light);
   font-size: var(--font-size-caption);
   color: var(--color-subtext);
   font-weight: 700;
-  padding: 12px 8px;
+  text-align: center;
+  padding: 10px var(--gap-sm);
 }
 
 .board-row .col-category {
@@ -1226,12 +1229,14 @@ a.logo-box:focus-visible {
 
 .board-list-toolbar .input-select {
   width: 140px;
+  padding-right: var(--gap-md);
+  border-color: var(--color-placeholder-sub);
 }
 
 .board-list-toolbar .search-box {
   flex: 1;
   min-width: 420px;
-  border-color: transparent;
+  border-color: var(--color-placeholder-sub);
   box-shadow: var(--shadow-md);
 }
 
@@ -1313,7 +1318,7 @@ a.logo-box:focus-visible {
   gap: var(--gap-md);
   padding: var(--gap-md);
   background-color: var(--color-surface);
-  border: none;
+  border: 1px solid var(--color-placeholder-sub);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
@@ -1452,9 +1457,10 @@ a.logo-box:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-placeholder-sub);
+  background-color: var(--color-surface);
   font-size: var(--font-size-caption);
-  color: var(--color-subtext);
+  color: var(--color-primary);
   transition: var(--transition);
 }
 
@@ -1709,6 +1715,7 @@ a.logo-box:focus-visible {
   flex: 1 1 140px;
   padding: 12px 14px;
   border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   background-color: var(--color-card);
   cursor: pointer;
   transition: var(--transition);
@@ -1846,8 +1853,9 @@ a.logo-box:focus-visible {
    15. Footer
    -------------------------------------------------------------------------- */
 .site-footer {
-  border-top: 1px solid var(--color-border);
+  border-top: none;
   background-color: var(--color-card);
+  box-shadow: var(--shadow-md);
   padding: 42px 0 var(--gap-xl);
 }
 
@@ -1914,6 +1922,10 @@ a.logo-box:focus-visible {
   .hero-top {
     grid-template-columns: 1fr;
     align-items: stretch;
+  }
+
+  .hero-bottom {
+    grid-template-columns: 1fr;
   }
 
   .hero-content {
@@ -2080,6 +2092,7 @@ a.logo-box:focus-visible {
   }
 
   .hero-bottom {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
     gap: var(--gap-md);
