@@ -598,13 +598,17 @@ a.logo-box:focus-visible {
 /* --------------------------------------------------------------------------
    7. Hero (index) - Discovery search + quick category + map/spot
    -------------------------------------------------------------------------- */
+.hero-section {
+  padding-bottom: calc(var(--gap-xl) * 3);
+}
+
 .hero {
   display: flex;
   flex-direction: column;
   gap: var(--gap-md);
 }
 
-/* Hero top: left copy block and right MAP card share the same row height,
+/* Hero top: left column and right MAP card share the same row height,
    so the two sides read as one component instead of two mismatched blocks. */
 .hero-top {
   display: grid;
@@ -613,11 +617,22 @@ a.logo-box:focus-visible {
   align-items: stretch;
 }
 
+/* Hero left: single vertical flow for the whole left column. Hero Copy sits
+   at the top; Hero Bottom (Quick Category + Search) is pinned to the bottom
+   via margin-top:auto, so it anchors naturally against the MAP card's height
+   instead of being pushed down by it as a separate row below hero-top. */
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  height: 100%;
+}
+
 .hero-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 100%;
+  justify-content: flex-start;
+  margin-top: calc(var(--gap-xl) * 2 + var(--gap-lg));
 }
 
 .hero-content .current-region {
@@ -625,7 +640,7 @@ a.logo-box:focus-visible {
   align-items: center;
   gap: 6px;
   align-self: flex-start;
-  margin-bottom: var(--gap-sm);
+  margin-bottom: var(--gap-md);
   padding: 0;
   border: none;
   background: transparent;
@@ -659,26 +674,32 @@ a.logo-box:focus-visible {
   width: 100%;
 }
 
-/* Hero bottom: reuses hero-top's own grid columns/gap so the search box
-   and Quick Category align to the same left/right axis as Hero Copy/MAP. */
+/* Hero bottom: Quick Category and Search stack at the bottom of hero-left,
+   sharing the same left edge as Hero Copy (region/title/desc) above. */
 .hero-bottom {
-  display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: var(--gap-xl);
-  align-items: center;
-  padding: var(--gap-sm) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-md);
+  margin-top: auto;
+  padding: var(--gap-sm) 0 0;
   border: none;
   background-color: transparent;
 }
 
 .hero-bottom .search-box {
-  width: 100%;
+  order: 2;
+  width: 630px;
   height: 56px;
   align-items: stretch;
 }
 
 .hero-bottom .search-box .btn {
   height: 100%;
+}
+
+.hero-bottom .hero-quick-category {
+  order: 1;
 }
 
 .hero-quick-category .quick-category-label {
@@ -812,6 +833,7 @@ a.logo-box:focus-visible {
    -------------------------------------------------------------------------- */
 .moment-pick-section {
   border-top: 1px solid var(--color-placeholder-sub);
+  padding-top: calc(var(--gap-xl) * 3);
 }
 
 .course-grid {
@@ -908,7 +930,7 @@ a.logo-box:focus-visible {
   border: none;
   text-align: center;
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transition: var(--transition);
 }
 
@@ -1924,12 +1946,16 @@ a.logo-box:focus-visible {
     align-items: stretch;
   }
 
-  .hero-bottom {
-    grid-template-columns: 1fr;
+  .hero-left {
+    height: auto;
   }
 
-  .hero-content {
-    height: auto;
+  .hero-bottom {
+    margin-top: 0;
+  }
+
+  .hero-bottom .search-box {
+    width: 100%;
   }
 
   .hero-visual {
@@ -2091,6 +2117,12 @@ a.logo-box:focus-visible {
     font-size: var(--font-size-heading);
   }
 
+  /* Mobile reads Hero Content -> Quick Category -> Search -> MAP, so cancel
+     Tablet's order:-1 (MAP-first) and let source order stand. */
+  .hero-visual {
+    order: 0;
+  }
+
   .hero-bottom {
     display: flex;
     flex-direction: column;
@@ -2100,6 +2132,7 @@ a.logo-box:focus-visible {
   }
 
   .hero-bottom .search-box {
+    width: 100%;
     flex: 0 0 auto;
     flex-direction: column;
     height: auto;
