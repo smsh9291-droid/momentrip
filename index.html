@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Momentrip Wireframe - Home</title>
-<link rel="stylesheet" href="css/wireframe.css">
+<link rel="stylesheet" href="css/wireframe.css">1
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=75bmp6f9fq"></script>
 </head>
 <body>
 
@@ -87,14 +88,16 @@
 
           <div class="hero-visual">
             <div class="hero-map-card">
-              <div class="ph-box hero-map"></div>
+              <div class="ph-box hero-map" id="map"></div>
 
               <div class="hero-map-spots">
                 <p class="panel-title">오늘 인기 Spot</p>
                 <ul class="hero-spot-list">
                   <li class="hero-spot-item">
                     <span class="spot-rank">1</span>
-                    <span class="icon-box"></span>
+                    <span class="icon-box">
+                      <img src="assets/images/hero/hero-spot-1.png" alt="소소한 카페">
+                    </span>
                     <span class="spot-text">
                       <span class="spot-name">소소한 카페</span>
                       <span class="spot-meta">성수동 · 도보 5분</span>
@@ -102,7 +105,9 @@
                   </li>
                   <li class="hero-spot-item">
                     <span class="spot-rank">2</span>
-                    <span class="icon-box"></span>
+                    <span class="icon-box">
+                      <img src="assets/images/hero/hero-spot-2.png" alt="한강 피크닉 존">
+                    </span>
                     <span class="spot-text">
                       <span class="spot-name">한강 피크닉 존</span>
                       <span class="spot-meta">성수동 · 도보 12분</span>
@@ -110,7 +115,9 @@
                   </li>
                   <li class="hero-spot-item">
                     <span class="spot-rank">3</span>
-                    <span class="icon-box"></span>
+                    <span class="icon-box">
+                      <img src="assets/images/hero/hero-spot-3.png" alt="전시 갤러리 무드">
+                    </span>
                     <span class="spot-text">
                       <span class="spot-name">전시 갤러리 무드</span>
                       <span class="spot-meta">성수동 · 도보 8분</span>
@@ -148,19 +155,25 @@
           </div>
           <div class="course-steps">
             <div class="course-step">
-              <div class="ph-box ratio-1-1"></div>
+              <div class="ph-box ratio-1-1">
+                <img src="assets/images/places/seoul-soso-cafe.png" alt="소소한 카페">
+              </div>
               <span class="step-label">STEP 1 · 장소</span>
               <span class="step-name">소소한 카페</span>
             </div>
             <span class="course-arrow">&rarr;</span>
             <div class="course-step">
-              <div class="ph-box ratio-1-1"></div>
+              <div class="ph-box ratio-1-1">
+                <img src="assets/images/places/local-brunch.png" alt="성수 로컬 브런치">
+              </div>
               <span class="step-label">STEP 2 · 식사</span>
               <span class="step-name">성수 로컬 브런치</span>
             </div>
             <span class="course-arrow">&rarr;</span>
             <div class="course-step">
-              <div class="ph-box ratio-1-1"></div>
+              <div class="ph-box ratio-1-1">
+                <img src="assets/images/classes/pottery-class-1.png" alt="도자기 원데이 클래스">
+              </div>
               <span class="step-label">STEP 3 · 체험</span>
               <span class="step-name">도자기 원데이 클래스</span>
             </div>
@@ -175,19 +188,25 @@
           </div>
           <div class="course-steps">
             <div class="course-step">
-              <div class="ph-box ratio-1-1"></div>
+              <div class="ph-box ratio-1-1">
+                <img src="assets/images/places/gallery-exhibition.png" alt="전시 갤러리 무드">
+              </div>
               <span class="step-label">STEP 1 · 장소</span>
               <span class="step-name">전시 갤러리 무드</span>
             </div>
             <span class="course-arrow">&rarr;</span>
             <div class="course-step">
-              <div class="ph-box ratio-1-1"></div>
+              <div class="ph-box ratio-1-1">
+                <img src="assets/images/places/vegan-pasta.png" alt="비건 파스타 하우스">
+              </div>
               <span class="step-label">STEP 2 · 식사</span>
               <span class="step-name">비건 파스타 하우스</span>
             </div>
             <span class="course-arrow">&rarr;</span>
             <div class="course-step">
-              <div class="ph-box ratio-1-1"></div>
+              <div class="ph-box ratio-1-1">
+                <img src="assets/images/classes/perfume-class.png" alt="향수 만들기 클래스">
+              </div>
               <span class="step-label">STEP 3 · 체험</span>
               <span class="step-name">향수 만들기 클래스</span>
             </div>
@@ -214,7 +233,9 @@
       <div class="card-grid">
         <article class="card overlay-card">
           <div class="card-image-wrap">
-            <div class="ph-box ratio-4-3"></div>
+            <div class="ph-box ratio-4-3">
+              <img src="assets/images/classes/pottery-class-2.png" alt="도자기 원데이 클래스">
+            </div>
             <div class="card-image-overlay">
               <span class="badge">클래스</span>
               <span class="icon-box sm"></span>
@@ -230,7 +251,9 @@
 
         <article class="card overlay-card">
           <div class="card-image-wrap">
-            <div class="ph-box ratio-4-3"></div>
+            <div class="ph-box ratio-4-3">
+              <img src="assets/images/events/riverside-market.png" alt="성수 리버사이드 마켓">
+            </div>
             <div class="card-image-overlay">
               <span class="badge">행사</span>
               <span class="icon-box sm"></span>
@@ -246,7 +269,9 @@
 
         <article class="card overlay-card">
           <div class="card-image-wrap">
-            <div class="ph-box ratio-4-3"></div>
+            <div class="ph-box ratio-4-3">
+              <img src="assets/images/classes/han-river-kayak.png" alt="한강 카약 체험">
+            </div>
             <div class="card-image-overlay">
               <span class="badge">체험</span>
               <span class="icon-box sm"></span>
@@ -262,7 +287,9 @@
 
         <article class="card overlay-card">
           <div class="card-image-wrap">
-            <div class="ph-box ratio-4-3"></div>
+            <div class="ph-box ratio-4-3">
+              <img src="assets/images/places/rooftop-cafe.png" alt="루프탑 브런치 카페">
+            </div>
             <div class="card-image-overlay">
               <span class="badge">장소</span>
               <span class="icon-box sm"></span>
@@ -295,19 +322,21 @@
       <div class="card-grid">
         <article class="card overlay-card">
           <div class="card-image-wrap">
-            <div class="ph-box ratio-4-3"></div>
+            <div class="ph-box ratio-4-3">
+              <img src="assets/images/places/brewing-lounge.png" alt="성수 브루잉 라운지">
+            </div>
             <div class="card-image-overlay">
               <span class="badge">맛집·카페</span>
               <span class="icon-box sm"></span>
             </div>
           </div>
           <div class="card-body">
-            <h3 class="card-title">플레이스 이름 001</h3>
+            <h3 class="card-title">성수 브루잉 라운지</h3>
             <div class="card-meta">
               <span>서울 성동구</span>
             </div>
             <div class="card-rating">
-              <span class="icon-box"></span>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
               4.8 (128)
             </div>
           </div>
@@ -315,19 +344,21 @@
 
         <article class="card overlay-card">
           <div class="card-image-wrap">
-            <div class="ph-box ratio-4-3"></div>
+            <div class="ph-box ratio-4-3">
+              <img src="assets/images/places/gallery-exhibition.png" alt="연남 코너북스">
+            </div>
             <div class="card-image-overlay">
               <span class="badge">문화·전시</span>
               <span class="icon-box sm"></span>
             </div>
           </div>
           <div class="card-body">
-            <h3 class="card-title">플레이스 이름 002</h3>
+            <h3 class="card-title">연남 코너북스</h3>
             <div class="card-meta">
               <span>서울 마포구</span>
             </div>
             <div class="card-rating">
-              <span class="icon-box"></span>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
               4.6 (94)
             </div>
           </div>
@@ -335,19 +366,21 @@
 
         <article class="card overlay-card">
           <div class="card-image-wrap">
-            <div class="ph-box ratio-4-3"></div>
+            <div class="ph-box ratio-4-3">
+              <img src="assets/images/places/riverside-walk.png" alt="한남 리버사이드 워크">
+            </div>
             <div class="card-image-overlay">
               <span class="badge">자연·산책</span>
               <span class="icon-box sm"></span>
             </div>
           </div>
           <div class="card-body">
-            <h3 class="card-title">플레이스 이름 003</h3>
+            <h3 class="card-title">한남 리버사이드 워크</h3>
             <div class="card-meta">
               <span>서울 용산구</span>
             </div>
             <div class="card-rating">
-              <span class="icon-box"></span>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
               4.9 (201)
             </div>
           </div>
@@ -355,19 +388,21 @@
 
         <article class="card overlay-card">
           <div class="card-image-wrap">
-            <div class="ph-box ratio-4-3"></div>
+            <div class="ph-box ratio-4-3">
+              <img src="assets/images/places/picnic-garden.png" alt="서울숲 피크닉 가든">
+            </div>
             <div class="card-image-overlay">
               <span class="badge">야외 활동</span>
               <span class="icon-box sm"></span>
             </div>
           </div>
           <div class="card-body">
-            <h3 class="card-title">플레이스 이름 004</h3>
+            <h3 class="card-title">서울숲 피크닉 가든</h3>
             <div class="card-meta">
               <span>서울 성동구</span>
             </div>
             <div class="card-rating">
-              <span class="icon-box"></span>
+              <i class="fa-solid fa-star" aria-hidden="true"></i>
               4.7 (156)
             </div>
           </div>
@@ -455,7 +490,9 @@
             <span class="marker-line"></span>
           </div>
           <div class="event-timeline-card">
-            <div class="ph-box"></div>
+            <div class="ph-box">
+              <img src="assets/images/events/riverside-market.png" alt="성수 리버사이드 마켓">
+            </div>
             <div class="card-body">
               <span class="badge">축제·행사</span>
               <h3 class="card-title">성수 리버사이드 마켓</h3>
@@ -476,10 +513,12 @@
             <span class="marker-line"></span>
           </div>
           <div class="event-timeline-card">
-            <div class="ph-box"></div>
+            <div class="ph-box">
+              <img src="assets/images/places/han-river-flea-market.png" alt="망원 한강 플리마켓">
+            </div>
             <div class="card-body">
               <span class="badge">플리마켓</span>
-              <h3 class="card-title">서브 행사 타이틀 001</h3>
+              <h3 class="card-title">망원 한강 플리마켓</h3>
               <div class="card-meta">
                 <span>서울 마포구</span>
                 <span class="divider"></span>
@@ -497,10 +536,12 @@
             <span class="marker-line"></span>
           </div>
           <div class="event-timeline-card">
-            <div class="ph-box"></div>
+            <div class="ph-box">
+              <img src="assets/images/places/gallery-night.png" alt="이태원 갤러리 나잇">
+            </div>
             <div class="card-body">
               <span class="badge">문화·전시</span>
-              <h3 class="card-title">서브 행사 타이틀 002</h3>
+              <h3 class="card-title">이태원 갤러리 나잇</h3>
               <div class="card-meta">
                 <span>서울 용산구</span>
                 <span class="divider"></span>
@@ -535,25 +576,25 @@
         </div>
         <div class="board-row">
           <span class="col-category">자유게시판</span>
-          <span class="col-title">게시글 제목이 들어가는 영역입니다 001</span>
+          <span class="col-title">루프탑 브런치 카페, 뷰 진짜 좋아요</span>
           <span class="col-author">작성자01</span>
           <span class="col-date">2026.07.28</span>
         </div>
         <div class="board-row">
           <span class="col-category">후기</span>
-          <span class="col-title">게시글 제목이 들어가는 영역입니다 002</span>
+          <span class="col-title">성수동 소소한 카페, 대기 없이 다녀왔어요</span>
           <span class="col-author">작성자02</span>
           <span class="col-date">2026.07.27</span>
         </div>
         <div class="board-row">
           <span class="col-category">질문</span>
-          <span class="col-title">게시글 제목이 들어가는 영역입니다 003</span>
+          <span class="col-title">마포구에서 아이랑 갈만한 실내 데이트 코스 있을까요?</span>
           <span class="col-author">작성자03</span>
           <span class="col-date">2026.07.26</span>
         </div>
         <div class="board-row">
           <span class="col-category">동행 모집</span>
-          <span class="col-title">게시글 제목이 들어가는 영역입니다 004</span>
+          <span class="col-title">이번 주말 한강 카약 같이 타실 분 구해요</span>
           <span class="col-author">작성자04</span>
           <span class="col-date">2026.07.25</span>
         </div>
@@ -581,5 +622,6 @@
   </div>
 </footer>
 
+<script src="js/map.js"></script>
 </body>
 </html>

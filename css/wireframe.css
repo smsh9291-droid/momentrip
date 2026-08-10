@@ -58,6 +58,13 @@
   --font-size-subtitle: 17px;
   --font-size-heading: 22px;
   --font-size-display: 34px;
+
+  --font-family-base: "LG EI Text", "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
+
+  --font-weight-body: 400;
+  --font-weight-nav: 500;
+  --font-weight-card-title: 600;
+  --font-weight-section-title: 700;
 }
 
 /* --------------------------------------------------------------------------
@@ -74,7 +81,7 @@ html {
 }
 
 body {
-  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
+  font-family: var(--font-family-base);
   background-color: var(--color-bg);
   color: var(--color-text);
   font-size: var(--font-size-body);
@@ -144,14 +151,14 @@ button, input, textarea, select {
 
 .section-heading .title {
   font-size: var(--font-size-heading);
-  font-weight: 700;
+  font-weight: var(--font-weight-section-title);
 }
 
 .section-heading .desc {
   margin-top: 4px;
   font-size: var(--font-size-caption);
   color: var(--color-subtext);
-  font-weight: 400;
+  font-weight: var(--font-weight-body);
 }
 
 .link-more {
@@ -162,7 +169,7 @@ button, input, textarea, select {
   border-radius: var(--radius-sm);
   padding: 6px 14px;
   white-space: nowrap;
-  font-weight: 600;
+  font-weight: var(--font-weight-card-title);
   transition: var(--transition);
 }
 
@@ -201,6 +208,24 @@ button, input, textarea, select {
 .ph-box.ratio-4-3  { aspect-ratio: 4 / 3; }
 .ph-box.ratio-1-1  { aspect-ratio: 1 / 1; }
 .ph-box.ratio-3-2  { aspect-ratio: 3 / 2; }
+
+.ph-box img,
+.icon-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ph-box:has(img),
+.icon-box:has(img) {
+  border: none;
+  background-color: transparent;
+}
+
+.ph-box:has(img)::before {
+  content: none;
+}
 
 .icon-circle,
 .icon-box {
@@ -261,7 +286,7 @@ button, input, textarea, select {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
   color: var(--color-surface);
-  font-weight: 600;
+  font-weight: var(--font-weight-card-title);
   box-shadow: var(--shadow-sm);
 }
 
@@ -333,7 +358,7 @@ button, input, textarea, select {
   display: block;
   margin-bottom: var(--gap-xs);
   font-size: var(--font-size-caption);
-  font-weight: 700;
+  font-weight: var(--font-weight-nav);
 }
 
 .field .field-hint {
@@ -416,7 +441,7 @@ button, input, textarea, select {
   background-color: var(--color-primary-light);
   color: var(--color-interactive-strong);
   font-size: var(--font-size-caption);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
 }
 
 /* --------------------------------------------------------------------------
@@ -444,9 +469,9 @@ button, input, textarea, select {
   justify-content: center;
   border: none;
   background-color: transparent;
-  font-weight: 700;
+  font-weight: var(--font-weight-section-title);
   font-size: var(--font-size-body);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   transition: var(--transition);
 }
 
@@ -470,7 +495,7 @@ a.logo-box:focus-visible {
 
 .gnb a {
   font-size: var(--font-size-body);
-  font-weight: 500;
+  font-weight: var(--font-weight-nav);
   padding: 8px 0;
   transition: var(--transition);
 }
@@ -487,7 +512,7 @@ a.logo-box:focus-visible {
 .gnb a.is-active {
   border-bottom: 2px solid var(--color-primary);
   color: var(--color-primary);
-  font-weight: 600;
+  font-weight: var(--font-weight-card-title);
 }
 
 .header-utils {
@@ -599,6 +624,7 @@ a.logo-box:focus-visible {
    7. Hero (index) - Discovery search + quick category + map/spot
    -------------------------------------------------------------------------- */
 .hero-section {
+  padding-top: calc(var(--gap-xl) * 4);
   padding-bottom: calc(var(--gap-xl) * 3);
 }
 
@@ -771,6 +797,15 @@ a.logo-box:focus-visible {
   content: "MAP";
 }
 
+#map {
+  width: 100%;
+  border-radius: inherit;
+}
+
+#map.hero-map::before {
+  content: none;
+}
+
 .hero-map-spots {
   padding: var(--gap-sm) var(--gap-md);
 }
@@ -845,7 +880,7 @@ a.logo-box:focus-visible {
 .course-card {
   background-color: var(--color-surface);
   border: none;
-  padding: var(--gap-md);
+  padding: var(--gap-lg) var(--gap-md);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
   transition: var(--transition);
@@ -856,12 +891,12 @@ a.logo-box:focus-visible {
 }
 
 .course-card-head .badge {
-  margin-bottom: 8px;
+  margin-bottom: var(--gap-sm);
 }
 
 .course-card-head .course-title {
   font-size: var(--font-size-subtitle);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
   margin-bottom: 4px;
 }
 
@@ -890,7 +925,7 @@ a.logo-box:focus-visible {
 .course-step .step-label {
   display: block;
   font-size: var(--font-size-caption);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
   color: var(--color-interactive-strong);
   margin-bottom: 4px;
 }
@@ -898,7 +933,7 @@ a.logo-box:focus-visible {
 .course-step .step-name {
   display: block;
   font-size: var(--font-size-caption);
-  font-weight: 500;
+  font-weight: var(--font-weight-card-title);
 }
 
 .course-arrow {
@@ -951,7 +986,7 @@ a.logo-box:focus-visible {
 
 .category-item .category-name {
   font-size: var(--font-size-caption);
-  font-weight: 500;
+  font-weight: var(--font-weight-nav);
 }
 
 .category-item .category-sub {
@@ -991,7 +1026,7 @@ a.logo-box:focus-visible {
 
 .card .card-title {
   font-size: var(--font-size-body);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
   margin-bottom: 4px;
 }
 
@@ -1048,9 +1083,14 @@ a.logo-box:focus-visible {
   justify-content: space-between;
 }
 
-.overlay-card .card-image-overlay .badge,
 .overlay-card .card-image-overlay .icon-box {
   background-color: var(--color-card);
+}
+
+.overlay-card .card-image-overlay .badge {
+  background-color: rgba(143, 207, 195, 0.88);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.85);
 }
 
 .overlay-card .card-rating {
@@ -1059,12 +1099,16 @@ a.logo-box:focus-visible {
   gap: 6px;
   margin-top: 8px;
   font-size: var(--font-size-caption);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
 }
 
 .overlay-card .card-rating .icon-box {
   width: 14px;
   height: 14px;
+}
+
+.overlay-card .card-rating .fa-star {
+  color: var(--color-primary);
 }
 
 /* --------------------------------------------------------------------------
@@ -1096,7 +1140,7 @@ a.logo-box:focus-visible {
 
 .event-timeline-marker .date-day {
   font-size: var(--font-size-heading);
-  font-weight: 800;
+  font-weight: var(--font-weight-section-title);
 }
 
 .event-timeline-marker .date-month {
@@ -1109,8 +1153,7 @@ a.logo-box:focus-visible {
   height: 10px;
   margin-top: 8px;
   border-radius: 50%;
-  background-color: var(--color-placeholder-sub);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-interactive-strong);
   flex-shrink: 0;
 }
 
@@ -1128,6 +1171,7 @@ a.logo-box:focus-visible {
 .event-timeline-card {
   flex: 1;
   display: flex;
+  align-items: center;
   gap: var(--gap-xs);
   background-color: var(--color-surface);
   border: none;
@@ -1181,7 +1225,7 @@ a.logo-box:focus-visible {
 .tab-item.is-active {
   background: linear-gradient(to bottom, var(--color-surface) 0%, transparent 100%);
   color: var(--color-primary);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
 }
 
 .card-grid.card-grid-3 {
@@ -1194,6 +1238,10 @@ a.logo-box:focus-visible {
 .board-preview-table {
   width: 100%;
   border-top: none;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
 }
 
 .board-row {
@@ -1204,6 +1252,7 @@ a.logo-box:focus-visible {
   padding: 10px 12px;
   border-bottom: 1px solid var(--color-placeholder-sub);
   font-size: var(--font-size-body);
+  text-align: center;
   transition: var(--transition);
 }
 
@@ -1212,12 +1261,21 @@ a.logo-box:focus-visible {
 }
 
 .board-row.head {
-  background-color: var(--color-primary-light);
+  background-color: var(--color-interactive-strong);
   font-size: var(--font-size-caption);
-  color: var(--color-subtext);
-  font-weight: 700;
+  color: var(--color-surface);
+  font-weight: var(--font-weight-card-title);
   text-align: center;
   padding: 10px var(--gap-sm);
+}
+
+/* .col-category/.col-author/.col-date set their own gray color below,
+   which wins over .board-row.head's inherited white — force all four
+   header labels to white so the whole header bar reads as one unit. */
+.board-row.head .col-category,
+.board-row.head .col-author,
+.board-row.head .col-date {
+  color: var(--color-surface);
 }
 
 .board-row .col-category {
@@ -1226,7 +1284,7 @@ a.logo-box:focus-visible {
 }
 
 .board-row .col-title {
-  font-weight: 500;
+  font-weight: var(--font-weight-nav);
 }
 
 .board-row .col-author,
@@ -1266,7 +1324,7 @@ a.logo-box:focus-visible {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
   color: var(--color-surface);
-  font-weight: 600;
+  font-weight: var(--font-weight-card-title);
 }
 
 .board-list-toolbar .search-box .btn:hover,
@@ -1318,7 +1376,7 @@ a.logo-box:focus-visible {
 
 .sort-list button.is-active {
   color: var(--color-interactive-strong);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
 }
 
 .sort-list .sort-divider {
@@ -1371,7 +1429,7 @@ a.logo-box:focus-visible {
   align-items: center;
   gap: 4px;
   font-size: var(--font-size-caption);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
   color: var(--color-text);
 }
 
@@ -1387,7 +1445,7 @@ a.logo-box:focus-visible {
 
 .post-card-title {
   font-size: var(--font-size-subtitle);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
   margin: 8px 0 4px;
   letter-spacing: -0.01em;
 }
@@ -1503,7 +1561,7 @@ a.logo-box:focus-visible {
   background-color: var(--color-primary);
   color: var(--color-surface);
   border-color: var(--color-primary);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
 }
 
 /* --------------------------------------------------------------------------
@@ -1521,7 +1579,7 @@ a.logo-box:focus-visible {
 
 .post-header .post-title {
   font-size: var(--font-size-heading);
-  font-weight: 700;
+  font-weight: var(--font-weight-section-title);
   margin-bottom: var(--gap-sm);
   letter-spacing: -0.01em;
 }
@@ -1707,7 +1765,7 @@ a.logo-box:focus-visible {
 
 .write-title {
   font-size: var(--font-size-heading);
-  font-weight: 700;
+  font-weight: var(--font-weight-section-title);
   margin-bottom: var(--gap-sm);
   letter-spacing: -0.01em;
 }
@@ -1759,7 +1817,7 @@ a.logo-box:focus-visible {
 
 .category-chip .chip-title {
   font-size: var(--font-size-body);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
   color: var(--color-text);
 }
 
@@ -1941,36 +1999,13 @@ a.logo-box:focus-visible {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .hero-top {
-    grid-template-columns: 1fr;
-    align-items: stretch;
-  }
-
-  .hero-left {
-    height: auto;
-  }
-
-  .hero-bottom {
-    margin-top: 0;
-  }
-
+  /* Tablet keeps Hero's 2-column layout identical to Desktop (hero-top,
+     hero-left, hero-bottom, hero-visual, hero-spot-list/item all stay on
+     their unconditional/Desktop rules). Only the search box still needs to
+     shrink to the narrower tablet left column instead of Desktop's fixed
+     630px. */
   .hero-bottom .search-box {
     width: 100%;
-  }
-
-  .hero-visual {
-    order: -1;
-    height: auto;
-  }
-
-  .hero-spot-list {
-    flex-direction: row;
-  }
-
-  .hero-spot-item {
-    flex: 1;
-    flex-direction: column;
-    text-align: center;
   }
 
   .course-grid {
@@ -2042,7 +2077,8 @@ a.logo-box:focus-visible {
 
   .category-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--gap-lg) var(--gap-md);
+    row-gap: var(--gap-md);
+    column-gap: var(--gap-md);
   }
 
   .category-item {
@@ -2113,14 +2149,43 @@ a.logo-box:focus-visible {
     line-height: 1.4;
   }
 
+  /* Mobile-only: Hero drops to a single stacked column (Tablet keeps
+     Desktop's 2-column grid, so this no longer cascades down from there). */
+  .hero-top {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-left {
+    height: auto;
+  }
+
+  /* Mobile: Desktop's hero-content margin-top exists only to vertically
+     balance Hero Copy against the MAP card in the 2-column desktop layout.
+     That alignment no longer applies once hero-top stacks to 1 column, so it
+     collapses to a plain Hero-section top/bottom gap instead. */
+  .hero-section {
+    padding-top: calc(var(--gap-xl) + var(--gap-sm));
+    padding-bottom: calc(var(--gap-xl) + var(--gap-sm));
+  }
+
+  /* .hero-bottom has padding: var(--gap-md) on all sides (wrapping Search +
+     Quick Category), which indents their left edge by that amount. Mirror
+     it here so hero-content's text starts on the same left edge. */
+  .hero-content {
+    margin-top: 0;
+    padding-left: var(--gap-md);
+  }
+
   .hero-content h1 {
     font-size: var(--font-size-heading);
   }
 
-  /* Mobile reads Hero Content -> Quick Category -> Search -> MAP, so cancel
-     Tablet's order:-1 (MAP-first) and let source order stand. */
+  /* Mobile reads Hero Content -> Search -> Quick Category -> MAP, so keep
+     source order (order:0) and drop the Desktop stretch-height so the MAP
+     card sizes to its own aspect-ratio instead of hero-left's height. */
   .hero-visual {
     order: 0;
+    height: auto;
   }
 
   .hero-bottom {
@@ -2129,13 +2194,21 @@ a.logo-box:focus-visible {
     align-items: stretch;
     gap: var(--gap-md);
     padding: var(--gap-md);
+    margin-top: 0;
   }
 
+  /* Mobile-only: put Search before Quick Category (Desktop keeps Quick
+     Category above Search via the unconditional order:1/2 rule above). */
   .hero-bottom .search-box {
+    order: 1;
     width: 100%;
     flex: 0 0 auto;
     flex-direction: column;
     height: auto;
+  }
+
+  .hero-quick-category {
+    order: 2;
   }
 
   .hero-bottom .search-box .input-text {
@@ -2156,8 +2229,16 @@ a.logo-box:focus-visible {
     margin-bottom: 16px;
   }
 
+  /* Hero Quick Category only: 5 chips as a 3-then-2 grid instead of the
+     generic .chip-list column stack, so the row doesn't run the page long. */
   .hero-quick-category .chip-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     justify-content: flex-start;
+  }
+
+  .hero-quick-category .chip {
+    padding: 10px 12px;
   }
 
   .chip {
@@ -2181,8 +2262,17 @@ a.logo-box:focus-visible {
     display: none;
   }
 
+  /* Mobile: card padding was wrapping the image too, insetting it from the
+     card's left edge unlike every other mobile card (image bleeds to the
+     card edge, padding lives on .card-body only). Move it there to match. */
   .event-timeline-card {
     flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .event-timeline-card .card-body {
+    padding: var(--gap-sm) var(--gap-sm) var(--gap-sm) 5px;
   }
 
   .event-timeline-card .ph-box {
@@ -2256,9 +2346,11 @@ a.logo-box:focus-visible {
     margin-top: var(--gap-sm);
   }
 
+  /* Mobile Community row: keep a compact board-list look — [category badge]
+     [title] [author] on one line — instead of stacking into a tall card. */
   .board-row {
-    grid-template-columns: 1fr;
-    gap: 4px;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: var(--gap-sm);
     text-align: left;
   }
 
@@ -2267,7 +2359,26 @@ a.logo-box:focus-visible {
   }
 
   .board-row .col-category {
-    order: -1;
+    justify-self: start;
+    width: 88px;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .board-row .col-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+  }
+
+  .board-row .col-author {
+    text-align: right;
+    white-space: nowrap;
   }
 
   .post-header .post-title {
@@ -2420,13 +2531,13 @@ a.logo-box:focus-visible {
 .place-info-label {
   font-size: var(--font-size-caption);
   color: var(--color-subtext);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   margin-bottom: 6px;
 }
 
 .place-info-name {
   font-size: var(--font-size-subtitle);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
   margin-bottom: var(--gap-sm);
   letter-spacing: -0.01em;
 }
@@ -2487,7 +2598,7 @@ a.logo-box:focus-visible {
 /* 댓글 영역 보강 */
 .comment-heading {
   font-size: var(--font-size-subtitle);
-  font-weight: 700;
+  font-weight: var(--font-weight-section-title);
   margin-bottom: var(--gap-md);
 }
 
@@ -2712,7 +2823,7 @@ a.logo-box:focus-visible {
 
 .login-title {
   font-size: var(--font-size-heading);
-  font-weight: 700;
+  font-weight: var(--font-weight-section-title);
   margin-bottom: var(--gap-sm);
   letter-spacing: -0.01em;
 }
@@ -2859,17 +2970,17 @@ a.logo-box:focus-visible {
   background-color: var(--color-primary-light);
   border-color: transparent;
   color: var(--color-secondary);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
 }
 
 .course-step .step-label {
   color: var(--color-interactive-strong);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
   letter-spacing: 0.02em;
 }
 
 .course-step .step-name {
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
 }
 
 /* course-arrow: 요구사항상 "Arrow는 그대로 유지"이므로 별도 스타일 없음 */
@@ -2877,7 +2988,7 @@ a.logo-box:focus-visible {
 /* --- HOT / Popular Spot: 동일한 Card(overlay-card) 시스템 공유 컴포넌트 --- */
 .overlay-card .card-image-overlay .badge {
   box-shadow: var(--shadow-sm);
-  font-weight: 700;
+  font-weight: var(--font-weight-card-title);
 }
 
 .overlay-card .card-image-overlay .icon-box {
@@ -2894,7 +3005,7 @@ a.logo-box:focus-visible {
 
 /* --- Category: Card 시스템 그대로, Hover는 기존 4번 규칙(Shadow만)만 사용 --- */
 .category-item .category-name {
-  font-weight: 700;
+  font-weight: var(--font-weight-nav);
 }
 
 /* --- Local Event: 이번 STEP에서 변경 없음 (Badge-Title spacing, Timeline 그대로 유지) --- */
@@ -2915,5 +3026,5 @@ a.logo-box:focus-visible {
 }
 
 .community-section .board-row .col-category {
-  font-weight: 600;
+  font-weight: var(--font-weight-card-title);
 }
