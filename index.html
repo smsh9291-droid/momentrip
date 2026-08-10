@@ -94,34 +94,40 @@
               <div class="hero-map-spots">
                 <p class="panel-title">오늘 인기 Spot</p>
                 <ul class="hero-spot-list">
-                  <li class="hero-spot-item">
+                  <li class="hero-spot-item" data-spot-id="cafe" tabindex="0" role="button">
                     <span class="spot-rank">1</span>
-                    <span class="icon-box">
-                      <img src="assets/images/hero/hero-spot-1.png" alt="소소한 카페">
-                    </span>
-                    <span class="spot-text">
-                      <span class="spot-name">소소한 카페</span>
-                      <span class="spot-meta">성수동 · 도보 5분</span>
+                    <span class="spot-body">
+                      <span class="icon-box">
+                        <img src="assets/images/hero/hero-spot-1.png" alt="소소한 카페">
+                      </span>
+                      <span class="spot-text">
+                        <span class="spot-name">소소한 카페</span>
+                        <span class="spot-meta">성수동 · 도보 5분</span>
+                      </span>
                     </span>
                   </li>
-                  <li class="hero-spot-item">
+                  <li class="hero-spot-item" data-spot-id="picnic" tabindex="0" role="button">
                     <span class="spot-rank">2</span>
-                    <span class="icon-box">
-                      <img src="assets/images/hero/hero-spot-2.png" alt="한강 피크닉 존">
-                    </span>
-                    <span class="spot-text">
-                      <span class="spot-name">한강 피크닉 존</span>
-                      <span class="spot-meta">성수동 · 도보 12분</span>
+                    <span class="spot-body">
+                      <span class="icon-box">
+                        <img src="assets/images/hero/hero-spot-2.png" alt="한강 피크닉 존">
+                      </span>
+                      <span class="spot-text">
+                        <span class="spot-name">한강 피크닉 존</span>
+                        <span class="spot-meta">성수동 · 도보 12분</span>
+                      </span>
                     </span>
                   </li>
-                  <li class="hero-spot-item">
+                  <li class="hero-spot-item" data-spot-id="gallery" tabindex="0" role="button">
                     <span class="spot-rank">3</span>
-                    <span class="icon-box">
-                      <img src="assets/images/hero/hero-spot-3.png" alt="전시 갤러리 무드">
-                    </span>
-                    <span class="spot-text">
-                      <span class="spot-name">전시 갤러리 무드</span>
-                      <span class="spot-meta">성수동 · 도보 8분</span>
+                    <span class="spot-body">
+                      <span class="icon-box">
+                        <img src="assets/images/hero/hero-spot-3.png" alt="전시 갤러리 무드">
+                      </span>
+                      <span class="spot-text">
+                        <span class="spot-name">전시 갤러리 무드</span>
+                        <span class="spot-meta">성수동 · 도보 8분</span>
+                      </span>
                     </span>
                   </li>
                 </ul>
@@ -239,7 +245,7 @@
             </div>
             <div class="card-image-overlay">
               <span class="badge">클래스</span>
-              <span class="icon-box sm"></span>
+              <button type="button" class="icon-box sm favorite-toggle" aria-pressed="false" aria-label="찜하기"><span class="favorite-check" aria-hidden="true">✓</span></button>
             </div>
           </div>
           <div class="card-body">
@@ -257,7 +263,7 @@
             </div>
             <div class="card-image-overlay">
               <span class="badge">행사</span>
-              <span class="icon-box sm"></span>
+              <button type="button" class="icon-box sm favorite-toggle" aria-pressed="false" aria-label="찜하기"><span class="favorite-check" aria-hidden="true">✓</span></button>
             </div>
           </div>
           <div class="card-body">
@@ -275,7 +281,7 @@
             </div>
             <div class="card-image-overlay">
               <span class="badge">체험</span>
-              <span class="icon-box sm"></span>
+              <button type="button" class="icon-box sm favorite-toggle" aria-pressed="false" aria-label="찜하기"><span class="favorite-check" aria-hidden="true">✓</span></button>
             </div>
           </div>
           <div class="card-body">
@@ -293,7 +299,7 @@
             </div>
             <div class="card-image-overlay">
               <span class="badge">장소</span>
-              <span class="icon-box sm"></span>
+              <button type="button" class="icon-box sm favorite-toggle" aria-pressed="false" aria-label="찜하기"><span class="favorite-check" aria-hidden="true">✓</span></button>
             </div>
           </div>
           <div class="card-body">
@@ -328,7 +334,7 @@
             </div>
             <div class="card-image-overlay">
               <span class="badge">맛집·카페</span>
-              <span class="icon-box sm"></span>
+              <button type="button" class="icon-box sm favorite-toggle" aria-pressed="false" aria-label="찜하기"><span class="favorite-check" aria-hidden="true">✓</span></button>
             </div>
           </div>
           <div class="card-body">
@@ -350,7 +356,7 @@
             </div>
             <div class="card-image-overlay">
               <span class="badge">문화·전시</span>
-              <span class="icon-box sm"></span>
+              <button type="button" class="icon-box sm favorite-toggle" aria-pressed="false" aria-label="찜하기"><span class="favorite-check" aria-hidden="true">✓</span></button>
             </div>
           </div>
           <div class="card-body">
@@ -372,7 +378,7 @@
             </div>
             <div class="card-image-overlay">
               <span class="badge">자연·산책</span>
-              <span class="icon-box sm"></span>
+              <button type="button" class="icon-box sm favorite-toggle" aria-pressed="false" aria-label="찜하기"><span class="favorite-check" aria-hidden="true">✓</span></button>
             </div>
           </div>
           <div class="card-body">
@@ -394,7 +400,7 @@
             </div>
             <div class="card-image-overlay">
               <span class="badge">야외 활동</span>
-              <span class="icon-box sm"></span>
+              <button type="button" class="icon-box sm favorite-toggle" aria-pressed="false" aria-label="찜하기"><span class="favorite-check" aria-hidden="true">✓</span></button>
             </div>
           </div>
           <div class="card-body">
@@ -624,5 +630,6 @@
 </footer>
 
 <script src="js/map.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

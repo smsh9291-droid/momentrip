@@ -108,6 +108,28 @@ button, input, textarea, select {
   color: inherit;
 }
 
+/* Common affordance for every genuinely clickable element (real navigation,
+   real button, or an explicit role="button" like .hero-spot-item) so pointer
+   cursor is consistent project-wide instead of being repeated (or missed) per
+   component. Several components already declare their own cursor: pointer
+   locally (.btn, .chip on hero-spot-item, .sort-list button, .category-chip,
+   .upload-box, .comment-actions button, header .region-select/.util-btn) --
+   this rule is a lower-specificity fallback for everything else (.chip
+   buttons, .tab-item, .action-btn, .gnb-toggle, plain <a> links like
+   .link-more/.post-card/pagination/breadcrumb/footer/login-links, etc.) and
+   never conflicts with those, since the value is identical everywhere.
+   Purely decorative, non-interactive elements (badge/rating/ranking number/
+   plain cards with only a hover shadow) are intentionally NOT included here. */
+a[href],
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 /* --------------------------------------------------------------------------
    2. Layout Containers
    -------------------------------------------------------------------------- */
@@ -624,7 +646,7 @@ a.logo-box:focus-visible {
    7. Hero (index) - Discovery search + quick category + map/spot
    -------------------------------------------------------------------------- */
 .hero-section {
-  padding-top: calc(var(--gap-xl) * 4);
+  padding-top: calc(var(--gap-xl) * 2 + var(--gap-sm));
   padding-bottom: calc(var(--gap-xl) * 3);
 }
 
@@ -866,6 +888,14 @@ a.logo-box:focus-visible {
   display: flex;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
+}
+
+/* Same focus-visible pattern used across the project (e.g. .sort-list button,
+   .chip) -- default outline kept, not removed. */
+.hero-spot-item:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
 }
 
 .hero-spot-item .spot-rank {
@@ -879,6 +909,26 @@ a.logo-box:focus-visible {
   background-color: var(--color-surface);
   font-size: var(--font-size-caption);
   font-weight: 700;
+}
+
+/* Groups icon-box + spot-text into one paintable box so hover background
+   starts after spot-rank (rank stays un-highlighted) and still reaches the
+   row's right edge -- flex: 1 here takes over the row-filling role spot-text
+   used to do directly against .hero-spot-item. Same subtle affordance
+   already used for clickable rows elsewhere
+   (.community-section .board-row:not(.head):hover), just scoped to this
+   narrower area instead of the whole item. */
+.hero-spot-item .spot-body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  transition: var(--transition);
+}
+
+.hero-spot-item:hover .spot-body {
+  background-color: var(--color-primary-light);
+  border-radius: var(--radius-sm);
 }
 
 .hero-spot-item .icon-box {
@@ -1125,6 +1175,54 @@ a.logo-box:focus-visible {
 
 .overlay-card .card-image-overlay .icon-box {
   background-color: var(--color-card);
+}
+
+/* Favorite/check toggle: same empty .icon-box.sm square as before (position,
+   size, border, background all untouched) -- now a real <button> so it needs
+   its own UA-button reset (no default padding/radius/appearance) and the
+   is-active look. Explicit flex centering here (on top of .icon-box's own
+   inline-flex/center) guarantees .favorite-check centers regardless of the
+   button's inline-flex/flex distinction across browsers. */
+.favorite-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 0;
+  appearance: none;
+}
+
+.favorite-toggle:not(.is-active):hover {
+  border-color: var(--color-primary);
+}
+
+.favorite-toggle:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
+}
+
+/* Scoped to the same ancestor path as .overlay-card .card-image-overlay
+   .icon-box (specificity 0,3,0, which sets background-color: white) so this
+   active-state background reliably wins regardless of source order --
+   .favorite-toggle.is-active alone (0,2,0) was always losing that fight,
+   which is why the mint background/checkmark contrast never showed. */
+.overlay-card .card-image-overlay .favorite-toggle.is-active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Real DOM element (not an icon font or pseudo-element) so the checkmark
+   never depends on an external resource loading correctly. */
+.favorite-check {
+  display: none;
+  color: var(--color-surface);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.favorite-toggle.is-active .favorite-check {
+  display: block;
 }
 
 .overlay-card .card-image-overlay .badge {
@@ -2889,6 +2987,7 @@ a.logo-box:focus-visible {
   margin-bottom: var(--gap-md);
   font-size: var(--font-size-caption);
   color: var(--color-subtext);
+  cursor: pointer;
 }
 
 .login-remember input[type="checkbox"] {
