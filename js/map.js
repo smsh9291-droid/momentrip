@@ -1,16 +1,18 @@
+var mapCenterPosition = new naver.maps.LatLng(37.5443, 127.0374);
+
 var map = new naver.maps.Map('map', {
-  center: new naver.maps.LatLng(37.5443, 127.0374),
+  center: mapCenterPosition,
   zoom: 15
 });
 
-var mapEl = document.getElementById('map');
+var resizeTimer = null;
 
-function resizeMap() {
-  if (!map || !mapEl) return;
-
-  map.setSize(
-    new naver.maps.Size(mapEl.clientWidth, mapEl.clientHeight)
-  );
+function handleMapResize() {
+  naver.maps.Event.trigger(map, 'resize');
+  map.setCenter(mapCenterPosition);
 }
 
-window.addEventListener('resize', resizeMap);
+window.addEventListener('resize', function () {
+  if (resizeTimer) clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(handleMapResize, 250);
+});

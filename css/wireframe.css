@@ -635,10 +635,15 @@ a.logo-box:focus-visible {
 }
 
 /* Hero top: left column and right MAP card share the same row height,
-   so the two sides read as one component instead of two mismatched blocks. */
+   so the two sides read as one component instead of two mismatched blocks.
+   minmax(0, ...) on both tracks (same technique as .write-row-media) keeps
+   each column shrinkable down to 0 instead of being floored by its content's
+   min-content width -- without this, a wide child (e.g. the search box)
+   forces its column to stay wide and steals space from the MAP column as
+   the viewport narrows, which is what made the MAP shrink/curl disproportionately. */
 .hero-top {
   display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: var(--gap-xl);
   align-items: stretch;
 }
@@ -691,6 +696,10 @@ a.logo-box:focus-visible {
   color: var(--color-subtext);
 }
 
+/* Stretched (via hero-top's align-items: stretch + height:100% here) so the
+   card matches hero-left's height for visual balance. The leftover height
+   this creates is absorbed by the MAP itself (see .hero-map.ph-box's
+   flex-grow below) instead of showing up as dead space under the Spot list. */
 .hero-visual {
   display: flex;
   height: 100%;
@@ -713,9 +722,16 @@ a.logo-box:focus-visible {
   background-color: transparent;
 }
 
+/* width: 100% + max-width: 630px (instead of a hard width: 630px) keeps the
+   exact same 630px box at real Desktop widths (the column always has more
+   than 630px there), but lets it shrink together with its column once the
+   column gets narrower than 630px -- previously the fixed width acted as a
+   hard floor that the grid column could never go below, which is what
+   squeezed the MAP column as the browser narrowed. */
 .hero-bottom .search-box {
   order: 2;
-  width: 630px;
+  width: 100%;
+  max-width: 630px;
   height: 56px;
   align-items: stretch;
 }
@@ -777,8 +793,16 @@ a.logo-box:focus-visible {
 }
 
 /* Hero right side: MAP and "today's popular spot" merged into one card component,
-   no big hero image and no separate floating panel. */
+   no big hero image and no separate floating panel.
+   display:flex + flex-direction:column turns MAP and Spot into flex items
+   stacked vertically, so the leftover height hero-map-card receives from
+   being stretched to hero-left's height (see .hero-visual above) can be
+   handed to a specific child via flex-grow, instead of sitting unclaimed
+   below Spot as dead space (plain block children never fill a taller-than-
+   content parent on their own). */
 .hero-map-card {
+  display: flex;
+  flex-direction: column;
   background-color: var(--color-surface);
   border: none;
   border-radius: var(--radius-md);
@@ -787,8 +811,21 @@ a.logo-box:focus-visible {
   transition: var(--transition);
 }
 
+/* flex-grow: 1 lets MAP claim any leftover height hero-map-card has beyond
+   its own natural content (Desktop, when hero-left is taller). flex-basis
+   stays the default "auto", so with no leftover height (Tablet/Mobile, once
+   hero-left no longer runs taller -- see the Tablet hero-content margin-top
+   override) MAP simply renders at its own aspect-ratio height, unchanged.
+   min-height is a safety floor only, not a design change: at every real
+   breakpoint the 16:9 aspect-ratio height is already well above it (e.g.
+   ~193px at a 375px-wide phone), so it never overrides the ratio-driven
+   height there. It just guarantees the naver map container (and therefore
+   the Naver Maps SDK below it, which sizes itself off this box's rendered
+   height) can never collapse to a sliver if width is ever squeezed to near 0. */
 .hero-map-card .hero-map.ph-box {
   aspect-ratio: 16 / 9;
+  min-height: 160px;
+  flex-grow: 1;
   border: none;
   border-bottom: 1px solid var(--color-border);
 }
@@ -806,7 +843,10 @@ a.logo-box:focus-visible {
   content: none;
 }
 
+/* flex-shrink: 0 keeps Spot at its natural content height always -- only
+   MAP (flex-grow: 1 above) absorbs/gives leftover height, Spot never does. */
 .hero-map-spots {
+  flex-shrink: 0;
   padding: var(--gap-sm) var(--gap-md);
 }
 
@@ -2001,11 +2041,20 @@ a.logo-box:focus-visible {
 
   /* Tablet keeps Hero's 2-column layout identical to Desktop (hero-top,
      hero-left, hero-bottom, hero-visual, hero-spot-list/item all stay on
-     their unconditional/Desktop rules). Only the search box still needs to
-     shrink to the narrower tablet left column instead of Desktop's fixed
-     630px. */
-  .hero-bottom .search-box {
-    width: 100%;
+     their unconditional/Desktop rules). The search box no longer needs a
+     Tablet-only override -- its base rule is already width:100%/max-width:630px,
+     so it shrinks with the narrower Tablet column on its own. */
+
+  /* Desktop's hero-content margin-top (128px) exists only to visually
+     balance Hero Copy against the MAP card, which is tall at Desktop's wider
+     column. At Tablet widths the same 2-column grid still applies, but the
+     MAP card's 16:9-driven height is much shorter, so that fixed 128px push
+     made hero-left taller than the MAP card and forced align-items:stretch
+     to stretch the MAP card past its own content -- reading as the MAP/Spot
+     card being squeezed into the top of an oversized box. Dropping it to 0
+     for Tablet lets both columns settle to their natural, matching height. */
+  .hero-content {
+    margin-top: 0;
   }
 
   .course-grid {
