@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <link rel="stylesheet" href="css/wireframe.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=75bmp6f9fq"></script>
+<script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=75bmp6f9fq&submodules=geocoder"></script>
 </head>
 <body>
 
@@ -83,7 +83,7 @@
             <div class="hero-content">
               <div class="current-region">
                 <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-                현재 지역 : 서울 성동구
+                <span>현재 지역 : <span id="current-region-text" aria-live="polite">서울 성동구</span></span>
               </div>
 
               <h1>오늘은 어떤 하루를<br>보내고 싶나요?</h1>

@@ -1,3 +1,152 @@
+// Hero "현재 지역" text: swaps the static "서울 성동구" fallback for the
+// user's real administrative region (Geolocation -> NAVER reverse
+// geocoding), once per page load. Purely a text label -- never touches
+// map.js's map instance, center, zoom, or markers. Any failure (no
+// geolocation support, permission denied, timeout, geocode miss) just
+// leaves the static fallback text in #current-region-text untouched; no
+// alerts, no thrown errors. Coordinates are used in-memory only for this
+// one lookup and are never logged, stored, or sent anywhere.
+//
+// TEMPORARY diagnostics (console.log/warn only, no coordinates/addresses
+// logged): traces which stage -- Geolocation, NAVER Service availability,
+// reverse geocode, or DOM update -- the fallback is falling back from.
+// Safe to strip once the real cause is found; every existing early-return
+// still leaves the fallback text exactly as before, unchanged.
+(function () {
+  var regionTextEl = document.getElementById('current-region-text');
+  if (!regionTextEl) {
+    console.warn('[location] #current-region-text not found in DOM');
+    return;
+  }
+
+  console.log('[location] isSecureContext:', window.isSecureContext);
+
+  if (navigator.permissions && navigator.permissions.query) {
+    navigator.permissions.query({ name: 'geolocation' }).then(
+      function (result) {
+        console.log('[location] permission state:', result.state);
+      },
+      function () {
+        console.log('[location] permission query unsupported/failed');
+      }
+    );
+  } else {
+    console.log('[location] navigator.permissions.query unsupported');
+  }
+
+  if (!('geolocation' in navigator)) {
+    console.warn('[location] navigator.geolocation unsupported');
+    return;
+  }
+
+  console.log(
+    '[location] naver.maps.Service typeof:',
+    typeof (window.naver && naver.maps && naver.maps.Service)
+  );
+
+  if (!window.naver || !naver.maps || !naver.maps.Service) {
+    console.warn('[location] naver.maps.Service unavailable (geocoder submodule not loaded)');
+    return;
+  }
+
+  // NAVER reverse geocoding's admcode area1/area2 already come back as one
+  // combined string for cities that have their own gu (area2: "고양시
+  // 일산동구", "성남시 분당구", ...), so area1 + area2 alone covers both the
+  // plain "시/도 + 시/군/구" case (서울 성동구) and the nested case without
+  // any extra branching. Abbreviations are the only formatting applied.
+  var SIDO_ABBREVIATIONS = {
+    '서울특별시': '서울',
+    '부산광역시': '부산',
+    '대구광역시': '대구',
+    '인천광역시': '인천',
+    '광주광역시': '광주',
+    '대전광역시': '대전',
+    '울산광역시': '울산',
+    '세종특별자치시': '세종',
+    '경기도': '경기',
+    '강원도': '강원',
+    '강원특별자치도': '강원',
+    '충청북도': '충북',
+    '충청남도': '충남',
+    '전북특별자치도': '전북',
+    '전라북도': '전북',
+    '전라남도': '전남',
+    '경상북도': '경북',
+    '경상남도': '경남',
+    '제주특별자치도': '제주'
+  };
+
+  function formatRegionName(area1Name, area2Name) {
+    if (!area1Name || !area2Name) return null;
+    var sido = SIDO_ABBREVIATIONS[area1Name] || area1Name;
+    return sido + ' ' + area2Name;
+  }
+
+  function handleReverseGeocodeResult(status, response) {
+    console.log('[location] reverse geocode callback status:', status);
+
+    if (status !== naver.maps.Service.Status.OK) {
+      console.warn('[location] reverse geocode failed, keeping fallback text');
+      return;
+    }
+
+    var hasV2 = !!(response && response.v2);
+    var results = hasV2 && response.v2.results;
+    console.log('[location] response.v2 exists:', hasV2, '| results length:', results ? results.length : 0);
+
+    var region = results && results[0] && results[0].region;
+    if (!region) {
+      console.warn('[location] no region in first result, keeping fallback text');
+      return;
+    }
+
+    console.log(
+      '[location] area1 present:', !!(region.area1 && region.area1.name),
+      '| area2 present:', !!(region.area2 && region.area2.name),
+      '| area3 present:', !!(region.area3 && region.area3.name)
+    );
+
+    var regionName = formatRegionName(
+      region.area1 && region.area1.name,
+      region.area2 && region.area2.name
+    );
+    if (!regionName) {
+      console.warn('[location] formatRegionName produced no result, keeping fallback text');
+      return;
+    }
+
+    console.log('[location] updating #current-region-text');
+    regionTextEl.textContent = regionName;
+  }
+
+  function handleGeolocationSuccess(position) {
+    console.log('[location] geolocation success');
+
+    var latlng = new naver.maps.LatLng(
+      position.coords.latitude,
+      position.coords.longitude
+    );
+
+    console.log('[location] reverse geocode started');
+    naver.maps.Service.reverseGeocode(
+      { coords: latlng, orders: 'admcode' },
+      handleReverseGeocodeResult
+    );
+  }
+
+  function handleGeolocationError(error) {
+    // Denied / unavailable / timeout -- static fallback text stays as-is.
+    console.warn('[location] geolocation failed', error.code, error.message);
+  }
+
+  console.log('[location] request started');
+  navigator.geolocation.getCurrentPosition(handleGeolocationSuccess, handleGeolocationError, {
+    enableHighAccuracy: false,
+    timeout: 8000,
+    maximumAge: 300000
+  });
+})();
+
 // Hero quick category chips: single-select, click active chip again to clear.
 document.querySelectorAll('.hero-quick-category .chip').forEach(function (chip) {
   chip.addEventListener('click', function () {
