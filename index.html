@@ -77,11 +77,11 @@
 
               <div class="hero-quick-category">
                 <div class="chip-list">
-                  <button type="button" class="chip">카페</button>
-                  <button type="button" class="chip">산책</button>
-                  <button type="button" class="chip">데이트</button>
-                  <button type="button" class="chip">아이와 함께</button>
-                  <button type="button" class="chip">친구와</button>
+                  <button type="button" class="chip" aria-pressed="false">카페</button>
+                  <button type="button" class="chip" aria-pressed="false">산책</button>
+                  <button type="button" class="chip" aria-pressed="false">데이트</button>
+                  <button type="button" class="chip" aria-pressed="false">아이와 함께</button>
+                  <button type="button" class="chip" aria-pressed="false">친구와</button>
                 </div>
               </div>
             </div>
@@ -234,7 +234,13 @@
           <h2 class="title">이번 주 HOT</h2>
           <p class="desc">지금 가장 많이 찾는 콘텐츠예요</p>
         </div>
-        <a href="#" class="link-more">전체보기</a>
+        <div class="card-carousel-actions">
+          <a href="#" class="link-more">전체보기</a>
+          <div class="card-carousel-controls">
+            <button type="button" class="card-carousel-arrow" data-direction="prev" aria-label="이전 카드 보기">&lsaquo;</button>
+            <button type="button" class="card-carousel-arrow" data-direction="next" aria-label="다음 카드 보기">&rsaquo;</button>
+          </div>
+        </div>
       </div>
 
       <div class="card-grid">
@@ -323,7 +329,13 @@
           <h2 class="title">주변 인기 장소</h2>
           <p class="desc">지금 내 주변에서 가장 많이 찜한 장소예요</p>
         </div>
-        <a href="#" class="link-more">전체보기</a>
+        <div class="card-carousel-actions">
+          <a href="#" class="link-more">전체보기</a>
+          <div class="card-carousel-controls">
+            <button type="button" class="card-carousel-arrow" data-direction="prev" aria-label="이전 카드 보기">&lsaquo;</button>
+            <button type="button" class="card-carousel-arrow" data-direction="next" aria-label="다음 카드 보기">&rsaquo;</button>
+          </div>
+        </div>
       </div>
 
       <div class="card-grid">

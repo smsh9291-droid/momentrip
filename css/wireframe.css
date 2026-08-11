@@ -711,11 +711,64 @@ a.logo-box:focus-visible {
   font-weight: 800;
   margin-bottom: var(--gap-sm);
   line-height: 1.35;
+  /* Reserve space for the completed 2-line title (line-height 1.35 x 2
+     lines) up front so js/main.js's typing/deleting loop never changes
+     h1's box height -- prevents the search/chip area below from shifting. */
+  min-height: calc(1.35em * 2);
+}
+
+/* Soft, thin typing caret appended after the in-progress line by
+   js/main.js. Blink is a gentle opacity fade, not a hard on/off flicker,
+   to match Momentrip's soft UI. */
+.hero-typing-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background-color: currentColor;
+  animation: hero-caret-blink 1.1s ease-in-out infinite;
+}
+
+@keyframes hero-caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
 }
 
 .hero-content .hero-desc {
   font-size: var(--font-size-body);
   color: var(--color-subtext);
+  /* One-time slide-in-from-left reveal on initial page load only. */
+  animation: hero-desc-reveal 0.8s ease-out 0.5s both;
+}
+
+@keyframes hero-desc-reveal {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-typing-caret {
+    animation: none;
+    opacity: 0;
+  }
+
+  .hero-content .hero-desc {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Stretched (via hero-top's align-items: stretch + height:100% here) so the
@@ -2178,6 +2231,35 @@ a.logo-box:focus-visible {
   }
 }
 
+/* Card carousel section-heading actions: wraps .link-more + .card-carousel-controls
+   so they share one row (전체보기 left, arrows right). Reused by every
+   .page-section that gets Mobile carousel controls (HOT, 주변 인기 장소, ...).
+   On Desktop/Tablet this is just a plain flex row holding .link-more --
+   .card-carousel-controls is display:none there so it takes no space and
+   nothing visually changes. The Mobile media query further down stretches it
+   to full width so justify-content:space-between actually pushes the arrows
+   to the row's right edge, flush with the card row below. */
+.card-carousel-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+/* Card carousel prev/next arrows: Mobile-only affordance for the horizontal
+   scroll-snap track that already exists below (Mobile breakpoint). Hidden by
+   default so Desktop/Tablet keep the plain .card-grid grid untouched; the
+   mobile media query further down turns this row on.
+   Must stay ABOVE the Mobile media query below: both rules target the same
+   .card-carousel-controls selector at equal specificity, so whichever comes
+   later in the file wins regardless of the media condition -- this base
+   display:none has to be the earlier one for the mobile display:flex
+   override to actually take effect. */
+.card-carousel-controls {
+  display: none;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
 /* Mobile: 767px and below */
 @media (max-width: 767px) {
   .container {
@@ -2258,6 +2340,21 @@ a.logo-box:focus-visible {
 
   .course-grid > .course-card {
     flex-basis: 90%;
+  }
+
+  /* .card-carousel-actions spans the row's full width here so
+     justify-content:space-between can push 전체보기 left / arrows right,
+     matching the card row's edges below. */
+  .card-carousel-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Card carousel prev/next arrows only make sense once .card-grid becomes
+     the horizontal scroll track above, so they're shown starting at this
+     same Mobile breakpoint. */
+  .card-carousel-controls {
+    display: flex;
   }
 
   /* Keep the STEP1 -> STEP2 -> STEP3 flow on a single row so the arrow
@@ -3103,6 +3200,24 @@ a.logo-box:focus-visible {
   color: var(--color-surface);
 }
 
+/* Hero-specific override for the shared .chip.is-active (background-color:
+   var(--color-placeholder) / border-color:var(--color-text), a gray+near-black
+   combo meant for a generic/neutral chip elsewhere). Scoped to
+   .hero-quick-category so the shared .chip.is-active default is untouched for
+   any other future .chip usage. */
+.hero-quick-category .chip.is-active {
+  background-color: color-mix(in srgb, var(--color-primary) 60%, var(--color-interactive-strong) 40%);
+  border-color: color-mix(in srgb, var(--color-primary) 60%, var(--color-interactive-strong) 40%);
+  color: var(--color-surface);
+}
+
+.hero-quick-category .chip.is-active:hover,
+.hero-quick-category .chip.is-active:active {
+  background-color: color-mix(in srgb, var(--color-primary) 55%, var(--color-interactive-strong) 45%);
+  border-color: color-mix(in srgb, var(--color-primary) 55%, var(--color-interactive-strong) 45%);
+  color: var(--color-surface);
+}
+
 .hero-spot-list .hero-spot-item:first-child .spot-rank {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
@@ -3149,6 +3264,35 @@ a.logo-box:focus-visible {
 
 .overlay-card .card-rating {
   color: var(--color-secondary);
+}
+
+.card-carousel-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-primary);
+  font-size: var(--font-size-heading);
+  font-weight: 700;
+  line-height: 1;
+  transition: var(--transition);
+}
+
+.card-carousel-arrow:not(:disabled):hover {
+  color: var(--color-interactive-strong);
+}
+
+.card-carousel-arrow:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
+}
+
+.card-carousel-arrow:disabled {
+  color: var(--color-border);
 }
 
 /* --- Category: Card 시스템 그대로, Hover는 기존 4번 규칙(Shadow만)만 사용 --- */
