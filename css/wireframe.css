@@ -513,56 +513,103 @@ a.logo-box:focus-visible {
    momentrip-logo-primary.svg <img>; the Header instead inlines
    assets/momentrip-logo-animated.svg (9 letters as individual
    <path class="logo-letter">) so each glyph can be targeted here. */
-.logo-letter {
-  opacity: 0;
-  animation: logo-letter-enter 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  transition: transform 170ms ease-out;
+/* assets/momentrip-logo-animated.svg carries a leftover <g clip-path="...">
+   from the source export -- a rect exactly matching the viewBox, a no-op
+   for the static artwork. Once letters translate upward off their rest
+   position, that same rect clips them to invisible until they fall back
+   inside its bounds, which is what made the drop read as "appearing
+   inside the logo" instead of "falling from above". Neutralized here
+   (CSS beats a presentation attribute) rather than editing the SVG file.
+   overflow: visible undoes the SVG viewport's own implicit clipping the
+   same way. Header-only via .site-logo-animated -- Footer's plain <img>
+   of the original file is untouched. */
+.site-logo-animated {
+  overflow: visible;
 }
 
-/* Each letter is fully invisible up top, then snaps to visible (opacity
-   flips in a single 1% step, not a fade) the instant it starts dropping,
-   overshoots once past rest, rebounds slightly short, and locks in place.
-   The bounce lives entirely in these keyframe stops -- the animation's own
-   timing-function is a plain ease-out so it doesn't add a second, competing
-   overshoot on top. No group-level scale finish on top of this; layering a
-   whole-logo scale over 9 already-bouncing letters read as the logo shaking
-   rather than each glyph coming to life individually. */
+.site-logo-animated g[clip-path] {
+  clip-path: none;
+}
+
+.logo-letter {
+  opacity: 0;
+  animation: logo-letter-enter 1500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: transform 170ms ease-out;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Each letter starts well above its own resting spot (measured in its own
+   height via transform-box: fill-box, not a fixed px guess), fully
+   invisible, then becomes visible almost immediately and spends most of
+   the duration actually falling back down -- the drop itself should read
+   as motion, not a pop. It overshoots past rest once, rebounds slightly
+   short, and locks in place. No scale here: size changes competed with
+   the fall for attention, so the fall is the only effect now. No
+   group-level scale finish either; layering a whole-logo scale over 9
+   already-falling letters read as the logo shaking rather than each
+   glyph coming to life individually. */
 @keyframes logo-letter-enter {
   0% {
     opacity: 0;
-    transform: translateY(-20px) scale(0.92);
+    transform: translateY(-140%);
   }
-  30% {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.92);
-  }
-  31% {
+  10% {
     opacity: 1;
-    transform: translateY(-20px) scale(0.92);
+    transform: translateY(-140%);
   }
-  68% {
+  70% {
     opacity: 1;
-    transform: translateY(4px) scale(1.04);
+    transform: translateY(5px);
   }
-  82% {
+  85% {
     opacity: 1;
-    transform: translateY(-2px) scale(0.99);
+    transform: translateY(-2px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
 .logo-letters .logo-letter:nth-child(1) { animation-delay: 0ms; }
-.logo-letters .logo-letter:nth-child(2) { animation-delay: 160ms; }
-.logo-letters .logo-letter:nth-child(3) { animation-delay: 320ms; }
-.logo-letters .logo-letter:nth-child(4) { animation-delay: 480ms; }
-.logo-letters .logo-letter:nth-child(5) { animation-delay: 640ms; }
-.logo-letters .logo-letter:nth-child(6) { animation-delay: 800ms; }
-.logo-letters .logo-letter:nth-child(7) { animation-delay: 960ms; }
-.logo-letters .logo-letter:nth-child(8) { animation-delay: 1120ms; }
-.logo-letters .logo-letter:nth-child(9) { animation-delay: 1280ms; }
+.logo-letters .logo-letter:nth-child(2) { animation-delay: 320ms; }
+.logo-letters .logo-letter:nth-child(3) { animation-delay: 640ms; }
+.logo-letters .logo-letter:nth-child(4) { animation-delay: 960ms; }
+.logo-letters .logo-letter:nth-child(5) { animation-delay: 1280ms; }
+.logo-letters .logo-letter:nth-child(6) { animation-delay: 1600ms; }
+.logo-letters .logo-letter:nth-child(7) { animation-delay: 1920ms; }
+.logo-letters .logo-letter:nth-child(8) { animation-delay: 2240ms; }
+.logo-letters .logo-letter:nth-child(9) { animation-delay: 2560ms; }
+
+/* Closing beat, once every letter has landed: hold the completed wordmark
+   (nth-child(9)'s 2560ms delay + 1500ms duration = lands at 4060ms), fade
+   the whole group out together (opacity only -- no transform, so this
+   can't read as another pop or drift), sit invisible briefly, then snap
+   back in a single step (no fade-in) and stay. Runs once; the 0%/100%
+   opacity:1 endpoints match the element's un-animated default, so nothing
+   flashes before the delay elapses or after the animation completes. */
+.logo-letters {
+  animation: logo-final-flash 2000ms ease-in-out 4060ms both;
+}
+
+@keyframes logo-final-flash {
+  0% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 0;
+  }
+  99.5% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 /* Hover: letters lift left-to-right, then return together in one step --
    no stagger on the way back so mouseleave snaps cleanly to rest instead
@@ -844,6 +891,7 @@ a.logo-box:focus-visible {
 
   .logo-letters {
     animation: none;
+    opacity: 1;
     transform: none;
   }
 
@@ -3371,7 +3419,7 @@ a.logo-box:focus-visible {
 }
 
 .card-carousel-arrow:not(:disabled):hover {
-  color: var(--color-interactive-strong);
+  color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
 }
 
 .card-carousel-arrow:focus-visible {

@@ -167,11 +167,15 @@ document.querySelectorAll('.favorite-toggle').forEach(function (button) {
 
 // Card carousel controller: prev/next buttons only -- native touch scroll
 // and CSS scroll-snap (see wireframe.css Mobile breakpoint) still own the
-// swipe gesture itself. Shared by every .page-section that has a .card-grid
-// + .card-carousel-controls pair (HOT, 주변 인기 장소, ...); each call is
-// scoped to its own section root so sections never see each other's track.
-function initCardCarousel(section) {
-  var track = section.querySelector('.card-grid');
+// swipe gesture itself. Shared by every .page-section that has a track +
+// .card-carousel-controls pair (HOT, 주변 인기 장소, 지역 행사, ...); each
+// call is scoped to its own section root so sections never see each
+// other's track. trackSelector defaults to '.card-grid' (HOT/popular);
+// pass '.event-timeline' for 지역 행사, whose items are .event-timeline-item
+// rather than .card -- everything past this line reads the track's own
+// children generically, so no other branching is needed per section type.
+function initCardCarousel(section, trackSelector) {
+  var track = section.querySelector(trackSelector || '.card-grid');
   if (!track) return;
 
   var prevBtn = section.querySelector('.card-carousel-arrow[data-direction="prev"]');
@@ -247,4 +251,15 @@ function initCardCarousel(section) {
   updateButtonState();
 }
 
-document.querySelectorAll('.hot-section, .popular-section').forEach(initCardCarousel);
+// Array.prototype.forEach calls its callback with (item, index, array) --
+// initCardCarousel's new trackSelector parameter would otherwise receive
+// that index (1 for the second matched section), so this wraps the call
+// down to the single argument each of these sections actually needs.
+document.querySelectorAll('.hot-section, .popular-section').forEach(function (section) {
+  initCardCarousel(section);
+});
+
+var eventSection = document.querySelector('.event-section');
+if (eventSection) {
+  initCardCarousel(eventSection, '.event-timeline');
+}
