@@ -15,7 +15,7 @@
      ========================================================================== -->
 <header class="site-header">
   <div class="container header-inner">
-    <button type="button" class="gnb-toggle" aria-label="메뉴 열기"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+    <button type="button" class="gnb-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="gnb-menu"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
 
     <div class="logo-area">
       <a href="index.html" class="logo-box" aria-label="MOMENTRIP">
@@ -42,8 +42,8 @@
       </a>
     </div>
 
-    <nav class="gnb">
-      <a href="index.html">둘러보기</a>
+    <nav class="gnb" id="gnb-menu">
+      <a href="index.html"><span class="gnb-label-desktop">둘러보기</span><span class="gnb-label-mobile">HOME</span></a>
       <a href="#">클래스·체험</a>
       <a href="#">지역행사</a>
       <a href="board-list.html" class="is-active">커뮤니티</a>
@@ -91,7 +91,7 @@
         <p class="write-desc">동네 사람들과 나누고 싶은 이야기를 자유롭게 남겨보세요</p>
       </header>
 
-      <form class="write-form">
+      <form class="write-form" id="board-write-form">
 
         <div class="field">
           <label class="field-label">카테고리</label>
@@ -126,9 +126,9 @@
 
         <div class="write-row-location">
           <div class="field">
-            <label class="field-label">지역</label>
-            <select class="input-select">
-              <option>지역 선택</option>
+            <label class="field-label" for="board-post-region">지역</label>
+            <select class="input-select" id="board-post-region" required>
+              <option value="">지역 선택</option>
               <option>서울 성동구</option>
               <option>서울 마포구</option>
               <option>서울 용산구</option>
@@ -137,19 +137,19 @@
           </div>
 
           <div class="field">
-            <label class="field-label">위치</label>
-            <input type="text" class="input-text" placeholder="장소를 검색해주세요">
+            <label class="field-label" for="board-post-location">위치</label>
+            <input type="text" class="input-text" id="board-post-location" placeholder="장소를 검색해주세요">
           </div>
         </div>
 
         <div class="field">
-          <label class="field-label">제목</label>
-          <input type="text" class="input-text" placeholder="제목을 입력해주세요">
+          <label class="field-label" for="board-post-title">제목</label>
+          <input type="text" class="input-text" id="board-post-title" placeholder="제목을 입력해주세요" required>
         </div>
 
         <div class="field">
-          <label class="field-label">내용</label>
-          <textarea class="input-textarea" placeholder="이야기를 자유롭게 남겨주세요"></textarea>
+          <label class="field-label" for="board-post-content">내용</label>
+          <textarea class="input-textarea" id="board-post-content" placeholder="이야기를 자유롭게 남겨주세요" required></textarea>
         </div>
 
         <div class="write-row-media">
@@ -167,14 +167,14 @@
         </div>
 
         <div class="field">
-          <label class="field-label">태그</label>
-          <input type="text" class="input-text" placeholder="태그를 입력하세요">
+          <label class="field-label" for="board-post-tags">태그</label>
+          <input type="text" class="input-text" id="board-post-tags" placeholder="태그를 입력하세요">
           <p class="field-hint">예) #카페 #데이트 #아이와함께 #주차가능</p>
         </div>
 
         <div class="form-actions">
           <a href="board-list.html" class="btn btn-lg">취소</a>
-          <button type="submit" class="btn btn-fill btn-lg">등록</button>
+          <button type="submit" class="btn btn-fill btn-lg" id="board-write-submit">등록</button>
         </div>
 
       </form>
@@ -203,5 +203,7 @@
   </div>
 </footer>
 
+<script src="js/main.js"></script>
+<script src="js/board.js"></script>
 </body>
 </html>

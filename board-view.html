@@ -15,7 +15,7 @@
      ========================================================================== -->
 <header class="site-header">
   <div class="container header-inner">
-    <button type="button" class="gnb-toggle" aria-label="메뉴 열기"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+    <button type="button" class="gnb-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="gnb-menu"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
 
     <div class="logo-area">
       <a href="index.html" class="logo-box" aria-label="MOMENTRIP">
@@ -42,8 +42,8 @@
       </a>
     </div>
 
-    <nav class="gnb">
-      <a href="index.html">둘러보기</a>
+    <nav class="gnb" id="gnb-menu">
+      <a href="index.html"><span class="gnb-label-desktop">둘러보기</span><span class="gnb-label-mobile">HOME</span></a>
       <a href="#">클래스·체험</a>
       <a href="#">지역행사</a>
       <a href="board-list.html" class="is-active">커뮤니티</a>
@@ -96,19 +96,19 @@
         <!-- 게시글 헤더 -->
         <header class="post-header">
           <div class="post-header-top">
-            <span class="badge">후기</span>
-            <span class="region-tag"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>서울 성동구</span>
+            <span class="badge" id="board-view-category">후기</span>
+            <span class="region-tag"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span id="board-view-region">서울 성동구</span></span>
             <button type="button" class="post-back-btn" aria-label="뒤로가기">
               <span aria-hidden="true">←</span> 뒤로
             </button>
           </div>
-          <h1 class="post-title">성수동 소소한 카페, 대기 없이 다녀왔어요</h1>
+          <h1 class="post-title" id="board-view-title">성수동 소소한 카페, 대기 없이 다녀왔어요</h1>
           <div class="post-meta">
-            <span>작성자01</span>
+            <span id="board-view-author">작성자01</span>
             <span class="divider"></span>
-            <span>2026.07.28</span>
+            <span id="board-view-date">2026.07.28</span>
             <span class="divider"></span>
-            <span>조회 186</span>
+            <span id="board-view-views">조회 186</span>
             <span class="divider"></span>
             <span>댓글 12</span>
             <span class="divider"></span>
@@ -117,7 +117,7 @@
         </header>
 
         <!-- 게시글 본문 (하단 구분선은 css .post-body border-bottom) -->
-        <div class="post-body">
+        <div class="post-body" id="board-view-content">
           <p>평일 오전에 방문했더니 대기 없이 바로 자리를 잡을 수 있었어요. 성수동 골목 안쪽에 있는 카페인데, 생각보다 한적한 분위기라 편하게 머물다 왔습니다.</p>
 
           <figure>
@@ -143,8 +143,8 @@
         <!-- 작성자 전용 관리 버튼: 본문 하단 구분선 바로 아래, .post-article의
              960px 폭 기준으로 오른쪽 정렬 (PLACE INFO나 바깥 container 폭 기준 아님) -->
         <div class="post-owner-actions">
-          <a href="board-write.html" class="btn">수정</a>
-          <button type="button" class="btn">삭제</button>
+          <a href="board-write.html" class="btn" id="board-edit-link">수정</a>
+          <button type="button" class="btn" id="board-delete-button">삭제</button>
         </div>
 
       </article>
@@ -333,5 +333,7 @@
   </div>
 </footer>
 
+<script src="js/main.js"></script>
+<script src="js/board.js"></script>
 </body>
 </html>

@@ -10,15 +10,15 @@
 <script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=75bmp6f9fq&submodules=geocoder"></script>
 </head>
 <body>
-
 <!-- ==========================================================================
      HEADER
      ========================================================================== -->
 <header class="site-header">
   <!-- Mobile(~767px): 햄버거 / 로고 / 검색 아이콘 / 로그인 아이콘만 노출.
-       지역 선택만 햄버거 메뉴 내부로 이동(별도 드로어는 IA 단계라 생략). -->
+       지역 선택은 Hero의 현재 지역 버튼(#current-region-trigger)이 담당하므로
+       Header에는 없음. -->
   <div class="container header-inner">
-    <button type="button" class="gnb-toggle" aria-label="메뉴 열기"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+    <button type="button" class="gnb-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="gnb-menu"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
 
     <div class="logo-area">
       <a href="index.html" class="logo-box" aria-label="MOMENTRIP">
@@ -45,18 +45,14 @@
       </a>
     </div>
 
-    <nav class="gnb">
-      <a href="index.html" class="is-active">둘러보기</a>
+    <nav class="gnb" id="gnb-menu">
+      <a href="index.html" class="is-active"><span class="gnb-label-desktop">둘러보기</span><span class="gnb-label-mobile">HOME</span></a>
       <a href="#">클래스·체험</a>
       <a href="#">지역행사</a>
       <a href="board-list.html">커뮤니티</a>
     </nav>
 
     <div class="header-utils">
-      <button type="button" class="region-select">
-        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-        <span class="util-label">지역 선택</span>
-      </button>
       <button type="button" class="util-btn util-search">
         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         <span class="util-label">검색</span>
@@ -81,9 +77,26 @@
         <div class="hero-top">
           <div class="hero-left">
             <div class="hero-content">
-              <div class="current-region">
-                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+              <button type="button" id="current-region-trigger" class="current-region" aria-haspopup="dialog" aria-expanded="false" aria-controls="region-select-dialog">
+                <i class="fa-solid fa-location-dot current-region-icon" aria-hidden="true"></i>
                 <span>현재 지역 : <span id="current-region-text" aria-live="polite">서울 성동구</span></span>
+                <i class="fa-solid fa-chevron-down current-region-chevron" aria-hidden="true"></i>
+              </button>
+
+              <div id="region-select-backdrop" class="region-select-backdrop" hidden></div>
+              <div id="region-select-dialog" class="region-select-dialog" role="dialog" aria-modal="true" aria-labelledby="region-select-title" hidden>
+                <div class="region-select-head">
+                  <h2 id="region-select-title">지역 선택</h2>
+                  <button type="button" id="region-select-close" class="region-select-close" aria-label="닫기">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <button type="button" id="region-use-current" class="btn btn-outline btn-block region-use-current">
+                  <i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i>
+                  현재 위치 사용
+                </button>
+                <ul id="region-option-list" class="region-option-list"></ul>
+                <button type="button" id="region-select-cancel" class="btn btn-block">취소</button>
               </div>
 
               <h1>오늘은 어떤 하루를<br>보내고 싶나요?</h1>
@@ -99,6 +112,7 @@
               <div class="hero-quick-category">
                 <div class="chip-list">
                   <button type="button" class="chip" aria-pressed="false">카페</button>
+                  <button type="button" class="chip" aria-pressed="false">맛집</button>
                   <button type="button" class="chip" aria-pressed="false">산책</button>
                   <button type="button" class="chip" aria-pressed="false">데이트</button>
                   <button type="button" class="chip" aria-pressed="false">아이와 함께</button>
@@ -160,6 +174,15 @@
     </div>
   </section>
 
+  <!-- Hero 검색/Quick Chip 필터 상태 안내: 평소 hidden, 필터가 적용된 동안만
+       노출. MOMENTRIP PICK/HOT/주변 인기 장소/지역 행사 4개 섹션만 대상. -->
+  <div class="container">
+    <div id="search-result-status" class="search-result-status" hidden aria-live="polite">
+      <span id="search-result-status-text"></span>
+      <button type="button" id="search-result-reset" class="link-more">전체보기</button>
+    </div>
+  </div>
+
   <!-- ==========================================================================
        MOMENTRIP PICK
        Momentrip만의 핵심 섹션 - 장소 -> 식사 -> 체험으로 이어지는 코스형 추천
@@ -171,11 +194,17 @@
           <h2 class="title">MOMENTRIP PICK</h2>
           <p class="desc">오늘의 추천 코스 - 장소부터 식사, 체험까지 하나의 흐름으로 이어드려요</p>
         </div>
-        <a href="#" class="link-more">전체보기</a>
+        <div class="card-carousel-actions">
+          <a href="#" class="link-more">전체보기</a>
+          <div class="card-carousel-controls">
+            <button type="button" class="card-carousel-arrow" data-direction="prev" aria-label="이전 카드 보기">&lsaquo;</button>
+            <button type="button" class="card-carousel-arrow" data-direction="next" aria-label="다음 카드 보기">&rsaquo;</button>
+          </div>
+        </div>
       </div>
 
       <div class="course-grid">
-        <article class="course-card">
+        <article class="course-card" data-tags="카페 데이트 친구와">
           <div class="course-card-head">
             <span class="badge">오늘의 추천 코스</span>
             <h3 class="course-title">성수동 감성 하루 코스</h3>
@@ -208,7 +237,7 @@
           </div>
         </article>
 
-        <article class="course-card">
+        <article class="course-card" data-tags="데이트 친구와">
           <div class="course-card-head">
             <span class="badge">비 오는 날 추천 코스</span>
             <h3 class="course-title">실내에서 즐기는 힐링 코스</h3>
@@ -265,7 +294,7 @@
       </div>
 
       <div class="card-grid">
-        <article class="card overlay-card">
+        <article class="card overlay-card" data-favorite-id="pottery-class" data-tags="데이트 친구와">
           <div class="card-image-wrap">
             <div class="ph-box ratio-4-3">
               <img src="assets/images/classes/pottery-class-2.png" alt="도자기 원데이 클래스">
@@ -283,7 +312,7 @@
           </div>
         </article>
 
-        <article class="card overlay-card">
+        <article class="card overlay-card" data-favorite-id="seongsu-riverside-market" data-tags="산책 아이와 함께 친구와">
           <div class="card-image-wrap">
             <div class="ph-box ratio-4-3">
               <img src="assets/images/events/riverside-market.png" alt="성수 리버사이드 마켓">
@@ -301,7 +330,7 @@
           </div>
         </article>
 
-        <article class="card overlay-card">
+        <article class="card overlay-card" data-favorite-id="han-river-kayak" data-tags="데이트 친구와">
           <div class="card-image-wrap">
             <div class="ph-box ratio-4-3">
               <img src="assets/images/classes/han-river-kayak.png" alt="한강 카약 체험">
@@ -319,7 +348,7 @@
           </div>
         </article>
 
-        <article class="card overlay-card">
+        <article class="card overlay-card" data-favorite-id="rooftop-brunch-cafe" data-tags="카페 맛집 데이트 친구와">
           <div class="card-image-wrap">
             <div class="ph-box ratio-4-3">
               <img src="assets/images/places/rooftop-cafe.png" alt="루프탑 브런치 카페">
@@ -360,7 +389,7 @@
       </div>
 
       <div class="card-grid">
-        <article class="card overlay-card">
+        <article class="card overlay-card" data-favorite-id="seongsu-brewing-lounge" data-tags="카페 맛집 데이트 친구와">
           <div class="card-image-wrap">
             <div class="ph-box ratio-4-3">
               <img src="assets/images/places/brewing-lounge.png" alt="성수 브루잉 라운지">
@@ -382,7 +411,7 @@
           </div>
         </article>
 
-        <article class="card overlay-card">
+        <article class="card overlay-card" data-favorite-id="yeonnam-corner-books" data-tags="산책 데이트 친구와">
           <div class="card-image-wrap">
             <div class="ph-box ratio-4-3">
               <img src="assets/images/places/gallery-exhibition.png" alt="연남 코너북스">
@@ -404,7 +433,7 @@
           </div>
         </article>
 
-        <article class="card overlay-card">
+        <article class="card overlay-card" data-favorite-id="hannam-riverside-walk" data-tags="산책 데이트 아이와 함께 친구와">
           <div class="card-image-wrap">
             <div class="ph-box ratio-4-3">
               <img src="assets/images/places/riverside-walk.png" alt="한남 리버사이드 워크">
@@ -426,7 +455,7 @@
           </div>
         </article>
 
-        <article class="card overlay-card">
+        <article class="card overlay-card" data-favorite-id="seoulforest-picnic-garden" data-tags="산책 데이트 아이와 함께 친구와">
           <div class="card-image-wrap">
             <div class="ph-box ratio-4-3">
               <img src="assets/images/places/picnic-garden.png" alt="서울숲 피크닉 가든">
@@ -528,7 +557,7 @@
       </div>
 
       <div class="event-timeline">
-        <article class="event-timeline-item">
+        <article class="event-timeline-item" data-tags="산책 아이와 함께 친구와">
           <div class="event-timeline-marker">
             <span class="date-day">09</span>
             <span class="date-month">AUG</span>
@@ -551,7 +580,7 @@
           </div>
         </article>
 
-        <article class="event-timeline-item">
+        <article class="event-timeline-item" data-tags="산책 아이와 함께 친구와">
           <div class="event-timeline-marker">
             <span class="date-day">12</span>
             <span class="date-month">AUG</span>
@@ -574,7 +603,7 @@
           </div>
         </article>
 
-        <article class="event-timeline-item">
+        <article class="event-timeline-item" data-tags="데이트 친구와">
           <div class="event-timeline-marker">
             <span class="date-day">15</span>
             <span class="date-month">AUG</span>
