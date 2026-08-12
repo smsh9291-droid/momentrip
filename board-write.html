@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <link rel="stylesheet" href="css/wireframe.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=75bmp6f9fq&submodules=geocoder"></script>
 </head>
 <body>
 
@@ -50,10 +51,6 @@
     </nav>
 
     <div class="header-utils">
-      <button type="button" class="region-select">
-        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-        <span class="util-label">지역 선택</span>
-      </button>
       <button type="button" class="util-btn util-search">
         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         <span class="util-label">검색</span>
@@ -124,22 +121,36 @@
           </div>
         </div>
 
-        <div class="write-row-location">
-          <div class="field">
-            <label class="field-label" for="board-post-region">지역</label>
-            <select class="input-select" id="board-post-region" required>
-              <option value="">지역 선택</option>
-              <option>서울 성동구</option>
-              <option>서울 마포구</option>
-              <option>서울 용산구</option>
-              <option>서울 광진구</option>
+        <div class="field">
+          <label class="field-label" for="board-post-region-province">지역</label>
+          <div class="region-select-group">
+            <select class="input-select" id="board-post-region-province" required>
+              <option value="">시/도</option>
+            </select>
+            <select class="input-select" id="board-post-region-city" required disabled>
+              <option value="">시/군/구</option>
+            </select>
+            <select class="input-select" id="board-post-region-district" disabled>
+              <option value="">세부 구</option>
             </select>
           </div>
+        </div>
 
-          <div class="field">
-            <label class="field-label" for="board-post-location">위치</label>
-            <input type="text" class="input-text" id="board-post-location" placeholder="장소를 검색해주세요">
+        <div class="field">
+          <label class="field-label" for="board-post-place-search">장소 검색</label>
+          <div class="place-search-row">
+            <input type="text" class="input-text" id="board-post-place-search" placeholder="장소명 또는 주소를 검색해주세요">
+            <button type="button" class="btn" id="board-post-place-search-btn">검색</button>
           </div>
+          <ul class="place-search-results" id="place-search-results" hidden></ul>
+          <div class="place-selected-card" id="place-selected-card" hidden>
+            <div class="place-selected-info">
+              <p class="place-selected-name" id="place-selected-name"></p>
+              <p class="place-selected-address" id="place-selected-address"></p>
+            </div>
+            <button type="button" class="place-selected-remove" id="place-selected-remove">삭제</button>
+          </div>
+          <p class="field-hint">네이버 지도 Geocoder 기반 검색이라 도로명 주소를 포함해서 검색하면 더 정확하게 찾을 수 있어요.</p>
         </div>
 
         <div class="field">
@@ -152,24 +163,21 @@
           <textarea class="input-textarea" id="board-post-content" placeholder="이야기를 자유롭게 남겨주세요" required></textarea>
         </div>
 
-        <div class="write-row-media">
-          <div class="field">
-            <label class="field-label">이미지 첨부</label>
-            <div class="upload-box"><i class="fa-solid fa-image" aria-hidden="true"></i> 이미지 추가</div>
-            <p class="field-hint">최대 5장까지 첨부할 수 있습니다 (와이어프레임 단계)</p>
-          </div>
-
-          <div class="field">
-            <label class="field-label">동영상 첨부</label>
-            <div class="upload-box"><i class="fa-solid fa-video" aria-hidden="true"></i> 동영상 추가</div>
-            <p class="field-hint">최대 3개까지 첨부할 수 있습니다 (와이어프레임 단계)</p>
-          </div>
+        <div class="field">
+          <label class="field-label">사진 · 동영상 첨부</label>
+          <label class="upload-box" for="board-post-attachments">
+            <i class="fa-solid fa-image" aria-hidden="true"></i> 사진·동영상 추가
+          </label>
+          <input type="file" id="board-post-attachments" accept="image/*,video/*" multiple hidden>
+          <div class="attachment-preview-list" id="attachment-preview-list"></div>
+          <p class="field-hint">이미지와 동영상을 함께, 여러 개 첨부할 수 있어요.</p>
         </div>
 
         <div class="field">
           <label class="field-label" for="board-post-tags">태그</label>
-          <input type="text" class="input-text" id="board-post-tags" placeholder="태그를 입력하세요">
-          <p class="field-hint">예) #카페 #데이트 #아이와함께 #주차가능</p>
+          <input type="text" class="input-text" id="board-post-tags" placeholder="태그를 입력하고 Enter를 눌러주세요">
+          <ul class="tag-chip-list" id="tag-chip-list"></ul>
+          <p class="field-hint">태그는 10개 이상 자유롭게 등록할 수 있어요. 입력 후 Enter를 누르면 #모임 형태로 등록됩니다.</p>
         </div>
 
         <div class="form-actions">
@@ -204,6 +212,8 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/attachments.js"></script>
 <script src="js/board.js"></script>
 </body>
 </html>

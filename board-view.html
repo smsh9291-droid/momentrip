@@ -50,10 +50,6 @@
     </nav>
 
     <div class="header-utils">
-      <button type="button" class="region-select">
-        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-        <span class="util-label">지역 선택</span>
-      </button>
       <button type="button" class="util-btn util-search">
         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         <span class="util-label">검색</span>
@@ -110,7 +106,7 @@
             <span class="divider"></span>
             <span id="board-view-views">조회 186</span>
             <span class="divider"></span>
-            <span>댓글 12</span>
+            <span id="board-view-comment-count">댓글 12</span>
             <span class="divider"></span>
             <span>좋아요 34</span>
           </div>
@@ -139,6 +135,22 @@
             <figcaption class="image-caption">카페 외관, 골목 안쪽에 위치해 있어요</figcaption>
           </figure>
         </div>
+
+        <!-- CRUD 게시글 전용: 첨부 이미지/동영상(js/attachments.js의 IndexedDB에서
+             비동기로 불러옴). 정적 샘플/첨부 없는 글에서는 비워둔 채(내용 없음)
+             자연스럽게 자리를 차지하지 않는다. -->
+        <div class="post-attachments" id="board-view-attachments"></div>
+
+        <!-- CRUD 게시글 전용: 태그. region/place와 마찬가지로 필드가 없으면
+             비워둔다. -->
+        <ul class="post-tags" id="board-view-tags"></ul>
+
+        <!-- 본문(+첨부+태그) 콘텐츠 전체가 끝났음을 나타내는 하단 구분선.
+             정적 샘플/첨부·태그 없는 CRUD 글에서도 항상 존재해, 기존에
+             .post-body가 담당하던 "본문 끝" 구분선 역할을 그대로 이어받는다
+             (본문 바로 아래가 아니라 첨부/태그까지 다 나온 뒤로 위치만 이동).
+             폭은 위 제목/metadata 아래 메인 separator(.post-header)와 동일하다. -->
+        <div class="post-content-divider"></div>
 
         <!-- 작성자 전용 관리 버튼: 본문 하단 구분선 바로 아래, .post-article의
              960px 폭 기준으로 오른쪽 정렬 (PLACE INFO나 바깥 container 폭 기준 아님) -->
@@ -200,14 +212,19 @@
 
       <!-- 댓글 영역 -->
       <section class="comment-section" aria-label="댓글">
-        <p class="comment-heading">댓글 12</p>
+        <p class="comment-heading" id="board-view-comment-heading">댓글 12</p>
 
         <form class="comment-form">
           <textarea class="input-textarea" placeholder="따뜻한 댓글을 남겨주세요"></textarea>
           <button type="submit" class="btn">등록</button>
         </form>
 
-        <ul>
+        <!-- CRUD 게시글 전용: 댓글 기능이 아직 없으므로 아래 정적 샘플 댓글
+             목록 대신 이 문구만 노출한다(js/board.js). 정적 샘플 게시글은
+             건드리지 않으므로 이 요소는 항상 hidden 상태로 남는다. -->
+        <p class="comment-empty" id="board-view-comment-empty" hidden>아직 작성된 댓글이 없습니다.</p>
+
+        <ul id="board-view-comment-list">
           <li class="comment-item">
             <span class="icon-circle md"></span>
             <div class="comment-body">
@@ -334,6 +351,8 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/attachments.js"></script>
 <script src="js/board.js"></script>
 </body>
 </html>

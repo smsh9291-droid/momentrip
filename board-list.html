@@ -50,10 +50,6 @@
     </nav>
 
     <div class="header-utils">
-      <button type="button" class="region-select">
-        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-        <span class="util-label">지역 선택</span>
-      </button>
       <button type="button" class="util-btn util-search">
         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         <span class="util-label">검색</span>
@@ -90,12 +86,12 @@
       </div>
 
       <div class="tab-list" role="tablist">
-        <button type="button" class="tab-item is-active" role="tab">전체</button>
-        <button type="button" class="tab-item" role="tab">후기</button>
-        <button type="button" class="tab-item" role="tab">질문</button>
-        <button type="button" class="tab-item" role="tab">정보공유</button>
-        <button type="button" class="tab-item" role="tab">동행모집</button>
-        <button type="button" class="tab-item" role="tab">행사후기</button>
+        <button type="button" class="tab-item is-active" role="tab" aria-selected="true">전체</button>
+        <button type="button" class="tab-item" role="tab" aria-selected="false">후기</button>
+        <button type="button" class="tab-item" role="tab" aria-selected="false">질문</button>
+        <button type="button" class="tab-item" role="tab" aria-selected="false">정보공유</button>
+        <button type="button" class="tab-item" role="tab" aria-selected="false">동행모집</button>
+        <button type="button" class="tab-item" role="tab" aria-selected="false">행사후기</button>
       </div>
 
       <div class="board-list-toolbar">
@@ -135,9 +131,11 @@
       </div>
 
       <ul class="post-feed">
-        <li>
+        <li data-category="후기">
           <a href="board-view.html" class="post-card">
-            <div class="ph-box ratio-4-3 post-card-thumb"></div>
+            <div class="ph-box ratio-4-3 post-card-thumb">
+              <img src="assets/images/community/community-01.png" alt="성수동 카페 실내에서 디저트와 커피를 즐기는 모습">
+            </div>
             <div class="post-card-body">
               <div class="post-card-top">
                 <span class="badge">후기</span>
@@ -162,7 +160,7 @@
           </a>
         </li>
 
-        <li>
+        <li data-category="질문">
           <a href="board-view.html" class="post-card">
             <div class="post-card-body">
               <div class="post-card-top">
@@ -188,7 +186,7 @@
           </a>
         </li>
 
-        <li>
+        <li data-category="정보공유">
           <a href="board-view.html" class="post-card">
             <div class="post-card-body">
               <div class="post-card-top">
@@ -214,9 +212,11 @@
           </a>
         </li>
 
-        <li>
+        <li data-category="동행모집">
           <a href="board-view.html" class="post-card">
-            <div class="ph-box ratio-4-3 post-card-thumb"></div>
+            <div class="ph-box ratio-4-3 post-card-thumb">
+              <img src="assets/images/community/community-02.png" alt="한강에서 카약을 타며 인증샷을 찍는 사람들">
+            </div>
             <div class="post-card-body">
               <div class="post-card-top">
                 <span class="badge">동행모집</span>
@@ -241,9 +241,11 @@
           </a>
         </li>
 
-        <li>
+        <li data-category="행사후기">
           <a href="board-view.html" class="post-card">
-            <div class="ph-box ratio-4-3 post-card-thumb"></div>
+            <div class="ph-box ratio-4-3 post-card-thumb">
+              <img src="assets/images/community/community-03.png" alt="성수 리버사이드 마켓 현장, 플리마켓 부스와 방문객들">
+            </div>
             <div class="post-card-body">
               <div class="post-card-top">
                 <span class="badge">행사후기</span>
@@ -268,9 +270,11 @@
           </a>
         </li>
 
-        <li>
+        <li data-category="후기">
           <a href="board-view.html" class="post-card">
-            <div class="ph-box ratio-4-3 post-card-thumb"></div>
+            <div class="ph-box ratio-4-3 post-card-thumb">
+              <img src="assets/images/community/community-04.png" alt="루프탑 카페에서 바라본 서울 전망과 브런치 플레이트">
+            </div>
             <div class="post-card-body">
               <div class="post-card-top">
                 <span class="badge">후기</span>
@@ -295,7 +299,7 @@
           </a>
         </li>
 
-        <li>
+        <li data-category="질문">
           <a href="board-view.html" class="post-card">
             <div class="post-card-body">
               <div class="post-card-top">
@@ -321,7 +325,7 @@
           </a>
         </li>
 
-        <li>
+        <li data-category="동행모집">
           <a href="board-view.html" class="post-card">
             <div class="post-card-body">
               <div class="post-card-top">
@@ -346,6 +350,8 @@
             </div>
           </a>
         </li>
+
+        <li class="board-empty-state" hidden>해당 카테고리의 게시글이 아직 없습니다.</li>
       </ul>
 
       <nav class="pagination" aria-label="페이지네이션">
@@ -381,6 +387,8 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/attachments.js"></script>
 <script src="js/board.js"></script>
 </body>
 </html>
