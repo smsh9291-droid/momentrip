@@ -471,7 +471,11 @@ var carouselControllers = [];
     }
   }
 
-  function updateStatus(hasFilter, resultCount) {
+  // tag/keywordDisplay는 표시 전용 -- 매칭 계산(위 FILTER_TARGETS 루프)에는
+  // 전혀 관여하지 않는다. "카페 · 총 3개의 결과를 찾았습니다."처럼 지금
+  // 적용된 필터가 무엇 때문인지 결과 문구 자체에 보강해, chip 클릭 → 바로
+  // 아래 결과 배너라는 기존 인접 배치를 텍스트로도 한 번 더 확인시켜준다.
+  function updateStatus(hasFilter, resultCount, tag, keywordDisplay) {
     if (!statusEl || !statusTextEl) return;
 
     if (!hasFilter) {
@@ -479,9 +483,14 @@ var carouselControllers = [];
       return;
     }
 
-    statusTextEl.textContent = resultCount > 0
+    var labelParts = [];
+    if (tag) labelParts.push(tag);
+    if (keywordDisplay) labelParts.push('"' + keywordDisplay + '"');
+    var prefix = labelParts.length ? labelParts.join(' · ') + ' · ' : '';
+
+    statusTextEl.textContent = prefix + (resultCount > 0
       ? '총 ' + resultCount + '개의 결과를 찾았습니다.'
-      : '조건에 맞는 결과가 없습니다.';
+      : '조건에 맞는 결과가 없습니다.');
     statusEl.hidden = false;
   }
 
@@ -511,7 +520,7 @@ var carouselControllers = [];
       refreshCarouselFor(target.section);
     });
 
-    updateStatus(hasFilter, totalVisible);
+    updateStatus(hasFilter, totalVisible, tag, searchInput.value.trim());
   }
 
   function resetFilters() {
@@ -521,6 +530,29 @@ var carouselControllers = [];
       chip.setAttribute('aria-pressed', 'false');
     });
     applyFilters();
+  }
+
+  // "전체보기"는 필터를 푸는 버튼이 아니라, 지금 선택된 카테고리/검색어를
+  // 그대로 둔 채 그 결과가 시작되는 위치까지만 데려다주는 버튼이다 --
+  // resetFilters()를 호출하지 않으므로 active chip/aria-pressed/검색어/필터
+  // 결과는 전혀 건드리지 않는다. FILTER_TARGETS를 순서대로(MOMENTRIP PICK →
+  // HOT → 주변 인기 장소 → 지역 행사) 훑어 hidden이 아닌(= applyFilters()가
+  // 이 카테고리/검색어에 실제로 매치되는 카드를 남겨 둔) 첫 section으로
+  // scrollIntoView한다 -- 무조건 첫 번째 대상(MOMENTRIP PICK)으로 이동하면,
+  // 그 섹션 자체가 현재 필터에 맞는 카드가 하나도 없어 통째로
+  // hidden(applyFilters()의 target.section.hidden = hasFilter &&
+  // visibleCount === 0)인 경우 보이지도 않는 곳으로 스크롤을 시도하게 된다.
+  // 새 anchor/id 없이 이미 있는 DOM 참조를 재사용. .site-header가
+  // sticky/fixed가 아니라(box-shadow만 쓰는 정적 배치) block:'start'만으로
+  // Header에 가려지지 않는다.
+  function scrollToFilterResults() {
+    for (var i = 0; i < FILTER_TARGETS.length; i++) {
+      var section = FILTER_TARGETS[i].section;
+      if (section && !section.hidden) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+    }
   }
 
   function handleHeroSearch() {
@@ -549,7 +581,7 @@ var carouselControllers = [];
   });
 
   if (resetBtn) {
-    resetBtn.addEventListener('click', resetFilters);
+    resetBtn.addEventListener('click', scrollToFilterResults);
   }
 
   // Quick category chips: single-select, click active chip again to clear.
@@ -1001,100 +1033,335 @@ if (eventSection) {
   });
 })();
 
-// Header 검색(.util-search) 버튼: 새 검색 시스템을 만들지 않고 기존 Hero
-// 검색 input(#hero-search-input)을 그대로 재사용한다. Desktop/Tablet과
-// index.html이 아닌 페이지(board-*)는 기존 그대로: index.html 위에서는 그
-// 자리에서 바로 스크롤+focus, 그 외 페이지에서는 index.html의 같은 앵커로
-// 이동한 뒤 그쪽에서 focus한다. Mobile + index.html(= #mobile-search-bar가
-// 존재하는 페이지)에서만 Header 바로 아래 확장 검색 패널을 toggle한다 --
-// board-*.html은 이번 작업에서 수정 대상이 아니라 그 패널 자체가 없으므로
-// 자동으로 기존 동작(위 fallback)을 그대로 탄다. main.js는 모든 페이지에
-// 로드되므로 이 IIFE 하나로 전부 처리된다 -- 별도 검색 페이지/router 없음.
+// Header 검색(.util-search) 버튼: 모든 페이지(index.html + board-*.html)에서
+// 동일하게 Header 바로 아래 #header-search-panel을 그 자리에서 열고 닫는다.
+// 예전에는 Desktop/Tablet에서 Hero 검색 input으로 focus 이동만 시도하고,
+// Hero가 없는 board-*.html에서는 이동할 곳이 없어 index.html로 강제 이동하는
+// 문제가 있었다(Mobile도 동일 fallback을 타서 마찬가지였다) -- #header-search-panel
+// 자체는 이제 모든 페이지 Header 마크업에 공통으로 존재하므로 그 fallback을
+// 완전히 제거했다. main.js는 모든 페이지에 로드되므로 이 IIFE 하나로 전부
+// 처리된다 -- 별도 검색 페이지/router 없음.
 (function () {
-  var HERO_SEARCH_ID = 'hero-search-input';
-  var MOBILE_QUERY = '(max-width: 767px)';
+  var panel = document.getElementById('header-search-panel');
+  var form = document.getElementById('header-search-form');
+  var input = document.getElementById('header-search-input');
+  var closeBtn = document.querySelector('.header-search-close');
+  var searchButtons = document.querySelectorAll('.util-search');
+  if (!panel || !form || !input || !searchButtons.length) return;
+
+  function isOpen() {
+    return !panel.hidden;
+  }
+
+  function setButtonsExpanded(expanded) {
+    searchButtons.forEach(function (button) {
+      button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
+  }
+
+  function openPanel() {
+    panel.hidden = false;
+    setButtonsExpanded(true);
+    input.focus();
+  }
+
+  function closePanel() {
+    panel.hidden = true;
+    setButtonsExpanded(false);
+  }
+
+  function togglePanel() {
+    if (isOpen()) {
+      closePanel();
+    } else {
+      openPanel();
+    }
+  }
+
+  searchButtons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      // Mobile Drawer가 열려 있었다면 검색 패널을 여는 김에 자연스럽게
+      // 닫는다 -- Drawer 자체 코드는 건드리지 않고 기존 .gnb-toggle 클릭을
+      // 그대로 재사용(같은 열림/닫힘 로직을 새로 만들지 않음).
+      var gnbToggle = document.querySelector('.gnb-toggle');
+      if (gnbToggle && gnbToggle.getAttribute('aria-expanded') === 'true') {
+        gnbToggle.click();
+      }
+      togglePanel();
+    });
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closePanel);
+  }
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && isOpen()) {
+      closePanel();
+    }
+  });
+
+  function normalize(text) {
+    return text.trim().replace(/\s+/g, ' ').toLowerCase();
+  }
 
   function focusHeroSearch() {
-    var input = document.getElementById(HERO_SEARCH_ID);
-    if (!input) return false;
+    var heroInput = document.getElementById('hero-search-input');
+    if (!heroInput) return;
     // focus() first: Chrome scrolls a newly-focused element into view on its
     // own (instant, block:'nearest'), which would otherwise fight/override a
     // smooth scrollIntoView called before it. Calling scrollIntoView after
     // focus() makes the smooth centered scroll the last word.
-    input.focus();
-    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    heroInput.focus();
+    heroInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // index.html: 새 검색 시스템을 만들지 않고 기존 Hero 검색 input/form
+  // (#hero-search-input, keyword+Quick Category 필터 로직)을 그대로
+  // 재사용한다. 값만 옮겨 담고 그 form의 기존 submit을 재실행한다
+  // (requestSubmit은 버튼 클릭과 동일하게 기존 submit 리스너 -- 빈 검색어
+  // 처리 포함 -- 를 그대로 태운다).
+  function runHeroSearch(keyword) {
+    var heroInput = document.getElementById('hero-search-input');
+    var heroForm = heroInput ? heroInput.closest('form') : null;
+    if (!heroInput || !heroForm) return false;
+
+    heroInput.value = keyword;
+    if (heroForm.requestSubmit) {
+      heroForm.requestSubmit();
+    } else {
+      heroForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    }
     return true;
   }
 
-  var mobileBar = document.getElementById('mobile-search-bar');
-  var mobileInput = document.getElementById('mobile-search-input');
-  var mobileForm = document.querySelector('.mobile-search-form');
-  var mobileCloseBtn = document.querySelector('.mobile-search-close');
+  // board-list.html: 이미 렌더링된 게시글 카드(.post-feed li[data-category])의
+  // 제목/지역/카테고리 텍스트를 대상으로 부분일치(substring) 필터링한다.
+  // 카테고리 탭의 기존 필터 함수(js/board.js의 initBoardCategoryTabs)는 전혀
+  // 건드리지 않고, 탭에서 이미 선택된 카테고리를 읽기만 해서(수정 아님)
+  // 검색어와 함께 조합한다 -- Hero의 keyword+Quick Category 조합과 동일한
+  // 패턴. 새 검색 결과 페이지/컴포넌트를 만들지 않고 이미 있는 카드 목록의
+  // hidden만 토글한다.
+  function runBoardListSearch(keyword) {
+    var feed = document.querySelector('.post-feed');
+    if (!feed) return false;
 
-  function openMobileSearch() {
-    mobileBar.hidden = false;
-    if (mobileInput) mobileInput.focus();
+    var tabList = document.querySelector('.tab-list');
+    var activeTab = tabList ? tabList.querySelector('.tab-item.is-active') : null;
+    var category = activeTab ? activeTab.textContent.trim() : '전체';
+    var emptyState = feed.querySelector('.board-empty-state');
+    var items = feed.querySelectorAll('li[data-category]');
+    var normalizedKeyword = normalize(keyword);
+    var visibleCount = 0;
+
+    items.forEach(function (item) {
+      var matchesCategory = category === '전체' || item.dataset.category.trim() === category;
+      var matchesKeyword = !normalizedKeyword || normalize(item.textContent).indexOf(normalizedKeyword) !== -1;
+      var visible = matchesCategory && matchesKeyword;
+      item.hidden = !visible;
+      if (visible) visibleCount += 1;
+    });
+
+    if (emptyState) emptyState.hidden = visibleCount !== 0;
+    return true;
   }
 
-  function closeMobileSearch() {
-    mobileBar.hidden = true;
+  // event.preventDefault()를 항상 가장 먼저 호출한다 -- 최근 댓글 버그(form
+  // 기본 submit 때문에 board-view의 ?id가 사라졌던 문제)와 동일한 문제가
+  // 검색 폼에서도 재발하지 않도록. 검색 버튼 클릭과 input Enter 입력은 이미
+  // 둘 다 이 하나의 submit 이벤트로 귀결되므로 별도 핸들러가 필요 없다.
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var keyword = input.value;
+
+    if (runHeroSearch(keyword)) {
+      // Hero 섹션은 화면 아래에 있으므로, 검색을 실제로 실행한 뒤에만 그
+      // 결과 영역으로 이동한다(아이콘을 눌러 패널을 여는 시점에는 이동하지
+      // 않음 -- 그건 위 openPanel()).
+      closePanel();
+      focusHeroSearch();
+      return;
+    }
+
+    // board-list.html은 결과 목록이 검색 패널 바로 아래에 있으므로 닫지
+    // 않는다 -- 사용자가 검색어를 바로 이어서 수정할 수 있게 열어둔다.
+    // 그 외 페이지(board-view/write/login/signup/mypage)는 필터링할 목록
+    // 자체가 없으므로(있는 목록들은 모두 이번 작업에서 보호 대상 -- 댓글/
+    // PLACE INFO/마이페이지 저장 장소) 여기서 새 필터를 만들지 않는다.
+    runBoardListSearch(keyword);
+  });
+})();
+
+// 메인 카드 ↔ 커뮤니티 SAMPLE_POSTS 연동: js/sample-posts.js가
+// window.MomentripSamplePosts로 노출한, js/board.js와 완전히 동일한 9개
+// 샘플 게시글(별도 사본 없음)을 읽어 MOMENTRIP PICK/HOT/주변 인기 장소/
+// 지역 행사/커뮤니티 미리보기의 기존 카드 중 실제로 자연스럽게 맞는
+// 카드에만 제목/썸네일/지역/카테고리를 채우고 board-view.html?id=sample-N
+// 링크를 연결한다. board-*.html에는 이 섹션들 자체가 없어 아래 모든
+// querySelector가 그냥 빈 결과로 조용히 no-op된다.
+//
+// 카드 DOM 구조/class/CSS는 전혀 만들거나 바꾸지 않는다 -- textContent/
+// src/href/data-tags 속성만 갱신한다. HOT/주변 인기 장소(.overlay-card)는
+// 이미 카드 전체 클릭이 찜 토글로 쓰이고 있어(위 "HOT / 주변 인기 장소
+// card-wide selection hit area" 참고) 카드 전체를 링크로 바꾸지 않고
+// 제목만 <a>로 감싼다 -- 그 부분 클릭만 상세로 이동하고, 나머지 영역
+// 클릭은 기존 찜 토글 그대로 유지된다(그 클릭 핸들러가 이미
+// event.target.closest('a, button, ...')를 만나면 스스로 건너뛰도록
+// 되어 있다). 전역 `a { color:inherit; text-decoration:none; }` 리셋이
+// 이미 있어 새 CSS 없이도 기존 타이포그래피 그대로 보인다.
+//
+// 자연스럽게 맞는 게시글이 없는 카드(HOT의 "도자기 원데이 클래스", 지역
+// 행사의 "이태원 갤러리 나잇")는 그대로 둔다 -- 9개 샘플로 17장의 기존
+// 카드를 전부 채울 수는 없어서, 실제로 내용이 맞는 카드만 연결한다.
+(function () {
+  var posts = window.MomentripSamplePosts;
+  if (!posts || !posts.length) return;
+
+  var byId = {};
+  posts.forEach(function (post) { byId[post.id] = post; });
+
+  // js/board.js의 formatDate와 동일한 "YYYY.MM.DD" 형식 -- 두 파일이 공유하는
+  // 데이터(SAMPLE_POSTS)와 달리 이 포맷 함수 자체는 매우 짧고 board.js는
+  // index.html에 로드되지 않으므로, 공유 모듈을 새로 만들기보다 여기 그대로
+  // 다시 둔다.
+  function formatDate(isoString) {
+    var date = new Date(isoString);
+    if (isNaN(date.getTime())) return '';
+    var y = date.getFullYear();
+    var m = String(date.getMonth() + 1).padStart(2, '0');
+    var d = String(date.getDate()).padStart(2, '0');
+    return y + '.' + m + '.' + d;
   }
 
-  function toggleMobileSearch() {
-    if (mobileBar.hidden) {
-      openMobileSearch();
-    } else {
-      closeMobileSearch();
+  function detailUrl(id) {
+    return 'board-view.html?id=' + encodeURIComponent(id);
+  }
+
+  // 카드 제목의 기존 텍스트 노드를 실제 <a>로 감싼다(텍스트 자체는
+  // 그대로 유지 가능하도록 text 인자를 받는다 -- 지정하지 않으면 기존
+  // textContent를 그대로 링크 안에 옮긴다).
+  function linkifyTitle(titleEl, id, text) {
+    if (!titleEl) return;
+    var link = document.createElement('a');
+    link.href = detailUrl(id);
+    link.textContent = text != null ? text : titleEl.textContent;
+    titleEl.textContent = '';
+    titleEl.appendChild(link);
+  }
+
+  function addDataTag(el, tag) {
+    var tags = (el.dataset.tags || '').trim();
+    if (!tags) {
+      el.dataset.tags = tag;
+      return;
+    }
+    if ((' ' + tags + ' ').indexOf(' ' + tag + ' ') === -1) {
+      el.dataset.tags = tags + ' ' + tag;
     }
   }
 
-  document.querySelectorAll('.util-search').forEach(function (button) {
-    button.addEventListener('click', function () {
-      if (mobileBar && window.matchMedia(MOBILE_QUERY).matches) {
-        toggleMobileSearch();
-        return;
-      }
-
-      if (!focusHeroSearch()) {
-        window.location.href = 'index.html#' + HERO_SEARCH_ID;
-      }
+  // -- MOMENTRIP PICK: 코스형 카드(장소→식사→체험 3-STEP)라 개별 게시글
+  // 하나로 완전히 대체할 수 없다 -- 기존 코스 제목/스텝/이미지/카피는
+  // 전혀 건드리지 않고, 코스 제목만 가장 관련 있는 게시글로 링크
+  // 연결한다. 카드1의 STEP1("소소한 카페")이 sample-1의 실제 장소와
+  // 동일해 가장 자연스러운 연결이다. 카드2는 지역(마포구)과 "실내
+  // 데이트"라는 문구가 sample-9와 그대로 일치해 연결하고, Quick
+  // Category와 계속 맞도록 "아이와 함께" tag를 추가한다.
+  (function () {
+    var courseCards = document.querySelectorAll('.moment-pick-section .course-card');
+    [
+      { index: 0, id: 'sample-1' },
+      { index: 1, id: 'sample-9', addTag: '아이와 함께' }
+    ].forEach(function (entry) {
+      var card = courseCards[entry.index];
+      var post = byId[entry.id];
+      if (!card || !post) return;
+      linkifyTitle(card.querySelector('.course-title'), post.id);
+      if (entry.addTag) addDataTag(card, entry.addTag);
     });
+  })();
+
+  // -- HOT / 주변 인기 장소: 기존 data-favorite-id로 카드를 정확히
+  // 지목한다(찜 상태 storage와 동일한 값이라 이미 고유하다). 제목/썸네일/
+  // 지역·작성일/badge(카테고리)를 실제 게시글 값으로 채운다. 별점(rating)
+  // UI는 SAMPLE_POSTS에 대응하는 값이 없어(views/likes만 존재) 지어내지
+  // 않고 그대로 둔다.
+  [
+    { favoriteId: 'seongsu-riverside-market', id: 'sample-3' },
+    { favoriteId: 'han-river-kayak', id: 'sample-2' },
+    { favoriteId: 'rooftop-brunch-cafe', id: 'sample-5' },
+    { favoriteId: 'seongsu-brewing-lounge', id: 'sample-8', tags: '맛집 친구와' },
+    { favoriteId: 'yeonnam-corner-books', id: 'sample-6', tags: '카페 데이트 친구와' },
+    { favoriteId: 'hannam-riverside-walk', id: 'sample-7', tags: '카페 데이트 친구와' },
+    { favoriteId: 'seoulforest-picnic-garden', id: 'sample-4' }
+  ].forEach(function (entry) {
+    var card = document.querySelector('.card.overlay-card[data-favorite-id="' + entry.favoriteId + '"]');
+    var post = byId[entry.id];
+    if (!card || !post) return;
+
+    linkifyTitle(card.querySelector('.card-title'), post.id);
+
+    var img = card.querySelector('.ph-box img');
+    if (img && post.thumbnail) {
+      img.src = post.thumbnail;
+      img.alt = post.thumbnailAlt || post.title;
+    }
+
+    var badge = card.querySelector('.card-image-overlay .badge');
+    if (badge) badge.textContent = post.category;
+
+    var metaSpan = card.querySelector('.card-meta span');
+    if (metaSpan) metaSpan.textContent = post.region + ' · ' + formatDate(post.createdAt);
+
+    if (entry.tags) card.dataset.tags = entry.tags;
   });
 
-  if (mobileCloseBtn) {
-    mobileCloseBtn.addEventListener('click', closeMobileSearch);
-  }
+  // -- 지역 행사: 날짜 마커(예정일)/badge/지역은 "행사 자체"의 정보라
+  // 게시글의 작성일과는 의미가 달라 그대로 두고, 제목/썸네일만 실제
+  // 후기 게시글로 연결한다. 첫 항목은 HOT의 "성수 리버사이드 마켓"과
+  // 이미지(riverside-market.png)까지 동일한 원래 와이어프레임 설계를
+  // 그대로 따라 같은 sample-3로 연결한다.
+  (function () {
+    var eventItems = document.querySelectorAll('.event-section .event-timeline-item');
+    [
+      { index: 0, id: 'sample-3' },
+      { index: 1, id: 'sample-4' }
+    ].forEach(function (entry) {
+      var item = eventItems[entry.index];
+      var post = byId[entry.id];
+      if (!item || !post) return;
 
-  // Mobile 확장 검색창의 검색어를 기존 Hero 검색 input에 그대로 옮겨 담고,
-  // 기존 Hero 검색 <form>의 submit을 그대로 재실행한다(requestSubmit은 버튼
-  // 클릭과 동일하게 그 form의 기존 submit 리스너 -- 빈 검색어 처리 포함 --
-  // 를 그대로 태운다). 새 필터/검색 로직을 따로 만들지 않는다.
-  if (mobileForm) {
-    mobileForm.addEventListener('submit', function (event) {
-      event.preventDefault();
+      linkifyTitle(item.querySelector('.card-title'), post.id);
 
-      var heroInput = document.getElementById(HERO_SEARCH_ID);
-      var heroForm = heroInput ? heroInput.closest('form') : null;
-      if (!heroInput || !heroForm || !mobileInput) return;
-
-      heroInput.value = mobileInput.value;
-      if (heroForm.requestSubmit) {
-        heroForm.requestSubmit();
-      } else {
-        heroForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      var img = item.querySelector('.ph-box img');
+      if (img && post.thumbnail) {
+        img.src = post.thumbnail;
+        img.alt = post.thumbnailAlt || post.title;
       }
-
-      // 검색을 실제로 실행한 뒤에만 결과 영역으로 이동한다(아이콘을 눌러
-      // 패널을 여는 시점에는 이동하지 않음 -- 그건 위 openMobileSearch()).
-      closeMobileSearch();
-      focusHeroSearch();
     });
-  }
+  })();
 
-  // 다른 페이지에서 index.html#hero-search-input으로 넘어온 경우: 브라우저의
-  // 기본 해시 스크롤은 위치만 맞춰줄 뿐 focus는 보장하지 않으므로 명시적으로
-  // focus를 맞춘다.
-  if (window.location.hash === '#' + HERO_SEARCH_ID) {
-    focusHeroSearch();
-  }
+  // -- 커뮤니티 미리보기: 기존 정적 4행의 제목 텍스트가 이미 SAMPLE_POSTS
+  // 제목과 정확히 일치했다(애초에 이 4개를 염두에 두고 작성된 것으로
+  // 보인다) -- category/title/author/date 네 컬럼 모두 실제 게시글
+  // 값으로 교체한다. "전체보기"는 이미 board-list.html로 연결돼 있어
+  // 그대로 둔다.
+  (function () {
+    var rows = document.querySelectorAll('.community-section .board-row:not(.head)');
+    ['sample-5', 'sample-1', 'sample-9', 'sample-2'].forEach(function (id, index) {
+      var row = rows[index];
+      var post = byId[id];
+      if (!row || !post) return;
+
+      var categoryEl = row.querySelector('.col-category');
+      var titleEl = row.querySelector('.col-title');
+      var authorEl = row.querySelector('.col-author');
+      var dateEl = row.querySelector('.col-date');
+
+      if (categoryEl) categoryEl.textContent = post.category;
+      if (titleEl) linkifyTitle(titleEl, post.id);
+      if (authorEl) authorEl.textContent = post.author;
+      if (dateEl) dateEl.textContent = formatDate(post.createdAt);
+    });
+  })();
 })();

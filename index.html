@@ -53,7 +53,7 @@
     </nav>
 
     <div class="header-utils">
-      <button type="button" class="util-btn util-search">
+      <button type="button" class="util-btn util-search" aria-expanded="false" aria-controls="header-search-panel">
         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         <span class="util-label">검색</span>
       </button>
@@ -64,16 +64,19 @@
     </div>
   </div>
 
-  <!-- Mobile 전용 확장 검색 패널: 기본 hidden, .util-search 클릭 시 js/main.js가
-       toggle. Desktop/Tablet에서는 CSS로 항상 숨김(Mobile breakpoint 전용). -->
-  <div class="mobile-search-bar" id="mobile-search-bar" hidden>
-    <div class="container">
-      <form class="mobile-search-form" role="search">
-        <input type="text" id="mobile-search-input" class="input-text" placeholder="검색어를 입력해주세요">
-        <button type="button" class="mobile-search-close" aria-label="검색창 닫기">
-          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-        </button>
+  <!-- Header 검색 패널: Desktop/Tablet/Mobile 공통. 기본 hidden, .util-search
+       클릭 시 js/main.js가 toggle한다. 열려도 현재 페이지 URL은 그대로
+       유지되며(페이지 이동 없음), index.html에서는 기존 Hero 검색 input을
+       그대로 재사용해 실행한다. -->
+  <div class="header-search-panel" id="header-search-panel" hidden>
+    <div class="container header-search-panel-inner">
+      <form class="search-box header-search-form" id="header-search-form" role="search">
+        <input type="text" id="header-search-input" class="input-text" placeholder="장소, 지역, 카테고리를 검색해보세요">
+        <button type="submit" class="btn">검색</button>
       </form>
+      <button type="button" class="header-search-close" aria-label="검색창 닫기">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
@@ -711,6 +714,7 @@
 </footer>
 
 <script src="js/map.js"></script>
+<script src="js/sample-posts.js"></script>
 <script src="js/main.js"></script>
 <script src="js/auth.js"></script>
 </body>

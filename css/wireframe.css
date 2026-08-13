@@ -464,7 +464,8 @@ button:disabled {
 }
 
 .hero-bottom .search-box .input-text::placeholder,
-.board-list-toolbar .search-box .input-text::placeholder {
+.board-list-toolbar .search-box .input-text::placeholder,
+.header-search-form .input-text::placeholder {
   color: var(--color-placeholder);
 }
 
@@ -502,11 +503,106 @@ button:disabled {
   transition: var(--transition);
 }
 
-/* Mobile 전용 패널. Desktop/Tablet에서는 [hidden] 상태와 무관하게 항상
-   숨김 -- Mobile breakpoint(max-width:767px) 안에서만 display:block으로
-   뒤집는다(아래 Mobile Header 규칙 참고). */
-.mobile-search-bar {
+/* Header 검색 패널: Desktop/Tablet/Mobile 공통으로 .util-search 클릭 시
+   Header 바로 아래(.site-header 안, .header-inner의 형제)에 펼쳐진다.
+   breakpoint와 무관하게 [hidden] 속성 하나로만 열림/닫힘을 표현 -- 예전에는
+   Mobile에서만 열리고 Desktop/Tablet은 Hero 검색으로 포커스 이동(또는
+   index.html이 아닌 페이지에서는 이동할 Hero가 없어 index.html로 강제
+   이동)했으나, 이제 모든 breakpoint/페이지에서 같은 패널을 그 자리에서 연다.
+   .site-header와 같은 배경/구분선만 추가하고, 실제 input/button 스타일은
+   기존 .search-box(.input-text + .btn)를 그대로 재사용한다 -- 새 색상/
+   디자인 시스템 없음. */
+.header-search-panel {
   display: none;
+}
+
+/* Header nav와 검색 패널 사이 구분선: 기존 --color-border(#B8B8B8)는 진해서
+   검색창 자체의 mint border와 한 화면에서 경쟁했다. 프로젝트 전역에서 이미
+   연한 구분선 용도로 반복 사용 중인 --color-placeholder-sub(#E9E9E9, 예:
+   line ~1523/1987/2316 등의 섹션 구분 border-top/bottom)로 교체 -- 새 값
+   없이 기존 토큰만 재사용. .header-search-panel 범위로 한정되어 있어
+   패널이 닫혀 있을 때의 .site-header 자체(border-bottom:none, shadow만
+   사용)는 영향받지 않는다. */
+.header-search-panel:not([hidden]) {
+  display: block;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-placeholder-sub);
+  padding: var(--gap-sm) 0;
+}
+
+.header-search-panel-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+/* 기존 .search-box는 border-color: var(--color-border)(회색)를 상속하고,
+   radius는 아예 정의돼 있지 않다(Hero/board-list-toolbar도 각진 형태가
+   원래 디자인). Header 검색 전용으로만 mint border + 기존 .btn/.input-text가
+   이미 쓰는 --radius-sm을 적용해 input+버튼이 하나의 둥근 component로
+   보이게 한다. */
+.header-search-form {
+  flex: 1;
+  border-color: var(--color-primary);
+  border-radius: var(--radius-sm);
+}
+
+/* input은 .input-text 기본값(네 모서리 모두 --radius-sm)을 그대로 물려받아
+   버튼과 맞닿는 오른쪽 안쪽 모서리까지 둥글어져 있었다 -- wrapper 왼쪽
+   바깥 모서리만 남기고 오른쪽(안쪽 접합부)은 각지게 되돌려, 버튼 쪽의
+   왼쪽 모서리 처리(바로 아래)와 맞물려 접합부에 불필요한 라운드/틈이
+   보이지 않게 한다. */
+.header-search-form .input-text {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+/* 검색 실행 버튼: 기존 .btn.btn-fill 민트 배경/흰 글자/hover 값을 그대로
+   재사용한다(새 색상 없음) -- Header 검색 패널 전용으로 범위를 좁혀서
+   Hero(.hero-bottom .search-box)/board-list-toolbar의 기존 아웃라인 버튼은
+   건드리지 않는다. border-color를 명시해 .search-box .btn이 남기는 회색
+   border-left 구분선을 mint로 덮는다. radius는 오른쪽(바깥쪽) 두 모서리에만
+   --radius-sm을 적용 -- 이전에는 네 모서리 모두 라운드였어서 input과
+   맞닿는 왼쪽 안쪽 모서리까지 둥글어 wrapper 오른쪽 바깥 경계와 미세하게
+   어긋나 버튼이 튀어나온 것처럼 보였다. 왼쪽은 0으로 되돌려 접합부를
+   각지게, 오른쪽은 wrapper의 오른쪽 모서리와 동일한 위치/반경으로 맞춘다. */
+.header-search-form .btn {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border-color: var(--color-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.header-search-form .btn:hover,
+.header-search-form .btn:active {
+  background-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
+  border-color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
+  color: var(--color-surface);
+}
+
+/* 닫기 X: .region-select-close와 같은 크기/형태(테두리·배경 없는 아이콘
+   버튼, 클릭 영역 28x28 유지)이되, 색상만 .gnb-toggle 아이콘과 동일한 민트
+   색상/hover 패턴으로 맞춘다(회색 대신 mint, 박스/outline 형태 추가 없음). */
+.header-search-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  font-size: 16px;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.header-search-close:hover {
+  color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
+}
+
+.header-search-close:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
 }
 
 .header-inner {
@@ -3249,51 +3345,9 @@ a.mypage-place-link::after {
     gap: var(--gap-sm);
   }
 
-  /* Mobile 확장 검색 패널: 검색 아이콘을 눌렀다는 사실을 명확한 화면 변화로
-     보여주기 위해 Header 바로 아래(.site-header 안, .header-inner의 형제)에
-     펼쳐진다. .site-header와 같은 배경/구분선만 추가하고, 실제 input 스타일은
-     .input-text(border/radius/font/placeholder/mint focus)를 그대로 재사용한다
-     -- 새 색상/디자인 시스템 없음. */
-  .mobile-search-bar:not([hidden]) {
-    display: block;
-    background-color: var(--color-surface);
-    border-top: 1px solid var(--color-border);
-    padding: var(--gap-sm) 0;
-  }
-
-  .mobile-search-form {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-xs);
-  }
-
-  .mobile-search-form .input-text {
-    flex: 1;
-  }
-
-  /* .region-select-close와 동일한 값의 독립된 close 버튼(공유 selector는
-     Region Dialog 쪽이라 건드리지 않음). */
-  .mobile-search-close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border: none;
-    background: transparent;
-    color: var(--color-subtext);
-    font-size: 16px;
-    transition: var(--transition);
-  }
-
-  .mobile-search-close:hover {
-    color: var(--color-text);
-  }
-
-  .mobile-search-close:focus-visible {
-    outline: 2px solid var(--color-interactive-strong);
-    outline-offset: 2px;
-  }
+  /* Header 검색 패널 자체의 열림/닫힘/스타일은 breakpoint 공통 규칙(위 "5.
+     Header" 섹션의 .header-search-panel)으로 이미 처리된다 -- Mobile
+     전용으로 다시 정의할 규칙 없음. */
 
   /* Mobile Header 계정 영역: 닉네임은 .util-label 클래스를 쓰지 않으므로 위
      .header-utils .util-label 규칙의 영향을 받지 않고 계속 보인다(검색

@@ -50,7 +50,7 @@
     </nav>
 
     <div class="header-utils">
-      <button type="button" class="util-btn util-search">
+      <button type="button" class="util-btn util-search" aria-expanded="false" aria-controls="header-search-panel">
         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         <span class="util-label">검색</span>
       </button>
@@ -58,6 +58,21 @@
         <i class="fa-solid fa-user" aria-hidden="true"></i>
         <span class="util-label">로그인</span>
       </a>
+    </div>
+  </div>
+
+  <!-- Header 검색 패널: Desktop/Tablet/Mobile 공통. 기본 hidden, .util-search
+       클릭 시 js/main.js가 toggle한다. 열려도 현재 페이지 URL(예: ?id=...)은
+       그대로 유지된다(페이지 이동 없음). -->
+  <div class="header-search-panel" id="header-search-panel" hidden>
+    <div class="container header-search-panel-inner">
+      <form class="search-box header-search-form" id="header-search-form" role="search">
+        <input type="text" id="header-search-input" class="input-text" placeholder="장소, 지역, 카테고리를 검색해보세요">
+        <button type="submit" class="btn">검색</button>
+      </form>
+      <button type="button" class="header-search-close" aria-label="검색창 닫기">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </header>
@@ -245,6 +260,7 @@
   </div>
 </footer>
 
+<script src="js/sample-posts.js"></script>
 <script src="js/main.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/attachments.js"></script>
