@@ -452,9 +452,14 @@ var carouselControllers = [];
     return text.trim().replace(/\s+/g, ' ').toLowerCase();
   }
 
+  // Word-boundary substring match instead of splitting on every space: some
+  // Quick Category tags are themselves two words (e.g. "아이와 함께"), so
+  // splitting data-tags on \s+ into single-word tokens would break those
+  // tags apart and never match them. Padding both sides with a space keeps
+  // single-word tags (e.g. "산책") matching exactly as before.
   function itemMatchesTag(item, tag) {
-    var tags = (item.dataset.tags || '').split(/\s+/).filter(Boolean);
-    return tags.indexOf(tag) !== -1;
+    var tags = ' ' + (item.dataset.tags || '').trim() + ' ';
+    return tags.indexOf(' ' + tag + ' ') !== -1;
   }
 
   function refreshCarouselFor(section) {
@@ -569,58 +574,22 @@ var carouselControllers = [];
   });
 })();
 
-// Mobile #search-result-status placement: Desktop's DOM position (sibling
-// right after .hero-section, before MOMENTRIP PICK) stays untouched -- this
-// only relocates the SAME node (never duplicated/no second id) to right
-// after .hero-quick-category, inside .hero-bottom, while the Mobile
-// breakpoint is active, so filter feedback shows in the same viewport as the
-// Chip row instead of scrolled below the MAP/Spot card. Reparenting via
-// insertBefore/appendChild preserves the element's attributes and the
+// #search-result-status placement: Desktop's original DOM position (its own
+// section right after .hero-section, before MOMENTRIP PICK) put filter
+// feedback far below the Quick Category chips. It's now relocated once, on
+// load, to right after .hero-quick-category inside .hero-bottom for every
+// breakpoint -- Desktop/Tablet/Mobile each then position it purely via the
+// .hero-bottom > #search-result-status `order` CSS rule (see
+// wireframe.css), so no per-breakpoint reparenting is needed any more.
+// Reparenting via insertBefore preserves the element's attributes and the
 // search-filter IIFE's existing id-based references above, so
-// hidden/aria-live/updateStatus() keep working unchanged regardless of
-// which parent currently holds it.
+// hidden/aria-live/updateStatus() keep working unchanged.
 (function () {
   var statusEl = document.getElementById('search-result-status');
   var heroQuickCategory = document.querySelector('.hero-quick-category');
   if (!statusEl || !heroQuickCategory || !heroQuickCategory.parentNode) return;
 
-  var desktopParent = statusEl.parentNode;
-  var desktopNextSibling = statusEl.nextSibling;
-  var heroBottom = heroQuickCategory.parentNode;
-
-  function placeForMobile() {
-    if (statusEl.parentNode !== heroBottom) {
-      heroBottom.insertBefore(statusEl, heroQuickCategory.nextSibling);
-    }
-  }
-
-  function placeForDesktop() {
-    if (statusEl.parentNode !== desktopParent) {
-      desktopParent.insertBefore(statusEl, desktopNextSibling);
-    }
-  }
-
-  var mobileMql = window.matchMedia('(max-width: 767px)');
-
-  function applyLayout(isMobile) {
-    if (isMobile) {
-      placeForMobile();
-    } else {
-      placeForDesktop();
-    }
-  }
-
-  applyLayout(mobileMql.matches);
-
-  function handleChange(event) {
-    applyLayout(event.matches);
-  }
-
-  if (mobileMql.addEventListener) {
-    mobileMql.addEventListener('change', handleChange);
-  } else if (mobileMql.addListener) {
-    mobileMql.addListener(handleChange);
-  }
+  heroQuickCategory.parentNode.insertBefore(statusEl, heroQuickCategory.nextSibling);
 })();
 
 // Favorite (찜) toggle: persists which cards are favorited across reloads.
@@ -698,6 +667,23 @@ var carouselControllers = [];
     });
   });
 })();
+
+// HOT / 주변 인기 장소 card-wide selection hit area: .favorite-toggle is each
+// card's only selection control, but it's a small icon button in the corner.
+// Expand the click target to the whole card -- any click that doesn't land
+// on an existing interactive element (the toggle itself, or any future
+// a/button/input/select/textarea) re-dispatches a real click to the toggle
+// button, so the listener above (with its own stopPropagation) stays the
+// single source of truth for the toggle/state logic. No double-toggle: a
+// direct click on the button is caught by closest() below and skipped here.
+document.querySelectorAll('.overlay-card').forEach(function (card) {
+  card.addEventListener('click', function (event) {
+    if (event.target.closest('a, button, input, select, textarea')) return;
+
+    var toggle = card.querySelector('.favorite-toggle');
+    if (toggle) toggle.click();
+  });
+});
 
 // Hero title typing effect: types/deletes the existing 2-line title
 // ("오늘은 어떤 하루를" / "보내고 싶나요?") one character at a time, reusing
@@ -927,3 +913,188 @@ if (eventSection) {
     carouselControllers.push({ section: eventSection, refresh: eventCarouselController.refresh });
   }
 }
+
+// Main "커뮤니티" preview <-> board data: reads the exact same localStorage
+// key js/board.js uses (momentrip-board-posts) -- no separate main-page
+// storage/copy. board.js itself isn't loaded on index.html (see its own
+// file-separation comment), so this only re-implements the couple of lines
+// it actually needs (read + the same "newest first" sort + the same
+// "YYYY.MM.DD" date format), not the CRUD/category-tab logic that lives
+// there. Runs on every page (main.js is shared), but .board-preview-table
+// only exists on index.html, so this is a no-op everywhere else.
+(function () {
+  var STORAGE_KEY = 'momentrip-board-posts';
+
+  var table = document.querySelector('.community-section .board-preview-table');
+  if (!table) return;
+
+  function readPosts() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      var parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  // Same "YYYY.MM.DD" format as js/board.js's formatDate and the existing
+  // static sample rows.
+  function formatDate(isoString) {
+    var date = new Date(isoString);
+    if (isNaN(date.getTime())) return '';
+    var y = date.getFullYear();
+    var m = String(date.getMonth() + 1).padStart(2, '0');
+    var d = String(date.getDate()).padStart(2, '0');
+    return y + '.' + m + '.' + d;
+  }
+
+  var posts = readPosts().slice().sort(function (a, b) {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+  if (!posts.length) return;
+
+  // Preview row count comes from however many static sample rows the design
+  // already has (currently 4) -- never hardcoded separately, so it can't
+  // drift from the actual markup.
+  var staticRows = table.querySelectorAll('.board-row:not(.head)');
+  var previewCount = staticRows.length;
+
+  posts.slice(0, previewCount).forEach(function (post, index) {
+    var row = document.createElement('a');
+    row.className = 'board-row';
+    row.href = 'board-view.html?id=' + encodeURIComponent(post.id);
+
+    var category = document.createElement('span');
+    category.className = 'col-category';
+    category.textContent = post.category || '';
+
+    var title = document.createElement('span');
+    title.className = 'col-title';
+    title.textContent = post.title || '';
+
+    var author = document.createElement('span');
+    author.className = 'col-author';
+    author.textContent = post.author || '';
+
+    var date = document.createElement('span');
+    date.className = 'col-date';
+    date.textContent = formatDate(post.createdAt);
+
+    row.appendChild(category);
+    row.appendChild(title);
+    row.appendChild(author);
+    row.appendChild(date);
+
+    // Replace the static sample row in the same slot with the real post
+    // (newest CRUD posts fill from the top) -- any static rows left over
+    // when there are fewer real posts than previewCount stay untouched, so
+    // the total row count never changes and nothing is ever duplicated.
+    var target = staticRows[index];
+    if (target) {
+      table.insertBefore(row, target);
+      target.remove();
+    } else {
+      table.appendChild(row);
+    }
+  });
+})();
+
+// Header 검색(.util-search) 버튼: 새 검색 시스템을 만들지 않고 기존 Hero
+// 검색 input(#hero-search-input)을 그대로 재사용한다. Desktop/Tablet과
+// index.html이 아닌 페이지(board-*)는 기존 그대로: index.html 위에서는 그
+// 자리에서 바로 스크롤+focus, 그 외 페이지에서는 index.html의 같은 앵커로
+// 이동한 뒤 그쪽에서 focus한다. Mobile + index.html(= #mobile-search-bar가
+// 존재하는 페이지)에서만 Header 바로 아래 확장 검색 패널을 toggle한다 --
+// board-*.html은 이번 작업에서 수정 대상이 아니라 그 패널 자체가 없으므로
+// 자동으로 기존 동작(위 fallback)을 그대로 탄다. main.js는 모든 페이지에
+// 로드되므로 이 IIFE 하나로 전부 처리된다 -- 별도 검색 페이지/router 없음.
+(function () {
+  var HERO_SEARCH_ID = 'hero-search-input';
+  var MOBILE_QUERY = '(max-width: 767px)';
+
+  function focusHeroSearch() {
+    var input = document.getElementById(HERO_SEARCH_ID);
+    if (!input) return false;
+    // focus() first: Chrome scrolls a newly-focused element into view on its
+    // own (instant, block:'nearest'), which would otherwise fight/override a
+    // smooth scrollIntoView called before it. Calling scrollIntoView after
+    // focus() makes the smooth centered scroll the last word.
+    input.focus();
+    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return true;
+  }
+
+  var mobileBar = document.getElementById('mobile-search-bar');
+  var mobileInput = document.getElementById('mobile-search-input');
+  var mobileForm = document.querySelector('.mobile-search-form');
+  var mobileCloseBtn = document.querySelector('.mobile-search-close');
+
+  function openMobileSearch() {
+    mobileBar.hidden = false;
+    if (mobileInput) mobileInput.focus();
+  }
+
+  function closeMobileSearch() {
+    mobileBar.hidden = true;
+  }
+
+  function toggleMobileSearch() {
+    if (mobileBar.hidden) {
+      openMobileSearch();
+    } else {
+      closeMobileSearch();
+    }
+  }
+
+  document.querySelectorAll('.util-search').forEach(function (button) {
+    button.addEventListener('click', function () {
+      if (mobileBar && window.matchMedia(MOBILE_QUERY).matches) {
+        toggleMobileSearch();
+        return;
+      }
+
+      if (!focusHeroSearch()) {
+        window.location.href = 'index.html#' + HERO_SEARCH_ID;
+      }
+    });
+  });
+
+  if (mobileCloseBtn) {
+    mobileCloseBtn.addEventListener('click', closeMobileSearch);
+  }
+
+  // Mobile 확장 검색창의 검색어를 기존 Hero 검색 input에 그대로 옮겨 담고,
+  // 기존 Hero 검색 <form>의 submit을 그대로 재실행한다(requestSubmit은 버튼
+  // 클릭과 동일하게 그 form의 기존 submit 리스너 -- 빈 검색어 처리 포함 --
+  // 를 그대로 태운다). 새 필터/검색 로직을 따로 만들지 않는다.
+  if (mobileForm) {
+    mobileForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      var heroInput = document.getElementById(HERO_SEARCH_ID);
+      var heroForm = heroInput ? heroInput.closest('form') : null;
+      if (!heroInput || !heroForm || !mobileInput) return;
+
+      heroInput.value = mobileInput.value;
+      if (heroForm.requestSubmit) {
+        heroForm.requestSubmit();
+      } else {
+        heroForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      }
+
+      // 검색을 실제로 실행한 뒤에만 결과 영역으로 이동한다(아이콘을 눌러
+      // 패널을 여는 시점에는 이동하지 않음 -- 그건 위 openMobileSearch()).
+      closeMobileSearch();
+      focusHeroSearch();
+    });
+  }
+
+  // 다른 페이지에서 index.html#hero-search-input으로 넘어온 경우: 브라우저의
+  // 기본 해시 스크롤은 위치만 맞춰줄 뿐 focus는 보장하지 않으므로 명시적으로
+  // focus를 맞춘다.
+  if (window.location.hash === '#' + HERO_SEARCH_ID) {
+    focusHeroSearch();
+  }
+})();

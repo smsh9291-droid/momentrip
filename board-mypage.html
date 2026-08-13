@@ -99,6 +99,15 @@
         <p class="mypage-posts-empty" id="mypage-posts-empty" hidden>아직 작성한 게시글이 없습니다.</p>
       </section>
 
+      <!-- PLACE INFO에서 저장한 장소(momentrip-saved-places, 로그인 사용자별
+           분리). js/board.js가 동일한 저장/저장취소 함수를 그대로 재사용해
+           채운다 -- "내가 쓴 글"과 같은 h2/ul/empty state 구조. -->
+      <section class="mypage-places">
+        <h2 class="mypage-places-heading">저장한 장소</h2>
+        <ul class="mypage-place-list" id="mypage-places-list"></ul>
+        <p class="mypage-places-empty" id="mypage-places-empty" hidden>아직 저장한 장소가 없습니다.</p>
+      </section>
+
      </div>
     </div>
   </section>

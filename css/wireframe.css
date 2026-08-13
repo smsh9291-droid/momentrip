@@ -502,6 +502,13 @@ button:disabled {
   transition: var(--transition);
 }
 
+/* Mobile 전용 패널. Desktop/Tablet에서는 [hidden] 상태와 무관하게 항상
+   숨김 -- Mobile breakpoint(max-width:767px) 안에서만 display:block으로
+   뒤집는다(아래 Mobile Header 규칙 참고). */
+.mobile-search-bar {
+  display: none;
+}
+
 .header-inner {
   display: flex;
   align-items: center;
@@ -1195,7 +1202,7 @@ a.logo-box:focus-visible {
    hard floor that the grid column could never go below, which is what
    squeezed the MAP column as the browser narrowed. */
 .hero-bottom .search-box {
-  order: 2;
+  order: 3;
   width: 100%;
   max-width: 630px;
   height: 56px;
@@ -1208,6 +1215,18 @@ a.logo-box:focus-visible {
 
 .hero-bottom .hero-quick-category {
   order: 1;
+}
+
+/* #search-result-status is moved into .hero-bottom (right after
+   .hero-quick-category) by js/main.js for every breakpoint now, so Desktop/
+   Tablet feedback shows directly under the Chip row instead of in its
+   original far-below section. order:2 keeps it between Quick Category(1) and
+   Search(3); margin:0 replaces its own base margin since .hero-bottom's gap
+   already spaces it from the Chip row above (same technique as the Mobile
+   override further down). */
+.hero-bottom > #search-result-status {
+  order: 2;
+  margin: 0;
 }
 
 .hero-quick-category .quick-category-label {
@@ -1628,7 +1647,22 @@ a.logo-box:focus-visible {
 }
 
 /* Overlay card: image with overlay badge/favorite.
-   Shared by "이번 주 HOT" (mixed content types) and "주변 인기 장소" (place-only). */
+   Shared by "이번 주 HOT" (mixed content types) and "주변 인기 장소" (place-only).
+   cursor:pointer signals the whole card is now a click target for the
+   favorite toggle (js/main.js), not just the small icon button. */
+.overlay-card {
+  cursor: pointer;
+}
+
+/* 선택된 카드(내부 .favorite-toggle이 is-active) 강조: 3px 민트 border.
+   :has()로 버튼의 is-active 상태를 그대로 읽으므로 별도 class 동기화가 필요
+   없다 -- 토글되는 순간 border도 항상 같은 상태를 반영한다. 전역 box-sizing:
+   border-box(1. Reset & Base) 덕분에 border 유무와 무관하게 카드의 바깥
+   width/height는 그대로라 grid/carousel 위치가 흔들리지 않는다. */
+.overlay-card:has(.favorite-toggle.is-active) {
+  border: 3px solid var(--color-primary);
+}
+
 .overlay-card .card-image-wrap {
   position: relative;
 }
@@ -2341,6 +2375,14 @@ a.logo-box:focus-visible {
   font-size: var(--font-size-body);
 }
 
+/* 댓글 기본 프로필: 프로필 이미지를 등록하는 기능이 아직 없어 모든 댓글이
+   이 아이콘을 쓴다. 배경/테두리는 기존 .icon-circle(연한 gray)을 그대로
+   재사용하고, 사람 실루엣만 mint로 오버라이드한다(다른 .icon-circle 사용처
+   -- 마이페이지 프로필/region-tag 등 -- 는 그대로 subtext 회색 유지). */
+.comment-avatar i {
+  color: var(--color-primary);
+}
+
 .post-nav {
   border-bottom: 1px solid var(--color-placeholder-sub);
 }
@@ -2348,18 +2390,36 @@ a.logo-box:focus-visible {
 .post-nav .post-nav-row {
   display: flex;
   align-items: center;
-  gap: var(--gap-sm);
-  padding: 14px 0;
+  gap: var(--gap-md);
+  padding: 14px var(--gap-md);
   font-size: var(--font-size-body);
+}
+
+/* display:flex가 author rule이라 UA [hidden]{display:none}보다 우선하므로
+   (.post-owner-actions와 동일한 이유), 목록 맨 앞/뒤 글에서 js/board.js가
+   이전글 또는 다음글 행을 hidden 처리할 때 실제로 사라지도록 되돌린다. */
+.post-nav .post-nav-row[hidden] {
+  display: none;
 }
 
 .post-nav .post-nav-row .nav-label {
   width: 60px;
+  flex-shrink: 0;
   color: var(--color-subtext);
   font-size: var(--font-size-caption);
 }
 
+/* 제목은 label과 같은 한 줄 navigation으로 보이도록 caption 크기로 낮추고
+   (기존 body 15px -> caption 12px, 다른 곳의 게시글 제목/카드 제목 토큰은
+   그대로 둠), 넘치는 경우에도 두 줄로 꺾이거나 페이지 폭을 넓히지 않도록
+   ellipsis로 한 줄을 유지한다. */
 .post-nav .post-nav-row a {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--font-size-caption);
   transition: var(--transition);
 }
 
@@ -2487,6 +2547,85 @@ a.logo-box:focus-visible {
 }
 
 .mypage-posts-empty {
+  padding: var(--gap-xl) 0;
+  text-align: center;
+  color: var(--color-subtext);
+  font-size: var(--font-size-body);
+}
+
+/* 저장한 장소: "내가 쓴 글"과 동일한 h2/list/empty 구조·값(gap-lg/md/xl,
+   dashed border, subtext color)만 재사용한다 -- 새 HEX/gradient/shadow 없음. */
+.mypage-places {
+  margin-top: var(--gap-lg);
+}
+
+.mypage-places-heading {
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-card-title);
+  margin-bottom: var(--gap-md);
+}
+
+.mypage-place-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.mypage-place-item {
+  /* 저장취소 버튼과 함께 행 전체를 클릭 영역으로 넓히는 stretched-link
+     (.mypage-place-link::after)의 기준 위치. */
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--gap-sm) 0;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.mypage-place-link {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--color-text);
+}
+
+/* 게시글이 존재하는 저장 장소만 실제 <a>로 렌더링되므로(js/board.js),
+   이 ::after만 걸리면 자연스럽게 "이동 가능한 항목만" 행 전체가 눌린다.
+   삭제된 게시글의 저장 항목은 <div>라 여기 걸리지 않는다. */
+a.mypage-place-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.mypage-place-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.mypage-place-link:hover .mypage-place-name {
+  color: var(--color-primary);
+}
+
+.mypage-place-location {
+  font-size: var(--font-size-caption);
+  color: var(--color-subtext);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 행 전체를 덮는 ::after 위로 버튼이 눌리도록 별도 stacking context. */
+.mypage-place-cancel {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.mypage-places-empty {
   padding: var(--gap-xl) 0;
   text-align: center;
   color: var(--color-subtext);
@@ -2781,6 +2920,134 @@ a.logo-box:focus-visible {
   outline-offset: 2px;
 }
 
+/* Inline content editor(board-write.html): 네이버 카페형 단일 editor
+   surface. text/image/video block이 하나의 문서처럼 이어지도록, 개별
+   block에는 border/background를 주지 않고 .content-editor 하나에만
+   테두리를 준다. 새 색상 없이 기존 .upload-box/.input-text 계열 토큰만
+   재사용. */
+.content-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--gap-md);
+  background-color: var(--color-surface);
+}
+
+/* 상단 단일 toolbar: block마다 반복되던 "+ 추가" 버튼을 이걸로 대체. */
+.editor-toolbar {
+  display: flex;
+  gap: var(--gap-xs);
+  padding-bottom: var(--gap-sm);
+  margin-bottom: var(--gap-xs);
+  border-bottom: 1px solid var(--color-placeholder-sub);
+}
+
+.editor-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-placeholder-sub);
+  color: var(--color-subtext);
+  font-size: var(--font-size-caption);
+  transition: var(--transition);
+}
+
+.editor-toolbar-btn:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-interactive-strong);
+}
+
+.editor-toolbar-btn:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
+}
+
+.editor-toolbar-btn i {
+  color: var(--color-primary);
+}
+
+/* text block: textarea가 아니라 border 없는 contenteditable div. 여러 개가
+   나열돼도 각자 박스로 보이지 않고 하나의 문서처럼 이어진다. */
+.content-block-text {
+  padding: 6px 2px;
+  min-height: 1.6em;
+  line-height: 1.8;
+  font-size: var(--font-size-body);
+  color: var(--color-text);
+  white-space: pre-wrap;
+  word-break: break-word;
+  outline: none;
+}
+
+.content-block-text.is-empty::before {
+  content: attr(data-placeholder);
+  color: var(--color-subtext);
+  pointer-events: none;
+}
+
+/* 이미지/동영상 block: 원본 비율 그대로(board-view의 .post-attachment-item과
+   동일한 img/video 규칙을 공유) + width preset 적용 대상. 기본은 항상
+   가운데 정렬(카드 폭 전체를 넘지 않게). */
+.content-block-media {
+  position: relative;
+  max-width: 100%;
+  margin: 4px auto;
+  cursor: pointer;
+}
+
+.content-block-media.is-selected {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* 선택(mint outline)됐을 때만 드러나는 media용 mini toolbar(width preset +
+   텍스트 추가 + 삭제). 평소엔 화면에 항상 떠 있는 큰 X 없이 조용하다가,
+   선택했을 때만 필요한 조작을 보여준다. */
+.content-block-media-toolbar {
+  display: none;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.content-block-media.is-selected .content-block-media-toolbar {
+  display: flex;
+}
+
+.media-toolbar-btn {
+  padding: 4px 10px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-subtext);
+  font-size: var(--font-size-caption);
+  transition: var(--transition);
+}
+
+.media-toolbar-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-interactive-strong);
+}
+
+.media-toolbar-btn:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
+}
+
+.media-width-btn.is-active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-surface);
+}
+
+.media-toolbar-remove-btn:hover {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
 @media (max-width: 767px) {
   .region-select-group {
     grid-template-columns: 1fr;
@@ -2980,6 +3247,52 @@ a.logo-box:focus-visible {
      더 좁힌다. */
   .header-utils {
     gap: var(--gap-sm);
+  }
+
+  /* Mobile 확장 검색 패널: 검색 아이콘을 눌렀다는 사실을 명확한 화면 변화로
+     보여주기 위해 Header 바로 아래(.site-header 안, .header-inner의 형제)에
+     펼쳐진다. .site-header와 같은 배경/구분선만 추가하고, 실제 input 스타일은
+     .input-text(border/radius/font/placeholder/mint focus)를 그대로 재사용한다
+     -- 새 색상/디자인 시스템 없음. */
+  .mobile-search-bar:not([hidden]) {
+    display: block;
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    padding: var(--gap-sm) 0;
+  }
+
+  .mobile-search-form {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+  }
+
+  .mobile-search-form .input-text {
+    flex: 1;
+  }
+
+  /* .region-select-close와 동일한 값의 독립된 close 버튼(공유 selector는
+     Region Dialog 쪽이라 건드리지 않음). */
+  .mobile-search-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: var(--color-subtext);
+    font-size: 16px;
+    transition: var(--transition);
+  }
+
+  .mobile-search-close:hover {
+    color: var(--color-text);
+  }
+
+  .mobile-search-close:focus-visible {
+    outline: 2px solid var(--color-interactive-strong);
+    outline-offset: 2px;
   }
 
   /* Mobile Header 계정 영역: 닉네임은 .util-label 클래스를 쓰지 않으므로 위
@@ -3330,8 +3643,8 @@ a.logo-box:focus-visible {
     margin-top: 0;
   }
 
-  /* Mobile-only: put Search before Quick Category (Desktop keeps Quick
-     Category above Search via the unconditional order:1/2 rule above). */
+  /* Mobile-only: put Search before Quick Category (Desktop/Tablet keep Quick
+     Category above Search via the unconditional order:1/3 rule above). */
   .hero-bottom .search-box {
     order: 1;
     width: 100%;
@@ -3344,13 +3657,10 @@ a.logo-box:focus-visible {
     order: 2;
   }
 
-  /* Mobile only: js/main.js moves #search-result-status (the same single
-     element, never duplicated) to be .hero-bottom's last child so filter
-     feedback shows immediately under the Chip row instead of below the MAP
-     card. order:3 keeps it after search-box(1)/quick-category(2); margin:0
-     replaces its own base margin since .hero-bottom's gap already spaces it
-     from the Chip row above. Desktop is untouched -- the element only ever
-     becomes a .hero-bottom child at this breakpoint. */
+  /* Mobile-only override of the unconditional order:2 rule above: here
+     #search-result-status goes after search-box(1)/quick-category(2) instead
+     of between them, since Mobile's own order puts Search first. Still
+     directly under the Chip row either way. */
   .hero-bottom > #search-result-status {
     order: 3;
     margin: 0;
@@ -3732,7 +4042,10 @@ a.logo-box:focus-visible {
   background-color: var(--color-surface);
   border: none;
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  /* 크림 배경(--color-bg) 위 흰 카드가 shadow-sm만으로는 경계가 약해 바로
+     인식되지 않아 한 단계 강한 기존 --shadow-md로 올렸다 (다른 카드의
+     hover shadow와 같은 값 -- 새 shadow를 만들지 않음). */
+  box-shadow: var(--shadow-md);
   transition: var(--transition);
 }
 
@@ -3786,6 +4099,42 @@ a.logo-box:focus-visible {
   line-height: 1.5;
 }
 
+/* 저장 상태인 동안 계속 표시되는 마이페이지 이동 링크(js/board.js
+   setPlaceInfoSavedState) -- 버튼이 아니라 안내문구 아래 새 줄에 붙는
+   작은 텍스트 링크다. border/background/shadow 없이 기존 민트 색상만
+   재사용하고(font-size는 부모 .place-info-hint의 caption 크기를 그대로
+   상속), hover는 다른 버튼들과 동일한 color-mix 어두운 민트 패턴을 그대로
+   쓴다. [저장]/[저장취소] 버튼보다 시각적으로 강해 보이지 않는다. */
+.place-info-mypage-link {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-primary);
+}
+
+.place-info-mypage-link:hover {
+  color: color-mix(in srgb, var(--color-primary) 80%, var(--color-interactive-strong) 20%);
+}
+
+.place-info-mypage-link:focus-visible {
+  outline: 2px solid var(--color-interactive-strong);
+  outline-offset: 2px;
+}
+
+/* Desktop/Tablet 기본값: 저장 완료 문장은 "장소가 저장되었습니다."까지만
+   짧게 보이고(이어지는 문장은 .place-info-feedback-extra로 숨김), 대신
+   마이페이지 링크 쪽에 "에서 확인"을 더해 목적을 명확히 한다 -- 좁은 카드
+   폭에서 문장이 어색하게 꺾여 3줄이 되는 문제를 문구 자체가 아니라 CSS
+   표시 여부로만 정리한다(js/board.js는 두 텍스트를 항상 같이 만들고, 어느
+   쪽을 보여줄지만 breakpoint별로 갈린다). Mobile(max-width:767px)에서는
+   아래 미디어쿼리가 반대로 뒤집어 기존 문구를 그대로 유지한다. */
+.place-info-feedback-extra {
+  display: none;
+}
+
+.place-info-mypage-extra {
+  display: inline;
+}
+
 /* 작성자 전용 관리 버튼 (수정/삭제) - 반응 영역과 분리, 본문 하단 정가운데 배치.
    PLACE INFO 기준이 아니라 .post-article(게시글 영역) 기준으로 가운데 정렬된다.
    모바일에서는 .post-owner-actions .btn에 flex:1이 걸려 두 버튼이 폭을 꽉
@@ -3796,6 +4145,14 @@ a.logo-box:focus-visible {
   justify-content: center;
   gap: var(--gap-sm);
   margin: var(--gap-lg) 0;
+}
+
+/* display:flex가 author rule이라 UA의 [hidden]{display:none}보다 우선하므로
+   (.search-result-status/.event-timeline-item과 동일한 이유), SAMPLE_POSTS
+   글에서 js/board.js가 이 영역을 hidden 처리할 때 실제로 사라지도록
+   명시적으로 되돌린다. */
+.post-owner-actions[hidden] {
+  display: none;
 }
 
 /* 반응 영역: 좋아요/저장/공유를 하나의 그룹으로 묶어 모바일에서만 버튼형으로 전환 */
@@ -3953,6 +4310,25 @@ a.logo-box:focus-visible {
     max-width: 100%;
   }
 
+  /* Mobile에서는 Desktop/Tablet의 shadow-md 대신 연한 회색 1px border로만
+     카드를 구분한다(강한 shadow는 Mobile 좁은 화면에서 과해 보이므로 제외).
+     background/radius/padding 등 base .place-info-card 규칙은 그대로 둔다. */
+  .place-info-card {
+    box-shadow: none;
+    border: 1px solid var(--color-placeholder-sub);
+  }
+
+  /* Mobile은 Desktop/Tablet과 반대로 토글 -- 저장 완료 문장을 이어지는
+     문구까지 그대로 보여주고(카드 폭이 좁아 자연스럽게 줄바꿈됨), 링크의
+     "에서 확인"은 숨겨 기존 "마이페이지 >" 그대로 유지한다. */
+  .place-info-feedback-extra {
+    display: inline;
+  }
+
+  .place-info-mypage-extra {
+    display: none;
+  }
+
   .post-owner-actions .btn {
     flex: 1;
     padding: 14px 20px;
@@ -3974,18 +4350,10 @@ a.logo-box:focus-visible {
     flex-direction: column;
   }
 
-  .post-nav-row {
-    border: 1px solid var(--color-border);
-    padding: var(--gap-sm) var(--gap-md);
-    margin-bottom: var(--gap-sm);
-  }
-
-  .post-nav-row:last-child {
-    margin-bottom: 0;
-  }
-
   .post-nav {
-    border-bottom: none;
+    border: 1px solid var(--color-placeholder-sub);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface);
   }
 
   .post-nav .post-nav-row + .post-nav-row {

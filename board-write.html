@@ -159,18 +159,10 @@
         </div>
 
         <div class="field">
-          <label class="field-label" for="board-post-content">내용</label>
-          <textarea class="input-textarea" id="board-post-content" placeholder="이야기를 자유롭게 남겨주세요" required></textarea>
-        </div>
-
-        <div class="field">
-          <label class="field-label">사진 · 동영상 첨부</label>
-          <label class="upload-box" for="board-post-attachments">
-            <i class="fa-solid fa-image" aria-hidden="true"></i> 사진·동영상 추가
-          </label>
+          <label class="field-label">내용</label>
+          <div class="content-editor" id="content-editor"></div>
           <input type="file" id="board-post-attachments" accept="image/*,video/*" multiple hidden>
-          <div class="attachment-preview-list" id="attachment-preview-list"></div>
-          <p class="field-hint">이미지와 동영상을 함께, 여러 개 첨부할 수 있어요.</p>
+          <p class="field-hint">본문을 자유롭게 작성하다가 원하는 위치에서 상단 "이미지·동영상 추가"를 누르면 그 자리에 바로 삽입돼요. 삽입된 이미지·동영상을 클릭하면 크기 조절/삭제도 할 수 있어요.</p>
         </div>
 
         <div class="field">

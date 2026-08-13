@@ -63,6 +63,19 @@
       </a>
     </div>
   </div>
+
+  <!-- Mobile 전용 확장 검색 패널: 기본 hidden, .util-search 클릭 시 js/main.js가
+       toggle. Desktop/Tablet에서는 CSS로 항상 숨김(Mobile breakpoint 전용). -->
+  <div class="mobile-search-bar" id="mobile-search-bar" hidden>
+    <div class="container">
+      <form class="mobile-search-form" role="search">
+        <input type="text" id="mobile-search-input" class="input-text" placeholder="검색어를 입력해주세요">
+        <button type="button" class="mobile-search-close" aria-label="검색창 닫기">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </form>
+    </div>
+  </div>
 </header>
 
 <main>
@@ -105,7 +118,7 @@
 
             <div class="hero-bottom">
               <form class="search-box" role="search">
-                <input type="text" class="input-text" placeholder="오늘 하고 싶은 것을 검색해보세요">
+                <input type="text" id="hero-search-input" class="input-text" placeholder="오늘 하고 싶은 것을 검색해보세요">
                 <button type="submit" class="btn">검색</button>
               </form>
 

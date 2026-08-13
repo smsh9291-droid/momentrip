@@ -89,52 +89,32 @@
           <span class="current">게시글 상세</span>
         </nav>
 
-        <!-- 게시글 헤더 -->
+        <!-- 게시글 헤더: 실제 콘텐츠는 항상 js/board.js의 initBoardView가
+             SAMPLE_POSTS/CRUD 공통 경로로 채운다(정적 placeholder 텍스트 없음). -->
         <header class="post-header">
           <div class="post-header-top">
-            <span class="badge" id="board-view-category">후기</span>
-            <span class="region-tag"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span id="board-view-region">서울 성동구</span></span>
+            <span class="badge" id="board-view-category"></span>
+            <span class="region-tag"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span id="board-view-region"></span></span>
             <button type="button" class="post-back-btn" aria-label="뒤로가기">
               <span aria-hidden="true">←</span> 뒤로
             </button>
           </div>
-          <h1 class="post-title" id="board-view-title">성수동 소소한 카페, 대기 없이 다녀왔어요</h1>
+          <h1 class="post-title" id="board-view-title"></h1>
           <div class="post-meta">
-            <span id="board-view-author">작성자01</span>
+            <span id="board-view-author"></span>
             <span class="divider"></span>
-            <span id="board-view-date">2026.07.28</span>
+            <span id="board-view-date"></span>
             <span class="divider"></span>
-            <span id="board-view-views">조회 186</span>
+            <span id="board-view-views"></span>
             <span class="divider"></span>
-            <span id="board-view-comment-count">댓글 12</span>
+            <span id="board-view-comment-count"></span>
             <span class="divider"></span>
-            <span>좋아요 34</span>
+            <span id="board-view-likes"></span>
           </div>
         </header>
 
         <!-- 게시글 본문 (하단 구분선은 css .post-body border-bottom) -->
-        <div class="post-body" id="board-view-content">
-          <p>평일 오전에 방문했더니 대기 없이 바로 자리를 잡을 수 있었어요. 성수동 골목 안쪽에 있는 카페인데, 생각보다 한적한 분위기라 편하게 머물다 왔습니다.</p>
-
-          <figure>
-            <div class="ph-box ratio-16-9"></div>
-            <figcaption class="image-caption">카페 내부 전경 - 좌석 간 간격이 넉넉한 편이에요</figcaption>
-          </figure>
-
-          <p>원두는 직접 로스팅한다고 하는데 산미가 강하지 않고 부드러운 편이라, 커피를 잘 못 마시는 분들도 무난하게 즐기실 수 있을 것 같아요. 자리도 넉넉해서 노트북 들고 작업하기에도 좋았습니다.</p>
-
-          <figure>
-            <div class="ph-box ratio-16-9"></div>
-            <figcaption class="image-caption">이번에 마신 핸드드립 커피</figcaption>
-          </figure>
-
-          <p>다만 주말에는 대기가 꽤 긴 편이라고 하니, 평일 오전 시간대를 추천드려요. 근처에 주차 공간도 마련되어 있어서 차로 이동하시는 분들도 크게 불편함은 없었습니다.</p>
-
-          <figure>
-            <div class="ph-box ratio-4-3"></div>
-            <figcaption class="image-caption">카페 외관, 골목 안쪽에 위치해 있어요</figcaption>
-          </figure>
-        </div>
+        <div class="post-body" id="board-view-content"></div>
 
         <!-- CRUD 게시글 전용: 첨부 이미지/동영상(js/attachments.js의 IndexedDB에서
              비동기로 불러옴). 정적 샘플/첨부 없는 글에서는 비워둔 채(내용 없음)
@@ -155,7 +135,7 @@
         <!-- 작성자 전용 관리 버튼: 본문 하단 구분선 바로 아래, .post-article의
              960px 폭 기준으로 오른쪽 정렬 (PLACE INFO나 바깥 container 폭 기준 아님) -->
         <div class="post-owner-actions">
-          <a href="board-write.html" class="btn" id="board-edit-link">수정</a>
+          <a href="board-write.html" class="btn btn-fill" id="board-edit-link">수정</a>
           <button type="button" class="btn" id="board-delete-button">삭제</button>
         </div>
 
@@ -169,17 +149,13 @@
       <div class="place-info-column">
         <aside class="place-info-card">
           <p class="place-info-label">PLACE INFO</p>
-          <h2 class="place-info-name">소소한 카페</h2>
-          <ul class="place-info-list">
-            <li><span class="label">지역</span><span class="value">서울 성동구</span></li>
-            <li><span class="label">운영시간</span><span class="value">매일 09:00 - 21:00</span></li>
-            <li><span class="label">주차</span><span class="value">가능 (건물 내 2대)</span></li>
-          </ul>
+          <h2 class="place-info-name"></h2>
+          <ul class="place-info-list"></ul>
           <div class="place-info-actions">
-            <button type="button" class="btn btn-block">길찾기</button>
-            <button type="button" class="btn btn-block">저장</button>
+            <button type="button" class="btn btn-block" id="place-directions-btn">길찾기</button>
+            <button type="button" class="btn btn-block btn-fill" id="place-save-btn" aria-pressed="false">저장</button>
           </div>
-          <p class="place-info-hint">* 길찾기 버튼은 추후 네이버지도 · 카카오맵 · T맵 연동이 들어갈 위치입니다 (와이어프레임 단계)</p>
+          <p class="place-info-hint" aria-live="polite">* 길찾기는 네이버지도 새 창으로 연결됩니다. 저장한 장소는 마이페이지에서 확인할 수 있습니다.</p>
         </aside>
       </div>
 
@@ -210,114 +186,33 @@
         </button>
       </div>
 
-      <!-- 댓글 영역 -->
+      <!-- 댓글 영역: 목록/개수는 항상 실제 댓글 데이터(js/board.js
+           readCommentsForPost) 하나만 기준으로 렌더링한다. 정적 sample 댓글은
+           SAMPLE_POSTS의 seedComments로 완전히 분리돼 있고, 이 안의 고정
+           마크업으로는 존재하지 않는다. -->
       <section class="comment-section" aria-label="댓글">
-        <p class="comment-heading" id="board-view-comment-heading">댓글 12</p>
+        <p class="comment-heading" id="board-view-comment-heading"></p>
 
         <form class="comment-form">
           <textarea class="input-textarea" placeholder="따뜻한 댓글을 남겨주세요"></textarea>
           <button type="submit" class="btn">등록</button>
         </form>
 
-        <!-- CRUD 게시글 전용: 댓글 기능이 아직 없으므로 아래 정적 샘플 댓글
-             목록 대신 이 문구만 노출한다(js/board.js). 정적 샘플 게시글은
-             건드리지 않으므로 이 요소는 항상 hidden 상태로 남는다. -->
         <p class="comment-empty" id="board-view-comment-empty" hidden>아직 작성된 댓글이 없습니다.</p>
 
-        <ul id="board-view-comment-list">
-          <li class="comment-item">
-            <span class="icon-circle md"></span>
-            <div class="comment-body">
-              <div class="comment-meta">
-                <span>동네주민</span>
-                <span>2026.07.28</span>
-              </div>
-              <p class="comment-text">저도 가봤는데 정말 조용하고 좋더라구요!</p>
-              <div class="comment-actions">
-                <button type="button">좋아요 3</button>
-                <button type="button">답글</button>
-                <button type="button">신고</button>
-              </div>
-
-              <ul class="comment-replies">
-                <li class="comment-item">
-                  <span class="icon-circle md"></span>
-                  <div class="comment-body">
-                    <div class="comment-meta">
-                      <span>작성자01</span>
-                      <span>2026.07.28</span>
-                    </div>
-                    <p class="comment-text">맞아요! 평일에 특히 좋았어요 :)</p>
-                    <div class="comment-actions">
-                      <button type="button">좋아요 1</button>
-                      <button type="button">답글</button>
-                      <button type="button">신고</button>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="comment-item">
-            <span class="icon-circle md"></span>
-            <div class="comment-body">
-              <div class="comment-meta">
-                <span>카페투어러</span>
-                <span>2026.07.28</span>
-              </div>
-              <p class="comment-text">여기 원두 어디서 받는지 아시나요? 저도 궁금해서 여쭤봐요.</p>
-              <div class="comment-actions">
-                <button type="button">좋아요 1</button>
-                <button type="button">답글</button>
-                <button type="button">신고</button>
-              </div>
-            </div>
-          </li>
-
-          <li class="comment-item">
-            <span class="icon-circle md"></span>
-            <div class="comment-body">
-              <div class="comment-meta">
-                <span>성수동주민</span>
-                <span>2026.07.27</span>
-              </div>
-              <p class="comment-text">저희 동네인데 아직 못 가봤네요. 조만간 가봐야겠어요!</p>
-              <div class="comment-actions">
-                <button type="button">좋아요 2</button>
-                <button type="button">답글</button>
-                <button type="button">신고</button>
-              </div>
-            </div>
-          </li>
-
-          <li class="comment-item">
-            <span class="icon-circle md"></span>
-            <div class="comment-body">
-              <div class="comment-meta">
-                <span>여행하는고양이</span>
-                <span>2026.07.27</span>
-              </div>
-              <p class="comment-text">사진 잘 보고 갑니다. 분위기가 정말 좋네요.</p>
-              <div class="comment-actions">
-                <button type="button">좋아요 0</button>
-                <button type="button">답글</button>
-                <button type="button">신고</button>
-              </div>
-            </div>
-          </li>
-        </ul>
+        <ul id="board-view-comment-list"></ul>
       </section>
 
-      <!-- 이전글 / 다음글 -->
+      <!-- 이전글 / 다음글: href/텍스트는 항상 initBoardView가 SAMPLE_POSTS+CRUD를
+           합친 최신순 목록에서 현재 글의 앞뒤를 찾아 채운다. -->
       <nav class="post-nav" aria-label="이전글 다음글">
-        <div class="post-nav-row">
+        <div class="post-nav-row" id="board-view-prev-row" hidden>
           <span class="nav-label">이전글</span>
-          <a href="board-view.html">루프탑 브런치 카페, 뷰 진짜 좋아요</a>
+          <a id="board-view-prev-link" href="#"></a>
         </div>
-        <div class="post-nav-row">
+        <div class="post-nav-row" id="board-view-next-row" hidden>
           <span class="nav-label">다음글</span>
-          <a href="board-view.html">마포구에서 아이랑 갈만한 실내 데이트 코스 있을까요?</a>
+          <a id="board-view-next-link" href="#"></a>
         </div>
       </nav>
 
